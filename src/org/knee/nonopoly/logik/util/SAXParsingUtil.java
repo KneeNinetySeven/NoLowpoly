@@ -7,14 +7,15 @@ import org.xml.sax.helpers.DefaultHandler;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Nils on 29.09.2016.
- *
- * <b>BROKEN</b>
- *
+ * <p>
+ * <b>Inoperable</b>
  */
-@Deprecated
+
 public class SAXParsingUtil {
 
     private class SpielFeldHandler extends DefaultHandler {
@@ -43,20 +44,20 @@ public class SAXParsingUtil {
         }
 
         @Override
-        public void characters( char[] ch, int start, int length )
-        {
-            System.out.println( "Characters:" );
+        public void characters(char[] ch, int start, int length) {
+            System.out.println("Characters:");
 
-            for ( int i = start; i < (start + length); i++ )
-                System.out.printf( "%1$c (%1$x) ", (int) ch[i] );
+            for (int i = start; i < (start + length); i++)
+                System.out.printf("%1$c (%1$x) ", (int) ch[i]);
 
             System.out.println();
         }
     }
 
-    SAXParserFactory factory = SAXParserFactory.newInstance();
-    SAXParser saxParser = factory.newSAXParser();
-    DefaultHandler handler = new SpielFeldHandler();
-    saxParser.parse( new File("party.xml"), handler )
-
+    public void dateiVerarbeiten() throws ParserConfigurationException, SAXException, IOException {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser saxParser = factory.newSAXParser();
+        DefaultHandler handler = new SpielFeldHandler();
+        saxParser.parse(new File("party.xml"), handler);
+    }
 }
