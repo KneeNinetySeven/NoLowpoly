@@ -18,6 +18,8 @@ import java.io.IOException;
 
 public class SAXParsingUtil {
 
+    private String filePath;
+
     private class SpielFeldHandler extends DefaultHandler {
         private SpielFeldHandler() throws ParserConfigurationException, SAXException {
         }
@@ -54,10 +56,14 @@ public class SAXParsingUtil {
         }
     }
 
+    public SAXParsingUtil(String filePath) {
+        this.filePath = filePath;
+    }
+
     public void dateiVerarbeiten() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser saxParser = factory.newSAXParser();
         DefaultHandler handler = new SpielFeldHandler();
-        saxParser.parse(new File("party.xml"), handler);
+        saxParser.parse(new File(this.filePath), handler);
     }
 }
