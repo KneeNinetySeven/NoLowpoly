@@ -5,6 +5,8 @@ package org.knee.nonopoly.felder.abstracts;
  */
 public abstract class ImmobilienFeldFabrik extends FeldFabrik {
 
+    private int kaufpreis;
+
     @Override
     public boolean istImmobilie(){
         return true;
@@ -14,4 +16,11 @@ public abstract class ImmobilienFeldFabrik extends FeldFabrik {
         return false;
     }
 
+    public int getKaufpreis() {
+        return kaufpreis;
+    }
+
+    public void setKaufpreis(int kaufpreis) {
+        this.kaufpreis = kaufpreis;
+    }
 }

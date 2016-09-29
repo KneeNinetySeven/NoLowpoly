@@ -5,6 +5,8 @@ package org.knee.nonopoly.felder.abstracts;
  */
 public abstract class FeldFabrik {
 
+    private String name;
+
     public FeldFabrik(){
 
     }
@@ -17,4 +19,11 @@ public abstract class FeldFabrik {
         return false;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
