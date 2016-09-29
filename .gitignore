@@ -1,9 +1,0 @@
-
-.classpath
-.idea/
-.project
-NoNopoly.eml
-NoNopoly.iml
-NoNopoly.userlibraries
-out/
-src/org/kneemeyer/nonopoly/ui/
