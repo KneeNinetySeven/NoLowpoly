@@ -7,6 +7,11 @@ public abstract class ImmobilienFeld extends Feld {
 
     private int kaufpreis;
 
+    public ImmobilienFeld(String name, int kaufpreis) {
+        super(name);
+        this.kaufpreis = kaufpreis;
+    }
+
     @Override
     public boolean istImmobilie(){
         return true;

@@ -7,7 +7,14 @@ import org.knee.nonopoly.felder.abstracts.ImmobilienFeld;
  */
 public class Strassen extends ImmobilienFeld {
 
-     @Override
+    int[] mietStaffel;
+
+    public Strassen(String name, int kaufpreis, int[] mietStaffel) {
+        super(name, kaufpreis);
+        this.mietStaffel = mietStaffel;
+    }
+
+    @Override
     public boolean istStrasse(){
          return true;
      }

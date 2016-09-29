@@ -7,7 +7,7 @@ import org.knee.nonopoly.felder.abstracts.Feld;
 import org.knee.nonopoly.felder.implementations.Los;
 import org.knee.nonopoly.felder.implementations.immobilien.Strassen;
 import org.knee.nonopoly.logik.logging.Protokollant;
-import org.knee.nonopoly.logik.util.SAXParsingUtil;
+import org.knee.nonopoly.logik.util.XML.SAXParsingUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class SchiedsrichterFabrik {
         this.setProtokollant(new Protokollant());
         this.bank = new Bank();
         this.teilnehmer = new ArrayList<Spieler>();
-        this.strassenParser = new SAXParsingUtil("strassen.xml");
+        this.strassenParser = new SAXParsingUtil("nichtStrassen.xml");
         this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
         this.spielbrett = new ArrayList<Feld>(48);
     }

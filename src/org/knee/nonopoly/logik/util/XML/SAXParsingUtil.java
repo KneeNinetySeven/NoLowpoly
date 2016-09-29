@@ -1,4 +1,4 @@
-package org.knee.nonopoly.logik.util;
+package org.knee.nonopoly.logik.util.XML;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

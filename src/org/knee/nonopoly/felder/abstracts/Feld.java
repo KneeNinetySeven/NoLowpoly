@@ -7,8 +7,8 @@ public abstract class Feld {
 
     private String name;
 
-    public Feld(){
-
+    public Feld(String name){
+        this.name = name;
     }
 
     public void fuehrePflichtAktionAus(){
