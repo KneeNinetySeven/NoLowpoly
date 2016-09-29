@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Felder>
+    <Gemeinschaftsfelder>
+        <Gemeinschaftsfeld index="3">
+            <Name>Gemeinschaftsfeld</Name>
+        </Gemeinschaftsfeld>
+        <Gemeinschaftsfeld index="18">
+            <Name>Gemeinschaftsfeld</Name>
+        </Gemeinschaftsfeld>
+        <Gemeinschaftsfeld index="34">
+            <Name>Gemeinschaftsfeld</Name>
+        </Gemeinschaftsfeld>
+    </Gemeinschaftsfelder>
+
+    <Ereignisfelder>
+        <Ereignisfeld index="8">
+            <Name>Ereignisfeld</Name>
+        </Ereignisfeld>
+        <Ereignisfeld index="23">
+            <Name>Ereignisfeld</Name>
+        </Ereignisfeld>
+        <Ereignisfeld index="37">
+            <Name>Ereignisfeld</Name>
+        </Ereignisfeld>
+    </Ereignisfelder>
+
+    <Steuerfelder>
+        <Steuerfeld index="5">
+            <Name>Einkommenssteuer</Name>
+            <Preis>4000</Preis>
+        </Steuerfeld>
+        <Steuerfeld index="39">
+            <Name>Zusatzsteuer</Name>
+            <Preis>2000</Preis>
+        </Steuerfeld>
+    </Steuerfelder>
+
+    <Los index="1">
+        <Name>Los</Name>
+        <Treffer>6000</Treffer>
+        <Ueberschreitung>4000</Ueberschreitung>
+    </Los>
+
+    <Gefaengnis index="11">
+        <Name>Gefaengnis</Name>
+    </Gefaengnis>
+
+    <Freiparken index="21">
+        <Name>Freiparken</Name>
+    </Freiparken>
+
+    <Polizist index="31">
+        <Name>Polizist</Name>
+    </Polizist>
+
+    <Bahnhoefe>
+        <Bahnhof index="6">
+            <Name>Suedbahnhof</Name>
+            <Preis>4000</Preis>
+            <Mietpreise>
+                <Miete>500</Miete>
+                <Miete>1000</Miete>
+                <Miete>2000</Miete>
+                <Miete>4000</Miete>
+            </Mietpreise>
+        </Bahnhof>
+        <Bahnhof index="16">
+            <Name>Westbahnhof</Name>
+            <Preis>4000</Preis>
+            <Mietpreise>
+                <Miete>500</Miete>
+                <Miete>1000</Miete>
+                <Miete>2000</Miete>
+                <Miete>4000</Miete>
+            </Mietpreise>
+        </Bahnhof>
+        <Bahnhof index="26">
+            <Name>Nordbahnhof</Name>
+            <Preis>4000</Preis>
+            <Mietpreise>
+                <Miete>500</Miete>
+                <Miete>1000</Miete>
+                <Miete>2000</Miete>
+                <Miete>4000</Miete>
+            </Mietpreise>
+        </Bahnhof>
+        <Bahnhof index="36">
+            <Name>Hauptbahnhof</Name>
+            <Preis>4000</Preis>
+            <Mietpreise>
+                <Miete>500</Miete>
+                <Miete>1000</Miete>
+                <Miete>2000</Miete>
+                <Miete>4000</Miete>
+            </Mietpreise>
+        </Bahnhof>
+    </Bahnhoefe>
+
+    <Werke>
+        <Werk Index="13">
+            <Name>E-Werk</Name>
+            <Preis>3000</Preis>
+            <Mietpreise>
+                <Miete>80</Miete>
+                <Miete>200</Miete>
+            </Mietpreise>
+        </Werk>
+        <Werk Index="29">
+            <Name>Wasserwerk</Name>
+            <Preis>3000</Preis>
+            <Mietpreise>
+                <Miete>80</Miete>
+                <Miete>200</Miete>
+            </Mietpreise>
+        </Werk>
+    </Werke>
+</Felder>

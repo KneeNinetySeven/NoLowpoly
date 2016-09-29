@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Strassen>
+    <Strasse index="2">
+        <Name>Badstrasse</Name>
+        <Preis>1200</Preis>
+        <Mietpreise>
+            <Miete>40</Miete>
+            <Miete>200</Miete>
+            <Miete>600</Miete>
+            <Miete>1800</Miete>
+            <Miete>3200</Miete>
+            <Miete>5000</Miete>
+        </Mietpreise>
+        <Preis1Haus>1000</Preis1Haus>
+    </Strasse>
+    <Strasse index="4">
+        <Name>Turmstrasse</Name>
+        <Preis>1200</Preis>
+        <Mietpreise>
+            <Miete>80</Miete>
+            <Miete>400</Miete>
+            <Miete>1200</Miete>
+            <Miete>3600</Miete>
+            <Miete>6400</Miete>
+            <Miete>9000</Miete>
+        </Mietpreise>
+        <Preis1Haus>1000</Preis1Haus>
+    </Strasse>
+    <Strasse index="7">
+        <Name>Chausseestrasse</Name>
+        <Preis>2000</Preis>
+        <Mietpreise>
+            <Miete>120</Miete>
+            <Miete>600</Miete>
+            <Miete>1800</Miete>
+            <Miete>5400</Miete>
+            <Miete>8000</Miete>
+            <Miete>11000</Miete>
+        </Mietpreise>
+        <Preis1Haus>1000</Preis1Haus>
+    </Strasse>
+    <Strasse index="9">
+        <Name>Elisenstrasse</Name>
+        <Preis>2000</Preis>
+        <Mietpreise>
+            <Miete>120</Miete>
+            <Miete>600</Miete>
+            <Miete>1800</Miete>
+            <Miete>5400</Miete>
+            <Miete>8000</Miete>
+            <Miete>11000</Miete>
+        </Mietpreise>
+        <Preis1Haus>1000</Preis1Haus>
+    </Strasse>
+    <Strasse index="10">
+        <Name>Poststrasse</Name>
+        <Preis>2400</Preis>
+        <Mietpreise>
+            <Miete>160</Miete>
+            <Miete>800</Miete>
+            <Miete>2000</Miete>
+            <Miete>6000</Miete>
+            <Miete>9000</Miete>
+            <Miete>12000</Miete>
+        </Mietpreise>
+        <Preis1Haus>1000</Preis1Haus>
+    </Strasse>
+    <Strasse index="12">
+        <Name>Seestrasse</Name>
+        <Preis>2800</Preis>
+        <Mietpreise>
+            <Miete>200</Miete>
+            <Miete>1000</Miete>
+            <Miete>3000</Miete>
+            <Miete>9000</Miete>
+            <Miete>12500</Miete>
+            <Miete>15000</Miete>
+        </Mietpreise>
+        <Preis1Haus>2000</Preis1Haus>
+    </Strasse>
+    <Strasse index="14">
+        <Name>Hafenstrasse</Name>
+        <Preis>2800</Preis>
+        <Mietpreise>
+            <Miete>200</Miete>
+            <Miete>1000</Miete>
+            <Miete>3000</Miete>
+            <Miete>9000</Miete>
+            <Miete>12500</Miete>
+            <Miete>15000</Miete>
+        </Mietpreise>
+        <Preis1Haus>2000</Preis1Haus>
+    </Strasse>
+    <Strasse index="15">
+        <Name>Neue Strasse</Name>
+        <Preis>3200</Preis>
+        <Mietpreise>
+            <Miete>240</Miete>
+            <Miete>1200</Miete>
+            <Miete>3600</Miete>
+            <Miete>10000</Miete>
+            <Miete>14000</Miete>
+            <Miete>18000</Miete>
+        </Mietpreise>
+        <Preis1Haus>2000</Preis1Haus>
+    </Strasse>
+    <Strasse index="17">
+        <Name>Münchner Strasse</Name>
+        <Preis>3600</Preis>
+        <Mietpreise>
+            <Miete>280</Miete>
+            <Miete>1400</Miete>
+            <Miete>4000</Miete>
+            <Miete>11000</Miete>
+            <Miete>15000</Miete>
+            <Miete>19000</Miete>
+        </Mietpreise>
+        <Preis1Haus>2000</Preis1Haus>
+    </Strasse>
+    <Strasse index="19">
+        <Name>Wiener Strasse</Name>
+        <Preis>3600</Preis>
+        <Mietpreise>
+            <Miete>280</Miete>
+            <Miete>1400</Miete>
+            <Miete>4000</Miete>
+            <Miete>11000</Miete>
+            <Miete>15000</Miete>
+            <Miete>19000</Miete>
+        </Mietpreise>
+        <Preis1Haus>2000</Preis1Haus>
+    </Strasse>
+    <Strasse index="20">
+        <Name>Berliner Strasse</Name>
+        <Preis>4000</Preis>
+        <Mietpreise>
+            <Miete>320</Miete>
+            <Miete>1600</Miete>
+            <Miete>4400</Miete>
+            <Miete>12000</Miete>
+            <Miete>16000</Miete>
+            <Miete>20000</Miete>
+        </Mietpreise>
+        <Preis1Haus>2000</Preis1Haus>
+    </Strasse>
+    <Strasse index="22">
+        <Name>Theaterstrasse</Name>
+        <Preis>4400</Preis>
+        <Mietpreise>
+            <Miete>360</Miete>
+            <Miete>1800</Miete>
+            <Miete>5000</Miete>
+            <Miete>14000</Miete>
+            <Miete>17500</Miete>
+            <Miete>21000</Miete>
+        </Mietpreise>
+        <Preis1Haus>3000</Preis1Haus>
+    </Strasse>
+    <Strasse index="24">
+        <Name>Musuemstrasse</Name>
+        <Preis>4400</Preis>
+        <Mietpreise>
+            <Miete>360</Miete>
+            <Miete>1800</Miete>
+            <Miete>5000</Miete>
+            <Miete>14000</Miete>
+            <Miete>17500</Miete>
+            <Miete>21000</Miete>
+        </Mietpreise>
+        <Preis1Haus>3000</Preis1Haus>
+    </Strasse>
+    <Strasse index="25">
+        <Name>Opernplatz</Name>
+        <Preis>4800</Preis>
+        <Mietpreise>
+            <Miete>400</Miete>
+            <Miete>2000</Miete>
+            <Miete>6000</Miete>
+            <Miete>15000</Miete>
+            <Miete>18500</Miete>
+            <Miete>22000</Miete>
+        </Mietpreise>
+        <Preis1Haus>3000</Preis1Haus>
+    </Strasse>
+    <Strasse index="27">
+        <Name>Lessingstrasse</Name>
+        <Preis>5200</Preis>
+        <Mietpreise>
+            <Miete>440</Miete>
+            <Miete>2200</Miete>
+            <Miete>6600</Miete>
+            <Miete>16000</Miete>
+            <Miete>19500</Miete>
+            <Miete>23000</Miete>
+        </Mietpreise>
+        <Preis1Haus>3000</Preis1Haus>
+    </Strasse>
+    <Strasse index="28">
+        <Name>Schillerstrasse</Name>
+        <Preis>5200</Preis>
+        <Mietpreise>
+            <Miete>440</Miete>
+            <Miete>2200</Miete>
+            <Miete>6600</Miete>
+            <Miete>16000</Miete>
+            <Miete>19500</Miete>
+            <Miete>23000</Miete>
+        </Mietpreise>
+        <Preis1Haus>3000</Preis1Haus>
+    </Strasse>
+    <Strasse index="30">
+        <Name>Goethestrasse</Name>
+        <Preis>5600</Preis>
+        <Mietpreise>
+            <Miete>480</Miete>
+            <Miete>2400</Miete>
+            <Miete>7200</Miete>
+            <Miete>17000</Miete>
+            <Miete>20500</Miete>
+            <Miete>24000</Miete>
+        </Mietpreise>
+        <Preis1Haus>3000</Preis1Haus>
+    </Strasse>
+    <Strasse index="32">
+        <Name>Rathausplatz</Name>
+        <Preis>6000</Preis>
+        <Mietpreise>
+            <Miete>520</Miete>
+            <Miete>2600</Miete>
+            <Miete>7800</Miete>
+            <Miete>18000</Miete>
+            <Miete>22000</Miete>
+            <Miete>25500</Miete>
+        </Mietpreise>
+        <Preis1Haus>4000</Preis1Haus>
+    </Strasse>
+    <Strasse index="33">
+        <Name>Hauptstrasse</Name>
+        <Preis>6000</Preis>
+        <Mietpreise>
+            <Miete>520</Miete>
+            <Miete>2600</Miete>
+            <Miete>7800</Miete>
+            <Miete>18000</Miete>
+            <Miete>22000</Miete>
+            <Miete>25500</Miete>
+        </Mietpreise>
+        <Preis1Haus>4000</Preis1Haus>
+    </Strasse>
+    <Strasse index="35">
+        <Name>Bahnhofstrasse</Name>
+        <Preis>6400</Preis>
+        <Mietpreise>
+            <Miete>560</Miete>
+            <Miete>3000</Miete>
+            <Miete>9000</Miete>
+            <Miete>20000</Miete>
+            <Miete>24000</Miete>
+            <Miete>28000</Miete>
+        </Mietpreise>
+        <Preis1Haus>4000</Preis1Haus>
+    </Strasse>
+    <Strasse index="38">
+        <Name>Parkstrasse</Name>
+        <Preis>7000</Preis>
+        <Mietpreise>
+            <Miete>700</Miete>
+            <Miete>3500</Miete>
+            <Miete>10000</Miete>
+            <Miete>22000</Miete>
+            <Miete>26000</Miete>
+            <Miete>30000</Miete>
+        </Mietpreise>
+        <Preis1Haus>4000</Preis1Haus>
+    </Strasse>
+    <Strasse index="40">
+        <Name>Schlossallee</Name>
+        <Preis>8000</Preis>
+        <Mietpreise>
+            <Miete>1000</Miete>
+            <Miete>4000</Miete>
+            <Miete>12000</Miete>
+            <Miete>28000</Miete>
+            <Miete>34000</Miete>
+            <Miete>40000</Miete>
+        </Mietpreise>
+        <Preis1Haus>4000</Preis1Haus>
+    </Strasse>
+</Strassen>
