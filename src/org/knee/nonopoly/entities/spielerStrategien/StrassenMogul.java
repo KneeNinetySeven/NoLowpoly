@@ -3,7 +3,7 @@ package org.knee.nonopoly.entities.spielerStrategien;
 /**
  * Created by Nils on 24.09.2016.
  */
-public class StrassenMogul extends StrategieFabrik {
+public class StrassenMogul extends Strategie {
 
     @Override
     public String toString(){

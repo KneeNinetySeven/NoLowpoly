@@ -1,16 +1,16 @@
 package org.knee.nonopoly.felder.implementations;
 
-import org.knee.nonopoly.felder.abstracts.FeldFabrik;
+import org.knee.nonopoly.felder.abstracts.Feld;
 
 /**
  * Created by Nils on 24.09.2016.
  */
-public class LosFabrik extends FeldFabrik {
+public class Los extends Feld {
 
     private int treffer;
     private int überschreitung;
 
-    public LosFabrik() {
+    public Los() {
         this.treffer = 6000;
         this.überschreitung = 4000;
     }

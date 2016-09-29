@@ -1,6 +1,6 @@
 package org.knee.nonopoly.logik.logging;
 
-import org.knee.nonopoly.entities.SpielerFabrik;
+import org.knee.nonopoly.entities.Spieler;
 
 import java.util.ArrayList;
 
@@ -8,11 +8,11 @@ import java.util.ArrayList;
  * Created by Nils on 24.09.2016.
  */
 
-public class ProtokollantFabrik {
+public class Protokollant {
 
     private StringBuilder logOutput;
 
-    public ProtokollantFabrik() {
+    public Protokollant() {
         this.logOutput = new StringBuilder();
     }
 
@@ -25,9 +25,9 @@ public class ProtokollantFabrik {
         return this.logOutput.toString();
     }
 
-    public void printSpieler(ArrayList<SpielerFabrik> spielerListe){
+    public void printSpieler(ArrayList<Spieler> spielerListe){
         System.out.println("--- SPIELER ---");
-        for(SpielerFabrik s : spielerListe){
+        for(Spieler s : spielerListe){
             System.out.println(s.toString());
         }
     }

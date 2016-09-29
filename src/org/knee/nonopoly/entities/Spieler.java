@@ -1,26 +1,26 @@
 package org.knee.nonopoly.entities;
 
-import org.knee.nonopoly.entities.spielerStrategien.StrategieFabrik;
+import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 
 /**
  * Created by Nils on 09.09.2016.
  */
-public class SpielerFabrik extends Entity {
+public class Spieler extends Entity {
 
     private boolean imSpiel;
     private String name;
     private int position;
-    private StrategieFabrik strategie;
+    private Strategie strategie;
 
-    public static final SpielerFabrik spielerErzeugen(String name, StrategieFabrik strategie){
-        SpielerFabrik spieler = new SpielerFabrik();
+    public static final Spieler spielerErzeugen(String name, Strategie strategie){
+        Spieler spieler = new Spieler();
         spieler.setName(name);
         spieler.setImSpiel(true);
         spieler.setStrategie(strategie);
         return spieler;
     }
 
-    public SpielerFabrik() {
+    public Spieler() {
         this.setGuthaben(0);
         this.setPosition(0);
         this.setName("");
@@ -54,13 +54,13 @@ public class SpielerFabrik extends Entity {
 
     public void setPosition(int position) {
         this.position = position;
-    };
+    }
 
-    public StrategieFabrik getStrategie() {
+    public Strategie getStrategie() {
         return strategie;
     }
 
-    public void setStrategie(StrategieFabrik strategieFabrik) {
-        this.strategie = strategieFabrik;
+    public void setStrategie(Strategie strategie) {
+        this.strategie = strategie;
     }
 }

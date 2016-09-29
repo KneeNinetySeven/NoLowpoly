@@ -1,12 +1,12 @@
 package org.knee.nonopoly.logik;
 
 import org.knee.nonopoly.entities.Bank;
-import org.knee.nonopoly.entities.SpielerFabrik;
-import org.knee.nonopoly.entities.spielerStrategien.StrategieFabrik;
-import org.knee.nonopoly.felder.abstracts.FeldFabrik;
-import org.knee.nonopoly.felder.implementations.LosFabrik;
-import org.knee.nonopoly.felder.implementations.immobilien.StrassenFabrik;
-import org.knee.nonopoly.logik.logging.ProtokollantFabrik;
+import org.knee.nonopoly.entities.Spieler;
+import org.knee.nonopoly.entities.spielerStrategien.Strategie;
+import org.knee.nonopoly.felder.abstracts.Feld;
+import org.knee.nonopoly.felder.implementations.Los;
+import org.knee.nonopoly.felder.implementations.immobilien.Strassen;
+import org.knee.nonopoly.logik.logging.Protokollant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,38 +16,38 @@ import java.util.List;
  */
 public class SchiedsrichterFabrik {
 
-    private List<FeldFabrik> spielbrett;
-    private ArrayList<SpielerFabrik> teilnehmer;
+    private List<Feld> spielbrett;
+    private ArrayList<Spieler> teilnehmer;
     private Bank bank;
-    private ProtokollantFabrik protokollant;
+    private Protokollant protokollant;
 
     public SchiedsrichterFabrik(){
-        this.setProtokollant(new ProtokollantFabrik());
+        this.setProtokollant(new Protokollant());
         this.bank = new Bank();
-        this.teilnehmer = new ArrayList<SpielerFabrik>();
-        this.spielbrett = new ArrayList<FeldFabrik>(48);
+        this.teilnehmer = new ArrayList<Spieler>();
+        this.spielbrett = new ArrayList<Feld>(48);
     }
 
     private void spielbrettAnlegen(){
-        this.spielbrett.add(new LosFabrik());
-        this.spielbrett.add(new StrassenFabrik());
+        this.spielbrett.add(new Los());
+        this.spielbrett.add(new Strassen());
         this.spielbrett.get(this.spielbrett.toArray().length).setName("Badstrasse");
     }
 
-    public ProtokollantFabrik getProtokollant() {
+    public Protokollant getProtokollant() {
         return protokollant;
     }
 
-    private void setProtokollant(ProtokollantFabrik protokollant) {
+    private void setProtokollant(Protokollant protokollant) {
         this.protokollant = protokollant;
     }
 
-    public ArrayList<SpielerFabrik> getTeilnehmer() {
+    public ArrayList<Spieler> getTeilnehmer() {
         return teilnehmer;
     }
 
-    public void registriereTeilnehmer(String name, StrategieFabrik strategie){
-        this.teilnehmer.add(SpielerFabrik.spielerErzeugen(name, strategie));
+    public void registriereTeilnehmer(String name, Strategie strategie){
+        this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
     }
 
     public Bank getBank() {

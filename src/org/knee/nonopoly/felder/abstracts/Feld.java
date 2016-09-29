@@ -3,11 +3,11 @@ package org.knee.nonopoly.felder.abstracts;
 /**
  * Created by Nils on 24.09.2016.
  */
-public abstract class FeldFabrik {
+public abstract class Feld {
 
     private String name;
 
-    public FeldFabrik(){
+    public Feld(){
 
     }
 

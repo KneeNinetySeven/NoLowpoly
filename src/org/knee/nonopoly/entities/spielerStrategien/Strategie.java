@@ -1,19 +1,19 @@
 package org.knee.nonopoly.entities.spielerStrategien;
 
-import org.knee.nonopoly.entities.SpielerFabrik;
+import org.knee.nonopoly.entities.Spieler;
 
 /**
  * Created by Nils on 24.09.2016.
  */
-public abstract class StrategieFabrik {
+public abstract class Strategie {
 
     private String name;
 
-    public boolean erlaubtHausbau(SpielerFabrik spielerFabrik){
+    public boolean erlaubtHausbau(Spieler spieler){
         return false;
     }
 
-    public boolean erlaubtFeldKauf(SpielerFabrik spielerFabrik){ return false; }
+    public boolean erlaubtFeldKauf(Spieler spieler){ return false; }
 
     public String getName() {
         return name;

@@ -3,7 +3,7 @@ package org.knee.nonopoly.entities.spielerStrategien;
 /**
  * Created by Nils on 24.09.2016.
  */
-public class RestBudgetBetrachter extends StrategieFabrik {
+public class RestBudgetBetrachter extends Strategie {
 
     @Override
     public String toString(){

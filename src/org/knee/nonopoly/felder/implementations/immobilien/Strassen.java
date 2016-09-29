@@ -1,11 +1,11 @@
 package org.knee.nonopoly.felder.implementations.immobilien;
 
-import org.knee.nonopoly.felder.abstracts.ImmobilienFeldFabrik;
+import org.knee.nonopoly.felder.abstracts.ImmobilienFeld;
 
 /**
  * Created by Nils on 24.09.2016.
  */
-public class StrassenFabrik extends ImmobilienFeldFabrik {
+public class Strassen extends ImmobilienFeld {
 
      @Override
     public boolean istStrasse(){

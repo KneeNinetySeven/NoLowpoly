@@ -3,12 +3,12 @@ package org.knee.nonopoly.logik.wuerfel;
 /**
  * Created by Nils on 24.09.2016.
  */
-public class WurfFabrik {
+public class Wurf {
 
     private int wurf1;
     private int wurf2;
 
-    public WurfFabrik(int wurf1, int wurf2 ){
+    public Wurf(int wurf1, int wurf2 ){
         this.setWurf1(wurf1);
         this.setWurf2(wurf2);
     }
