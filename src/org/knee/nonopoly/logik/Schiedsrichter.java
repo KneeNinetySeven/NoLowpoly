@@ -4,39 +4,49 @@ import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.abstracts.Feld;
-import org.knee.nonopoly.felder.implementations.Los;
-import org.knee.nonopoly.felder.implementations.immobilien.Strassen;
 import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.util.XML.SAXParsingUtil;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Nils on 11.09.2016.
  */
-public class SchiedsrichterFabrik {
+public class Schiedsrichter {
 
-    private List<Feld> spielbrett;
+    private Feld[] spielbrett;
     private ArrayList<Spieler> teilnehmer;
     private Bank bank;
     private Protokollant protokollant;
     private SAXParsingUtil strassenParser;
     private SAXParsingUtil nichtStrassenParser;
 
-    public SchiedsrichterFabrik(){
+    public Schiedsrichter() {
         this.setProtokollant(new Protokollant());
         this.bank = new Bank();
         this.teilnehmer = new ArrayList<Spieler>();
         this.strassenParser = new SAXParsingUtil("nichtStrassen.xml");
         this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
-        this.spielbrett = new ArrayList<Feld>(48);
+        this.spielbrett = new Feld[48];
+        spielbrettAnlegen();
     }
 
-    private void spielbrettAnlegen(){
-        this.spielbrett.add(new Los());
-        this.spielbrett.add(new Strassen());
-        this.spielbrett.get(this.spielbrett.toArray().length).setName("Badstrasse");
+    private void spielbrettAnlegen() {
+
+        this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
+        try {
+            nichtStrassenParser.dateiVerarbeiten();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public Protokollant getProtokollant() {
@@ -51,7 +61,7 @@ public class SchiedsrichterFabrik {
         return teilnehmer;
     }
 
-    public void registriereTeilnehmer(String name, Strategie strategie){
+    public void registriereTeilnehmer(String name, Strategie strategie) {
         this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
     }
 

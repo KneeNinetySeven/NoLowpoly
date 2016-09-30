@@ -11,6 +11,10 @@ public abstract class Feld {
         this.name = name;
     }
 
+    public Feld() {
+
+    }
+
     public void fuehrePflichtAktionAus(){
 
     }

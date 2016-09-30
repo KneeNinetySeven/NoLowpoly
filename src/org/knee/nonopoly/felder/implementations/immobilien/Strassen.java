@@ -8,10 +8,12 @@ import org.knee.nonopoly.felder.abstracts.ImmobilienFeld;
 public class Strassen extends ImmobilienFeld {
 
     int[] mietStaffel;
+    int hauspreis;
 
-    public Strassen(String name, int kaufpreis, int[] mietStaffel) {
+    public Strassen(String name, int kaufpreis, int[] mietStaffel, int hauspreis) {
         super(name, kaufpreis);
         this.mietStaffel = mietStaffel;
+        this.hauspreis = hauspreis;
     }
 
     @Override

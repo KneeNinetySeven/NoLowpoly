@@ -11,6 +11,7 @@ public class Los extends Feld {
     private int überschreitung;
 
     public Los() {
+        super();
         this.treffer = 6000;
         this.überschreitung = 4000;
     }

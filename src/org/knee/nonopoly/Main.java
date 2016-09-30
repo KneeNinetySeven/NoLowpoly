@@ -1,18 +1,18 @@
 package org.knee.nonopoly;
 
-import org.knee.nonopoly.logik.SchiedsrichterFabrik;
 import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
 import org.knee.nonopoly.entities.spielerStrategien.StrassenMogul;
+import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * Created by Nils on 09.09.2016.
  */
 public class Main {
 
-    SchiedsrichterFabrik schiedsrichter;
+    Schiedsrichter schiedsrichter;
 
     public Main() {
-        this.schiedsrichter = new SchiedsrichterFabrik();
+        this.schiedsrichter = new Schiedsrichter();
     }
 
     public static void  main(String[] args){
