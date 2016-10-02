@@ -7,11 +7,12 @@ public class Steuertopf extends Entity{
 
     public Steuertopf() {
         super();
+        this.setName("Steuertopf");
     }
 
     @Override
     public String toString(){
-        return "Steuertopf mit: " + this.getGuthaben() + " Geld im Topf";
+        return this.getName() + " mit: " + this.getGuthaben() + " Geld im Topf";
     }
 
 }

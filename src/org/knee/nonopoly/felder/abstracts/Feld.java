@@ -1,5 +1,7 @@
 package org.knee.nonopoly.felder.abstracts;
 
+import org.knee.nonopoly.entities.Spieler;
+
 /**
  * Created by Nils on 24.09.2016.
  */
@@ -16,7 +18,7 @@ public abstract class Feld {
         System.out.println(this.getName() + ": creating...");
     }
 
-    public void fuehrePflichtAktionAus(){
+    public void fuehrePflichtAktionAus(Spieler spieler){
 
     }
 
@@ -31,5 +33,6 @@ public abstract class Feld {
     public void setName(String name) {
         this.name = name;
     }
+
 
 }
