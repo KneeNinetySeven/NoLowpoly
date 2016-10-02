@@ -41,7 +41,6 @@ public abstract class Entity {
     public void ueberweiseAn(int geldMenge, Entity ziel){
         this.belasteMit(geldMenge);
         ziel.gutschreibenAn(geldMenge);
-        System.out.println(this.toString() + "\t===" + geldMenge + "==> \t" + ziel);
     }
 
     private void gutschreibenAn(int geldMenge){
