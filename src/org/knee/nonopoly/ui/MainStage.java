@@ -1,25 +1,35 @@
 package org.knee.nonopoly.ui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * Created by Nils on 02.10.2016.
  */
 public class MainStage extends Application {
 
+    //Spieldaten
+    private Schiedsrichter spiel;
+
+    //UIdaten
     private final String windowTitle = "NoNopoly - Dat Game";
     private Stage window;
     private Scene scene1, scene2;
+    private BorderPane layout;
+    private MenuBar menuBar;
 
     public MainStage() {
-
+        //TODO: this.spiel = schiedsrichter;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         launch(args);
     }
 
@@ -27,62 +37,47 @@ public class MainStage extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         window = primaryStage;
-        window.setTitle(windowTitle);
 
-        Button button = new Button("CLICK ME");
+        //Menu
+        menuBar = new MenuBar();
+        Menu menu = new Menu("Menü");
+        menu.getItems().add(new MenuItem("Test"));
+        menuBar.getMenus().add(menu);
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-        Scene scene = new Scene(layout, 600, 400);
-        window.setScene(scene);
-        window.show();
+        // Main Layout
+        layout = new BorderPane();
+        layout.setTop(menuBar);
 
-        /*      SWITCHING BETWEEN SCENES
-        window = primaryStage;
-        Label label1 = new Label("Welcome to Scene 1");
-        Button button1 = new Button("Switch Scene to 2");
-        button1.setOnAction(e -> window.setScene(scene2));
+        VBox context1 = new VBox();
+        HBox context2 = new HBox();
 
-        // Layout 1 - Vertical Column
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, button1);
-        scene1 = new Scene(layout1, 200, 200);
+        Button button1 = new Button("Switch to 2");
+        button1.setOnAction(event -> layout.setCenter(context2));
+        Label label1 = new Label("1");
+        context1.getChildren().addAll(button1, label1);
 
-        Label label2 = new Label("Welcome to Scene 2");
-        Button button2 = new Button("Switch to Scene 1");
-        button2.setOnAction(e -> window.setScene(scene1));
+        Button button2 = new Button("Switch to 1");
+        button2.setOnAction(event -> layout.setCenter(context1));
+        Label label2 = new Label("2");
+        context2.getChildren().addAll(button2,label2);
 
-        //Layout 2
-        StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(label2, button2);
-        scene2 = new Scene(layout2, 600, 300);
+        layout.setCenter(context1);
+        scene1 = new Scene(layout, 500, 500);
 
         window.setScene(scene1);
         window.setTitle(windowTitle);
         window.show();
-        */
-        //--------------------------------------------------
+    }
 
-        //Primary Stage vorbereiten
-        //primaryStage.setTitle(windowTitle);
-
-        /*//Komponenten vorbereiten
-        Button button = new Button("TEST");
-        button.setOnAction(e -> {
-            System.out.println("BUTTON");
+    public void refresh() {
+        window.close();
+        Platform.runLater(() -> {
+            try {
+                new MainStage().start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
-
-        //Komonenten zusammensetzen
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-
-        //Scene aufsetzen
-        Scene scene = new Scene(layout, 600, 800);
-        primaryStage.setScene(scene);
-
-        // GO!
-        primaryStage.show();
-   */
     }
 
 }
