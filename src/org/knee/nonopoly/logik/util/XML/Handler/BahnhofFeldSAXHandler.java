@@ -1,8 +1,10 @@
 package org.knee.nonopoly.logik.util.XML.Handler;
 
-import jdk.internal.org.xml.sax.Locator;
 import org.knee.nonopoly.felder.implementations.immobilien.Bahnhof;
+import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +22,16 @@ public class BahnhofFeldSAXHandler implements ContentHandler {
     public BahnhofFeldSAXHandler() {
     }
 
+    public List<Bahnhof> getBahnhoefe() {
+        return bahnhoefe;
+    }
 
-    public void setDocumentLocator(Locator locator) {
-
+    public void setBahnhoefe(List<Bahnhof> bahnhoefe) {
+        this.bahnhoefe = bahnhoefe;
     }
 
     @Override
-    public void setDocumentLocator(org.xml.sax.Locator locator) {
+    public void setDocumentLocator(Locator locator) {
 
     }
 
@@ -51,7 +56,7 @@ public class BahnhofFeldSAXHandler implements ContentHandler {
     }
 
     @Override
-    public void startElement(String uri, String localName, String qName, org.xml.sax.Attributes atts) {
+    public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
         if (localName.equalsIgnoreCase("Bahnhof")) {
             //bahnhof = null;
             bahnhofPos = Integer.parseInt(atts.getValue("index"));
@@ -60,30 +65,28 @@ public class BahnhofFeldSAXHandler implements ContentHandler {
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName) {
-        if (localName.equalsIgnoreCase("Bahnhof")){
+    public void endElement(String uri, String localName, String qName) throws SAXException {
             String name = "";
             int preis = 0;
             int index = 0;
             int[] mieten = new int[4];
-            if (localName.equalsIgnoreCase("Name")) {
+            if (qName.equalsIgnoreCase("Name")) {
                 name = currentVal;
                 System.out.print("Name: " + name + "\t");
             }
 
-            if (localName.equalsIgnoreCase("Preis")) {
+            if (qName.equalsIgnoreCase("Preis")) {
                 preis = Integer.parseInt(currentVal);
                 System.out.print("Preis: " + name + "\t");
             }
 
-            if (localName.equalsIgnoreCase("Miete")) {
+            if (qName.equalsIgnoreCase("Miete")) {
                 mieten[index] = Integer.parseInt(currentVal);
                 index++;
                 System.out.print("Miete: " + name + "\t");
             }
             bahnhoefe.add(new Bahnhof(name, preis, mieten));
             System.out.println("/ Bahnhof: " + bahnhofPos);
-        }
     }
 
     @Override
