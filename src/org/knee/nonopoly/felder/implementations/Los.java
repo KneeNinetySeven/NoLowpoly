@@ -12,6 +12,7 @@ public class Los extends Feld {
 
     public Los() {
         super();
+        this.setName("Los");
         this.treffer = 6000;
         this.überschreitung = 4000;
     }

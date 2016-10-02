@@ -12,7 +12,8 @@ public abstract class Feld {
     }
 
     public Feld() {
-
+        this.setName("Feld");
+        System.out.println(this.getName() + ": creating...");
     }
 
     public void fuehrePflichtAktionAus(){
@@ -30,4 +31,5 @@ public abstract class Feld {
     public void setName(String name) {
         this.name = name;
     }
+
 }

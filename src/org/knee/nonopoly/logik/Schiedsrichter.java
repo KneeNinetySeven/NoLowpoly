@@ -6,10 +6,7 @@ import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.abstracts.Feld;
 import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.util.XML.SAXParsingUtil;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -28,24 +25,24 @@ public class Schiedsrichter {
         this.setProtokollant(new Protokollant());
         this.bank = new Bank();
         this.teilnehmer = new ArrayList<Spieler>();
-        this.strassenParser = new SAXParsingUtil("nichtStrassen.xml");
-        this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
+        //this.strassenParser = new SAXParsingUtil("nichtStrassen.xml");
+        //this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
         this.spielbrett = new Feld[48];
         spielbrettAnlegen();
     }
 
     private void spielbrettAnlegen() {
 
-        this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
+        /*this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
         try {
-            nichtStrassenParser.dateiVerarbeiten();
+           nichtStrassenParser.dateiVerarbeiten();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } */
 
     }
 

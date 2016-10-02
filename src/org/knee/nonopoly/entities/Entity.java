@@ -6,6 +6,13 @@ package org.knee.nonopoly.entities;
 public abstract class Entity {
 
     private int guthaben;
+    private String name;
+    private boolean imSpiel;
+
+    protected Entity() {
+        this.setGuthaben(0);
+        this.setName("");
+    }
 
     public int getGuthaben() {
         return guthaben;
@@ -15,8 +22,20 @@ public abstract class Entity {
         this.guthaben = guthaben;
     }
 
-    protected Entity() {
-        this.guthaben = 0;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean getImSpiel() {
+        return imSpiel;
+    }
+
+    public void setImSpiel(boolean imSpiel) {
+        this.imSpiel = imSpiel;
     }
 
     public void ueberweiseAn(int geldMenge, Entity ziel){

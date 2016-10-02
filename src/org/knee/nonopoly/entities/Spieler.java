@@ -8,7 +8,6 @@ import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 public class Spieler extends Entity {
 
     private boolean imSpiel;
-    private String name;
     private int position;
     private Strategie strategie;
 
@@ -21,6 +20,7 @@ public class Spieler extends Entity {
     }
 
     public Spieler() {
+        super();
         this.setGuthaben(0);
         this.setPosition(0);
         this.setName("");
@@ -30,22 +30,6 @@ public class Spieler extends Entity {
     public String toString(){
         return "Spieler[" + this.getGuthaben() + "," + this.getName() + "," +"imSpiel:" + this.imSpiel + "]" +
                 "\n \t Seine Strategie: " + this.strategie.toString() ;
-    }
-
-    public boolean istImSpiel() {
-        return imSpiel;
-    }
-
-    public void setImSpiel(boolean imSpiel) {
-        this.imSpiel = imSpiel;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getPosition() {
