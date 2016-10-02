@@ -34,8 +34,6 @@ public class SAXParsingUtil {
         xmlReader.setContentHandler(bhfFeldSaxHandler);
         xmlReader.parse(inputSource);
 
-        bhfFeldSaxHandler.getBahnhoefe();
-
 
 
     }

@@ -18,33 +18,28 @@ public class Schiedsrichter {
     private ArrayList<Spieler> teilnehmer;
     private Bank bank;
     private Protokollant protokollant;
-//    private SAXParsingUtil strassenParser;
-//    private SAXParsingUtil nichtStrassenParser;
     private DOMParsingUtil domParser;
 
     public Schiedsrichter() {
         this.setProtokollant(new Protokollant());
         this.bank = new Bank();
         this.teilnehmer = new ArrayList<Spieler>();
-//        this.strassenParser = new SAXParsingUtil("nichtStrassen.xml");
-//        this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
         this.domParser = new DOMParsingUtil("nichtStrassen.xml");
         this.spielbrett = new Feld[48];
         spielbrettAnlegen();
     }
 
     private void spielbrettAnlegen() {
-
-//        this.nichtStrassenParser = new SAXParsingUtil("nichtStrassen.xml");
-//        try {
-//            nichtStrassenParser.dateiVerarbeiten();
-//        } catch (ParserConfigurationException e) {
-//            e.printStackTrace();
-//        } catch (SAXException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        // TODO: domParser einrichten
+        //try {
+            //domParser.dateiVerarbeiten();
+        //} catch (ParserConfigurationException e) {
+           // e.printStackTrace();
+        //} catch (SAXException e) {
+          //  e.printStackTrace();
+       // } catch (IOException e) {
+         //   e.printStackTrace();
+       // }
 
     }
 
