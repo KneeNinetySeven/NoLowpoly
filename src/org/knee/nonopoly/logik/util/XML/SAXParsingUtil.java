@@ -19,6 +19,7 @@ import java.io.IOException;
 public class SAXParsingUtil {
 
     private String filePath;
+    private BahnhofFeldSAXHandler bhfFeldSaxHandler = new BahnhofFeldSAXHandler();
 
     public SAXParsingUtil(String filePath) {
         this.filePath = filePath;
@@ -30,8 +31,12 @@ public class SAXParsingUtil {
         FileReader reader = new FileReader(filePath);
         InputSource inputSource = new InputSource(reader);
 
-        xmlReader.setContentHandler(new BahnhofFeldSAXHandler());
+        xmlReader.setContentHandler(bhfFeldSaxHandler);
         xmlReader.parse(inputSource);
+
+        bhfFeldSaxHandler.getBahnhoefe();
+
+
 
     }
 }
