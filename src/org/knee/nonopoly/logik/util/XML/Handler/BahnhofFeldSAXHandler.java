@@ -52,11 +52,11 @@ public class BahnhofFeldSAXHandler implements ContentHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, org.xml.sax.Attributes atts) {
-        if (localName.equalsIgnoreCase("Bahnhof")) {
-            //bahnhof = null;
-            bahnhofPos = Integer.parseInt(atts.getValue("index"));
-            System.out.println("Bahnhof: " + bahnhofPos );
-        }
+//        if (localName.equalsIgnoreCase("Bahnhof")) {
+//            //bahnhof = null;
+//            bahnhofPos = Integer.parseInt(atts.getValue("index"));
+//            System.out.println("Bahnhof: " + bahnhofPos );
+//        }
     }
 
     @Override
