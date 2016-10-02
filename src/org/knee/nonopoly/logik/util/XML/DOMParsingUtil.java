@@ -1,4 +1,4 @@
-package org.knee.nonopoly.logik.util.XML.Handler;
+package org.knee.nonopoly.logik.util.XML;
 
 import org.knee.nonopoly.felder.implementations.immobilien.Bahnhof;
 import org.w3c.dom.Document;

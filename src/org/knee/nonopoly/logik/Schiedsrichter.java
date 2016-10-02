@@ -5,12 +5,8 @@ import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.abstracts.Feld;
 import org.knee.nonopoly.logik.logging.Protokollant;
-import org.knee.nonopoly.logik.util.XML.Handler.DOMParsingUtil;
-import org.knee.nonopoly.logik.util.XML.SAXParsingUtil;
-import org.xml.sax.SAXException;
+import org.knee.nonopoly.logik.util.XML.DOMParsingUtil;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
