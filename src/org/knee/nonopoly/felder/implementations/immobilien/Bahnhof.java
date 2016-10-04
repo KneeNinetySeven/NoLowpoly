@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class Bahnhof extends ImmobilienFeld {
 
-    int[] mietStaffel;
+    private int[] mietStaffel;
 
 
 

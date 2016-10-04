@@ -6,7 +6,10 @@ import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.abstracts.Feld;
 import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.util.XML.DOMParsingUtil;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -24,22 +27,32 @@ public class Schiedsrichter {
         this.setProtokollant(new Protokollant());
         this.bank = new Bank();
         this.teilnehmer = new ArrayList<Spieler>();
-        this.domParser = new DOMParsingUtil("nichtStrassen.xml");
+
+        try {
+            this.domParser = new DOMParsingUtil("nichtStrassen.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
         this.spielbrett = new Feld[48];
-        spielbrettAnlegen();
+        this.spielbrettAnlegen();
     }
 
     private void spielbrettAnlegen() {
         // TODO: domParser einrichten
-        //try {
-            //domParser.dateiVerarbeiten();
-        //} catch (ParserConfigurationException e) {
-           // e.printStackTrace();
-        //} catch (SAXException e) {
-          //  e.printStackTrace();
-       // } catch (IOException e) {
-         //   e.printStackTrace();
-       // }
+        try {
+            this.domParser.dateiVerarbeiten();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
