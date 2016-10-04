@@ -40,8 +40,8 @@ public class MainStage extends Application {
 
         //Menu
         menuBar = new MenuBar();
-        Menu menu = new Menu("Menü");
-        menu.getItems().add(new MenuItem("Test"));
+        Menu menu = new Menu("Spieler");
+        menu.getItems().add(new MenuItem("Neuer Spieler"));
         menuBar.getMenus().add(menu);
 
         // Main Layout
