@@ -21,11 +21,11 @@ import java.util.List;
 /**
  * Created by Nils on 29.09.2016.
  * <p>
- * Funktioniert fuer Bahnhoefe, Werke, Gemeinschafts- und Ereignisfelder.
+ * Deprecated, JDOMParsing stattdessen verwenden
  * TODO: Refactoring...viel zu viel doppelter Code
- * TODO: Index-Attribute mit einlesen? --> Haben die Strassen, Felder etc. ein Attribut "index" bzw. sollten diese eins haben?
+ *
  */
-
+@Deprecated
 public class DOMParsingUtil {
 
     private String filePath;
@@ -61,85 +61,85 @@ public class DOMParsingUtil {
      * @throws IOException
      */
     public void dateiVerarbeiten() throws ParserConfigurationException, SAXException, IOException {
-        this.bahnhoefeAnlegen();
-        this.werkeAnlegen();
+//        this.bahnhoefeAnlegen();
+//        this.werkeAnlegen();
         this.gemeinschaftsfelderAnlegen();
         this.ereignisfelderAnlegen();
     }
 
-    private void bahnhoefeAnlegen() throws ParserConfigurationException, SAXException, IOException {
-        String name = "invalid";
-        int kaufpreis = 0;
-        int[] mietstaffel = new int[4];
+//    private void bahnhoefeAnlegen() throws ParserConfigurationException, SAXException, IOException {
+//        String name = "invalid";
+//        int kaufpreis = 0;
+//        List<Integer> mietstaffel = new int[4];
+//
+//
+//        final NodeList bahnhofNodeList = rootElement.getElementsByTagName("Bahnhof");
+//
+//        for (int i = 0; i < bahnhofNodeList.getLength(); i++) {
+//            Node bahnhofNode = bahnhofNodeList.item(i);
+//
+//            if (bahnhofNode.getNodeType() == Node.ELEMENT_NODE) {
+//                Element bahnhofElement = (Element) bahnhofNode;
+//                name = bahnhofElement.getElementsByTagName("Name").item(0).getTextContent();
+//                kaufpreis = Integer.parseInt(bahnhofElement.getElementsByTagName("Preis").item(0).getTextContent());
+//                final NodeList mietpreisNodeList = bahnhofElement.getElementsByTagName("Mietpreise");
+//
+//                for (int j = 0; j < mietpreisNodeList.getLength(); j++) {
+//                    Node mietpreisNode = mietpreisNodeList.item(j);
+//
+//                    if (mietpreisNode.getNodeType() == Node.ELEMENT_NODE) {
+//                        Element mieteElement = (Element) mietpreisNode;
+//
+//                        for (int k = 0; k < mieteElement.getElementsByTagName("Miete").getLength(); k++) {
+//                            mietstaffel.set(k, Integer.parseInt(mieteElement.getElementsByTagName("Miete").item(k).getTextContent()));
+//                        }
+//                    }
+//                }
+//            }
+//            this.bahnhofListe.add(new Bahnhof(name, kaufpreis, mietstaffel));
+//            mietstaffel = new int[4]; //Array leeren, ohne funktioniert es nicht... (warum eigentlich nicht?)
+//        }
+//        bahnhofListe.forEach(System.out::println);
+//    }
 
-
-        final NodeList bahnhofNodeList = rootElement.getElementsByTagName("Bahnhof");
-
-        for (int i = 0; i < bahnhofNodeList.getLength(); i++) {
-            Node bahnhofNode = bahnhofNodeList.item(i);
-
-            if (bahnhofNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element bahnhofElement = (Element) bahnhofNode;
-                name = bahnhofElement.getElementsByTagName("Name").item(0).getTextContent();
-                kaufpreis = Integer.parseInt(bahnhofElement.getElementsByTagName("Preis").item(0).getTextContent());
-                final NodeList mietpreisNodeList = bahnhofElement.getElementsByTagName("Mietpreise");
-
-                for (int j = 0; j < mietpreisNodeList.getLength(); j++) {
-                    Node mietpreisNode = mietpreisNodeList.item(j);
-
-                    if (mietpreisNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element mieteElement = (Element) mietpreisNode;
-
-                        for (int k = 0; k < mieteElement.getElementsByTagName("Miete").getLength(); k++) {
-                            mietstaffel[k] = Integer.parseInt(mieteElement.getElementsByTagName("Miete").item(k).getTextContent());
-                        }
-                    }
-                }
-            }
-            this.bahnhofListe.add(new Bahnhof(name, kaufpreis, mietstaffel));
-            mietstaffel = new int[4]; //Array leeren, ohne funktioniert es nicht... (warum eigentlich nicht?)
-        }
-        bahnhofListe.forEach(System.out::println);
-    }
-
-    private void werkeAnlegen() throws ParserConfigurationException, SAXException, IOException {
-        String name = "invalid";
-        int kaufpreis = 0;
-        int[] faktoren = new int[2];
-
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(new File(filePath));
-        Element rootElement = doc.getDocumentElement();
-
-        final NodeList werkNodeList = rootElement.getElementsByTagName("Werk");
-
-        for (int i = 0; i < werkNodeList.getLength(); i++) {
-            Node werkNode = werkNodeList.item(i);
-
-            if (werkNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element werkElement = (Element) werkNode;
-                name = werkElement.getElementsByTagName("Name").item(0).getTextContent();
-                kaufpreis = Integer.parseInt(werkElement.getElementsByTagName("Preis").item(0).getTextContent());
-                final NodeList mietpreisNodeList = werkElement.getElementsByTagName("Mietpreise");
-
-                for (int j = 0; j < mietpreisNodeList.getLength(); j++) {
-                    Node mietpreisNode = mietpreisNodeList.item(j);
-
-                    if (mietpreisNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element mieteElement = (Element) mietpreisNode;
-
-                        for (int k = 0; k < mieteElement.getElementsByTagName("Miete").getLength(); k++) {
-                            faktoren[k] = Integer.parseInt(mieteElement.getElementsByTagName("Miete").item(k).getTextContent());
-                        }
-                    }
-                }
-            }
-            this.werkListe.add(new Werk(name, kaufpreis, faktoren));
-            faktoren = new int[2]; //Array leeren, ohne funktioniert es nicht... (warum eigentlich nicht?)
-        }
-        werkListe.forEach(System.out::println);
-    }
+//    private void werkeAnlegen() throws ParserConfigurationException, SAXException, IOException {
+//        String name = "invalid";
+//        int kaufpreis = 0;
+//        int[] faktoren = new int[2];
+//
+//        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder builder = factory.newDocumentBuilder();
+//        Document doc = builder.parse(new File(filePath));
+//        Element rootElement = doc.getDocumentElement();
+//
+//        final NodeList werkNodeList = rootElement.getElementsByTagName("Werk");
+//
+//        for (int i = 0; i < werkNodeList.getLength(); i++) {
+//            Node werkNode = werkNodeList.item(i);
+//
+//            if (werkNode.getNodeType() == Node.ELEMENT_NODE) {
+//                Element werkElement = (Element) werkNode;
+//                name = werkElement.getElementsByTagName("Name").item(0).getTextContent();
+//                kaufpreis = Integer.parseInt(werkElement.getElementsByTagName("Preis").item(0).getTextContent());
+//                final NodeList mietpreisNodeList = werkElement.getElementsByTagName("Mietpreise");
+//
+//                for (int j = 0; j < mietpreisNodeList.getLength(); j++) {
+//                    Node mietpreisNode = mietpreisNodeList.item(j);
+//
+//                    if (mietpreisNode.getNodeType() == Node.ELEMENT_NODE) {
+//                        Element mieteElement = (Element) mietpreisNode;
+//
+//                        for (int k = 0; k < mieteElement.getElementsByTagName("Miete").getLength(); k++) {
+//                            faktoren[k] = Integer.parseInt(mieteElement.getElementsByTagName("Miete").item(k).getTextContent());
+//                        }
+//                    }
+//                }
+//            }
+//            this.werkListe.add(new Werk(name, kaufpreis, faktoren));
+//            faktoren = new int[2]; //Array leeren, ohne funktioniert es nicht... (warum eigentlich nicht?)
+//        }
+//        werkListe.forEach(System.out::println);
+//    }
 
     private void gemeinschaftsfelderAnlegen() {
         String name = "invalid";

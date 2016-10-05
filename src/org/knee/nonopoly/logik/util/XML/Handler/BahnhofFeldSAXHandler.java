@@ -19,7 +19,7 @@ public class BahnhofFeldSAXHandler implements ContentHandler {
 
     private String name;
     private int kaufpreis;
-    private int[] mietstaffel;
+    private List<Integer> mietstaffel;
 
     private boolean bName;
     private boolean bKaufpreis;
