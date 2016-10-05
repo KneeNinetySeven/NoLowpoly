@@ -12,14 +12,16 @@ public class Werk extends ImmobilienFeld {
 
     private List<Integer> faktoren;
 
-    public Werk(String name, int kaufpreis, List<Integer> faktoren) {
-        super(name, kaufpreis);
+    public Werk(int index, String name, int kaufpreis, List<Integer> faktoren) {
+        super(index, name, kaufpreis);
         this.faktoren = faktoren;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Werk{");
+        sb.append("index='").append(this.getIndex()).append('\'');
+        sb.append('}');
         sb.append("name=").append(this.getName());
         sb.append('}');
         sb.append("kaufpreis=").append(this.getKaufpreis());

@@ -8,13 +8,12 @@ import org.knee.nonopoly.felder.abstracts.Feld;
 public class Los extends Feld {
 
     private int treffer;
-    private int überschreitung;
+    private int ueberschreitung;
 
-    public Los() {
-        super();
-        this.setName("Los");
-        this.treffer = 6000;
-        this.überschreitung = 4000;
+    public Los(int index, String name, int treffer, int ueberschreitung) {
+        super(index, name);
+        this.setTreffer(treffer);
+        this.setUeberschreitung(ueberschreitung);
     }
 
     public int getTreffer() {
@@ -25,11 +24,24 @@ public class Los extends Feld {
         this.treffer = treffer;
     }
 
-    public int getÜberschreitung() {
-        return überschreitung;
+    public int getUeberschreitung() {
+        return ueberschreitung;
     }
 
-    public void setÜberschreitung(int überschreitung) {
-        this.überschreitung = überschreitung;
+    public void setUeberschreitung(int ueberschreitung) {
+        this.ueberschreitung = ueberschreitung;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Los{");
+        sb.append("index='").append(this.getIndex()).append('\'');
+        sb.append('}');
+        sb.append("name=").append(this.getName());
+        sb.append('}');
+        sb.append("treffer=").append(treffer);
+        sb.append(", ueberschreitung=").append(ueberschreitung);
+        sb.append('}');
+        return sb.toString();
     }
 }
