@@ -3,15 +3,16 @@ package org.knee.nonopoly.felder.implementations.immobilien;
 import org.knee.nonopoly.felder.abstracts.ImmobilienFeld;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Nils on 24.09.2016.
  */
 public class Werk extends ImmobilienFeld {
 
-    private int[] faktoren;
+    private List<Integer> faktoren;
 
-    public Werk(String name, int kaufpreis, int[] faktoren) {
+    public Werk(String name, int kaufpreis, List<Integer> faktoren) {
         super(name, kaufpreis);
         this.faktoren = faktoren;
     }
@@ -23,7 +24,7 @@ public class Werk extends ImmobilienFeld {
         sb.append('}');
         sb.append("kaufpreis=").append(this.getKaufpreis());
         sb.append('}');
-        sb.append("faktoren=").append(Arrays.toString(faktoren));
+        sb.append("faktoren=").append(faktoren);
         sb.append('}');
         return sb.toString();
     }
