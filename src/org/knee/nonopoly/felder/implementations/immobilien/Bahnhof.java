@@ -3,17 +3,18 @@ package org.knee.nonopoly.felder.implementations.immobilien;
 import org.knee.nonopoly.felder.abstracts.ImmobilienFeld;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Nils on 24.09.2016.
  */
 public class Bahnhof extends ImmobilienFeld {
 
-    private int[] mietStaffel;
+    private List<Integer> mietStaffel;
 
 
 
-    public Bahnhof(String name, int kaufpreis, int[] mietStaffel) {
+    public Bahnhof(String name, int kaufpreis, List<Integer> mietStaffel) {
         super(name, kaufpreis);
         this.mietStaffel = mietStaffel;
     }
@@ -25,7 +26,7 @@ public class Bahnhof extends ImmobilienFeld {
         sb.append('}');
         sb.append("kaufpreis=").append(this.getKaufpreis());
         sb.append('}');
-        sb.append("mietStaffel=").append(Arrays.toString(mietStaffel));
+        sb.append("mietStaffel=").append(mietStaffel);
         sb.append('}');
         return sb.toString();
     }
