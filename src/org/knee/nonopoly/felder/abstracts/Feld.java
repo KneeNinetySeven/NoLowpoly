@@ -7,9 +7,11 @@ import org.knee.nonopoly.entities.Spieler;
  */
 public abstract class Feld {
 
+    private int index;
     private String name;
 
-    public Feld(String name){
+    public Feld(int index, String name){
+        this.index = index;
         this.name = name;
     }
 
@@ -34,5 +36,7 @@ public abstract class Feld {
         this.name = name;
     }
 
-
+    public int getIndex(){
+        return this.index;
+    }
 }

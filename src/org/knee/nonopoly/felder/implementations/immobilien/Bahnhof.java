@@ -14,14 +14,16 @@ public class Bahnhof extends ImmobilienFeld {
 
 
 
-    public Bahnhof(String name, int kaufpreis, List<Integer> mietStaffel) {
-        super(name, kaufpreis);
+    public Bahnhof(int index, String name, int kaufpreis, List<Integer> mietStaffel) {
+        super(index, name, kaufpreis);
         this.mietStaffel = mietStaffel;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Bahnhof{");
+        sb.append("index='").append(this.getIndex()).append('\'');
+        sb.append('}');
         sb.append("name=").append(this.getName());
         sb.append('}');
         sb.append("kaufpreis=").append(this.getKaufpreis());

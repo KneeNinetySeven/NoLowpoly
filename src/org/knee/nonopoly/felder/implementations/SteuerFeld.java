@@ -12,8 +12,8 @@ public class SteuerFeld extends Feld {
     private int steuer;
     private Steuertopf steuertopf;
 
-    public SteuerFeld(String name, Steuertopf steuertopf, int steuer) {
-        super(name);
+    public SteuerFeld(int index, String name, Steuertopf steuertopf, int steuer) {
+        super(index, name);
         this.steuer = steuer;
         this.steuertopf = steuertopf;
     }
@@ -25,5 +25,16 @@ public class SteuerFeld extends Feld {
     @Override
     public void fuehrePflichtAktionAus(Spieler spieler){
         spieler.ueberweiseAn(this.getSteuer(), this.steuertopf);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("SteuerFeld{");
+        sb.append("index=").append(this.getIndex());
+        sb.append(", name=").append(this.getName());
+        sb.append(", steuer=").append(steuer);
+        sb.append(", steuertopf=").append(steuertopf);
+        sb.append('}');
+        return sb.toString();
     }
 }
