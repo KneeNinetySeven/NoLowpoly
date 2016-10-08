@@ -7,8 +7,8 @@ public abstract class ImmobilienFeld extends Feld {
 
     private int kaufpreis;
 
-    public ImmobilienFeld(String name, int kaufpreis) {
-        super(name);
+    public ImmobilienFeld(int index, String name, int kaufpreis) {
+        super(index, name);
         this.kaufpreis = kaufpreis;
     }
 

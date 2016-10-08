@@ -97,7 +97,7 @@
     </Bahnhoefe>
 
     <Werke>
-        <Werk Index="13">
+        <Werk index="13">
             <Name>E-Werk</Name>
             <Preis>3000</Preis>
             <Mietpreise>
@@ -105,7 +105,7 @@
                 <Miete>200</Miete>
             </Mietpreise>
         </Werk>
-        <Werk Index="29">
+        <Werk index="29">
             <Name>Wasserwerk</Name>
             <Preis>3000</Preis>
             <Mietpreise>

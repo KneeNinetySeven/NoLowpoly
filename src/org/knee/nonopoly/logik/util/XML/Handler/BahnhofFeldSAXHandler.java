@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by Nils on 30.09.2016.
+ * Achtung, nicht funktionsfaehig: Code-Zeilen auskommentiert, um Fehler zu unterdrücken.
  */
 public class BahnhofFeldSAXHandler implements ContentHandler {
 
@@ -19,7 +20,7 @@ public class BahnhofFeldSAXHandler implements ContentHandler {
 
     private String name;
     private int kaufpreis;
-    private int[] mietstaffel;
+    private List<Integer> mietstaffel;
 
     private boolean bName;
     private boolean bKaufpreis;
@@ -83,8 +84,8 @@ public class BahnhofFeldSAXHandler implements ContentHandler {
     @Override
     public void endElement(String uri, String localName, String qName) {
         if(localName.equalsIgnoreCase("Bahnhof")){
-            bahnhof = new Bahnhof(this.name, this.kaufpreis, this.mietstaffel);
-            bahnhoefe.add(bahnhof);
+//            bahnhof = new Bahnhof(this.name, this.kaufpreis, this.mietstaffel);
+//            bahnhoefe.add(bahnhof);
         }
 
 

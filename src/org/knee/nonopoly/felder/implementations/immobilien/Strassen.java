@@ -10,8 +10,8 @@ public class Strassen extends ImmobilienFeld {
     int[] mietStaffel;
     int hauspreis;
 
-    public Strassen(String name, int kaufpreis, int[] mietStaffel, int hauspreis) {
-        super(name, kaufpreis);
+    public Strassen(int index, String name, int kaufpreis, int[] mietStaffel, int hauspreis) {
+        super(index, name, kaufpreis);
         this.mietStaffel = mietStaffel;
         this.hauspreis = hauspreis;
     }
