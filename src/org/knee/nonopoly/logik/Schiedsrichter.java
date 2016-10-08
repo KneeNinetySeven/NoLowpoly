@@ -47,22 +47,28 @@ public class Schiedsrichter {
         this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
     }
 
-    public boolean spieleEinenSpielzug(){
-        return true;
+    public boolean spieleEinenSpielzug() {
+        return spielLäuftNoch();
     }
 
-    public boolean spieleEineRunde(){
-        return true;
+    public boolean spieleEineRunde() {
+        return spielLäuftNoch();
     }
 
-    public void spieleSpielZuEnde(){
-        while(this.spieleEineRunde()){
+    public void spieleSpielZuEnde() {
+        while (this.spieleEineRunde()) {
             // DO NOTHING
         }
     }
 
-    private boolean spielLäuftNoch(){
-
+    private boolean spielLäuftNoch() {
+        int imSpiel = 0;
+        for (Spieler spieler : this.teilnehmer) {
+            if(spieler.getImSpiel()){
+                imSpiel++;
+            }
+        }
+        return (imSpiel > 1) && (bank.getGuthaben() > 0);
     }
 
     public Bank getBank() {
