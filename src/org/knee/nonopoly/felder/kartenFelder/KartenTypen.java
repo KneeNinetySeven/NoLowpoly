@@ -1,4 +1,4 @@
-package org.knee.nonopoly.felder.implementations.kartenFelder;
+package org.knee.nonopoly.felder.kartenFelder;
 
 /**
  * Created by Nils on 08.10.2016.

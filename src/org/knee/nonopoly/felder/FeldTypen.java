@@ -1,4 +1,4 @@
-package org.knee.nonopoly.felder.implementations;
+package org.knee.nonopoly.felder;
 
 /**
  * Created by Nils on 08.10.2016.

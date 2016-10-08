@@ -6,12 +6,13 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.knee.nonopoly.entities.Steuertopf;
-import org.knee.nonopoly.felder.abstracts.KartenFeld;
+import org.knee.nonopoly.felder.*;
+import org.knee.nonopoly.felder.immobilien.Bahnhof;
+import org.knee.nonopoly.felder.immobilien.Werk;
 import org.knee.nonopoly.felder.implementations.*;
-import org.knee.nonopoly.felder.implementations.immobilien.Bahnhof;
-import org.knee.nonopoly.felder.implementations.immobilien.Werk;
-import org.knee.nonopoly.felder.implementations.kartenFelder.EreignisFeld;
-import org.knee.nonopoly.felder.implementations.kartenFelder.GemeinschaftsFeld;
+import org.knee.nonopoly.felder.kartenFelder.EreignisFeld;
+import org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld;
+import org.knee.nonopoly.felder.kartenFelder.KartenFeld;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,13 +1,18 @@
-package org.knee.nonopoly.felder.implementations;
+package org.knee.nonopoly.felder;
 
-import org.knee.nonopoly.felder.abstracts.Feld;
+import org.knee.nonopoly.entities.Spieler;
+import org.knee.nonopoly.entities.Steuertopf;
 
 /**
  * Created by Nils on 24.09.2016.
  */
 public class FreiParken extends Feld {
-    public FreiParken(int index, String name) {
+
+    private Steuertopf steuertopf;
+
+    public FreiParken(int index, String name, Steuertopf steuertopf) {
         super(index, name);
+        this.steuertopf = steuertopf;
     }
 
     @Override
@@ -19,5 +24,9 @@ public class FreiParken extends Feld {
         sb.append('}');
         sb.append('}');
         return sb.toString();
+    }
+
+    public void fuehrePflichtAktionAus(Spieler spieler) {
+        this.steuertopf.ueberweiseAn(this.steuertopf.getGuthaben(), spieler);
     }
 }

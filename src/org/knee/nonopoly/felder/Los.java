@@ -1,6 +1,4 @@
-package org.knee.nonopoly.felder.implementations;
-
-import org.knee.nonopoly.felder.abstracts.Feld;
+package org.knee.nonopoly.felder;
 
 /**
  * Created by Nils on 24.09.2016.

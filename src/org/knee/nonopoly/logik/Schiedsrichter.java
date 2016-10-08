@@ -4,13 +4,10 @@ import org.jdom2.JDOMException;
 import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
-import org.knee.nonopoly.felder.abstracts.Feld;
+import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.logik.logging.Protokollant;
-import org.knee.nonopoly.logik.util.XML.DOMParsingUtil;
 import org.knee.nonopoly.logik.util.XML.JDOMParsing;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
 

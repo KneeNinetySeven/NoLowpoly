@@ -1,7 +1,7 @@
 package org.knee.nonopoly.logik.util.XML.Handler;
 
 import jdk.internal.org.xml.sax.Locator;
-import org.knee.nonopoly.felder.implementations.immobilien.Bahnhof;
+import org.knee.nonopoly.felder.immobilien.Bahnhof;
 import org.xml.sax.ContentHandler;
 
 import java.util.ArrayList;

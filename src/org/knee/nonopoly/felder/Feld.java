@@ -1,7 +1,6 @@
-package org.knee.nonopoly.felder.abstracts;
+package org.knee.nonopoly.felder;
 
 import org.knee.nonopoly.entities.Spieler;
-import org.knee.nonopoly.felder.implementations.FeldTypen;
 
 /**
  * Created by Nils on 24.09.2016.

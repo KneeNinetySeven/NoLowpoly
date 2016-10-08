@@ -1,8 +1,5 @@
-package org.knee.nonopoly.felder.implementations.immobilien;
+package org.knee.nonopoly.felder.immobilien;
 
-import org.knee.nonopoly.felder.abstracts.ImmobilienFeld;
-
-import java.util.Arrays;
 import java.util.List;
 
 /**

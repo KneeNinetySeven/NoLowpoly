@@ -1,8 +1,7 @@
-package org.knee.nonopoly.felder.implementations;
+package org.knee.nonopoly.felder;
 
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.Steuertopf;
-import org.knee.nonopoly.felder.abstracts.Feld;
 
 /**
  * Created by Nils on 24.09.2016.

@@ -1,7 +1,7 @@
-package org.knee.nonopoly.felder.abstracts;
+package org.knee.nonopoly.felder.immobilien;
 
-import org.knee.nonopoly.felder.implementations.FeldTypen;
-import org.knee.nonopoly.felder.implementations.immobilien.ImmobilienTypen;
+import org.knee.nonopoly.felder.Feld;
+import org.knee.nonopoly.felder.FeldTypen;
 
 /**
  * Created by Nils on 24.09.2016.

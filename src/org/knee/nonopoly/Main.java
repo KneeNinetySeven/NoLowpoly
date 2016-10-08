@@ -2,6 +2,8 @@ package org.knee.nonopoly;
 
 import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
 import org.knee.nonopoly.entities.spielerStrategien.StrassenMogul;
+import org.knee.nonopoly.felder.kartenFelder.EreignisFeld;
+import org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld;
 import org.knee.nonopoly.logik.Schiedsrichter;
 import org.knee.nonopoly.ui.MainStage;
 
@@ -25,5 +27,11 @@ public class Main {
     public void runGame(){
         schiedsrichter.registriereTeilnehmer("nils", new AllesKaeufer());
         schiedsrichter.registriereTeilnehmer("Matze", new StrassenMogul());
+
+        EreignisFeld ereignisFeld = new EreignisFeld(10, "Ereignis");
+        GemeinschaftsFeld gemeinschaftsFeld = new GemeinschaftsFeld(11, "Gemeinschaftsfeld");
+
+        System.out.println(ereignisFeld.istVomTyp(gemeinschaftsFeld.typ));
+
     }
 }

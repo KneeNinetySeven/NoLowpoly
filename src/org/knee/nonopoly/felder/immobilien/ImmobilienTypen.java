@@ -1,4 +1,4 @@
-package org.knee.nonopoly.felder.implementations.immobilien;
+package org.knee.nonopoly.felder.immobilien;
 
 /**
  * Created by Nils on 08.10.2016.
