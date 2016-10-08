@@ -9,7 +9,6 @@ import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.felder.*;
 import org.knee.nonopoly.felder.immobilien.Bahnhof;
 import org.knee.nonopoly.felder.immobilien.Werk;
-import org.knee.nonopoly.felder.implementations.*;
 import org.knee.nonopoly.felder.kartenFelder.EreignisFeld;
 import org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld;
 import org.knee.nonopoly.felder.kartenFelder.KartenFeld;

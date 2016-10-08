@@ -20,7 +20,6 @@ public class Schiedsrichter {
     private ArrayList<Spieler> teilnehmer;
     private Bank bank;
     private Protokollant protokollant;
-    //    private DOMParsingUtil domParser;
     private JDOMParsing jdomParser;
 
     public Schiedsrichter() {
@@ -44,6 +43,36 @@ public class Schiedsrichter {
         this.jdomParser.dateiVerarbeiten();
     }
 
+    public void registriereTeilnehmer(String name, Strategie strategie) {
+        this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
+    }
+
+    public boolean spieleEinenSpielzug(){
+        return true;
+    }
+
+    public boolean spieleEineRunde(){
+        return true;
+    }
+
+    public void spieleSpielZuEnde(){
+        while(this.spieleEineRunde()){
+            // DO NOTHING
+        }
+    }
+
+    private boolean spielLäuftNoch(){
+
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
     public Protokollant getProtokollant() {
         return protokollant;
     }
@@ -54,17 +83,5 @@ public class Schiedsrichter {
 
     public ArrayList<Spieler> getTeilnehmer() {
         return teilnehmer;
-    }
-
-    public void registriereTeilnehmer(String name, Strategie strategie) {
-        this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
     }
 }
