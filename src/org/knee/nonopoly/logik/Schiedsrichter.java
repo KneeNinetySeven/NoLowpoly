@@ -6,11 +6,8 @@ import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.abstracts.Feld;
 import org.knee.nonopoly.logik.logging.Protokollant;
-import org.knee.nonopoly.logik.util.XML.DOMParsingUtil;
 import org.knee.nonopoly.logik.util.XML.JDOMParsing;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,8 +20,8 @@ public class Schiedsrichter {
     private ArrayList<Spieler> teilnehmer;
     private Bank bank;
     private Protokollant protokollant;
-    //    private DOMParsingUtil domParser;
-    private JDOMParsing jdomParser;
+    private JDOMParsing jdomParserNichtStrassen;
+    private JDOMParsing jdomParserStrassen;
 
     public Schiedsrichter() {
         this.setProtokollant(new Protokollant());
@@ -32,7 +29,8 @@ public class Schiedsrichter {
         this.teilnehmer = new ArrayList<Spieler>();
 
         try {
-            this.jdomParser = new JDOMParsing("nichtStrassen.xml");
+            this.jdomParserNichtStrassen = new JDOMParsing("nichtStrassen.xml");
+            this.jdomParserStrassen = new JDOMParsing("strassen.xml");
         } catch (JDOMException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -44,7 +42,8 @@ public class Schiedsrichter {
 
     private void spielbrettAnlegen() {
         // TODO: domParser einrichten
-        this.jdomParser.dateiVerarbeiten();
+        this.jdomParserNichtStrassen.dateiVerarbeiten();
+        this.jdomParserStrassen.dateiVerarbeiten();
     }
 
     public Protokollant getProtokollant() {
