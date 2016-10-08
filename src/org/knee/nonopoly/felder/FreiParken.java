@@ -10,9 +10,11 @@ public class FreiParken extends Feld {
 
     private Steuertopf steuertopf;
 
-    public FreiParken(int index, String name, Steuertopf steuertopf) {
+    //TODO: Steuertopf steuertopf im Konstruktor einlesen
+
+    public FreiParken(int index, String name) {
         super(index, name);
-        this.steuertopf = steuertopf;
+        //this.steuertopf = steuertopf;
     }
 
     @Override
@@ -27,6 +29,6 @@ public class FreiParken extends Feld {
     }
 
     public void fuehrePflichtAktionAus(Spieler spieler) {
-        this.steuertopf.ueberweiseAn(this.steuertopf.getGuthaben(), spieler);
+        //this.steuertopf.ueberweiseAn(this.steuertopf.getGuthaben(), spieler);
     }
 }
