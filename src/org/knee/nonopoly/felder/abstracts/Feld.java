@@ -1,6 +1,7 @@
 package org.knee.nonopoly.felder.abstracts;
 
 import org.knee.nonopoly.entities.Spieler;
+import org.knee.nonopoly.felder.implementations.FeldTypen;
 
 /**
  * Created by Nils on 24.09.2016.
@@ -9,10 +10,12 @@ public abstract class Feld {
 
     private int index;
     private String name;
+    public FeldTypen typ;
 
     public Feld(int index, String name){
         this.index = index;
         this.name = name;
+        this.typ = FeldTypen.ABSTRACT;
     }
 
     public Feld() {
@@ -24,8 +27,8 @@ public abstract class Feld {
 
     }
 
-    public boolean istImmobilie(){
-        return false;
+    public boolean istVomTyp(FeldTypen testType) {
+        return this.typ == testType;
     }
 
     public String getName() {
