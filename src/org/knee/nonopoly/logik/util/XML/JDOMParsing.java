@@ -8,8 +8,8 @@ import org.jdom2.input.SAXBuilder;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.felder.*;
 import org.knee.nonopoly.felder.immobilien.Bahnhof;
+import org.knee.nonopoly.felder.immobilien.Strassen;
 import org.knee.nonopoly.felder.immobilien.Werk;
-import org.knee.nonopoly.felder.implementations.*;
 import org.knee.nonopoly.felder.kartenFelder.EreignisFeld;
 import org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld;
 import org.knee.nonopoly.felder.kartenFelder.KartenFeld;
@@ -22,7 +22,6 @@ import java.util.List;
  * Created by Adrian on 05.10.2016.
  * TODO: XML-Validierung
  * TODO: Exception-Handling
- *
  */
 public class JDOMParsing {
 
@@ -37,20 +36,44 @@ public class JDOMParsing {
     }
 
     public void dateiVerarbeiten() {
-        try {
-            this.legeBahnhoefeAn().forEach(System.out::println);
-            this.legeWerkeAn().forEach(System.out::println);
-            this.legeEreignisfelderAn().forEach(System.out::println);
-            this.legeGemeinschaftsfelderAn().forEach(System.out::println);
-            this.legeSteuerfelderAn().forEach(System.out::println);
-            System.out.println(this.legeLosAn());
-            System.out.println(this.legeGefaengnisAn());
-            System.out.println(this.legeFreiParkenAn());
-            System.out.println(this.legePolizistAn());
-        } catch (DataConversionException e) {
-            e.printStackTrace();
+        if (this.filepath == "nichtStrassen.xml") {
+            try {
+                this.legeBahnhoefeAn().forEach(System.out::println);
+                this.legeWerkeAn().forEach(System.out::println);
+                this.legeEreignisfelderAn().forEach(System.out::println);
+                this.legeGemeinschaftsfelderAn().forEach(System.out::println);
+                this.legeSteuerfelderAn().forEach(System.out::println);
+                System.out.println(this.legeLosAn());
+                System.out.println(this.legeGefaengnisAn());
+                System.out.println(this.legeFreiParkenAn());
+                System.out.println(this.legePolizistAn());
+            } catch (DataConversionException e) {
+                e.printStackTrace();
+            }
+        } else if (this.filepath == "strassen.xml") {
+            try {
+                this.legeStrassenAn().forEach(System.out::println);
+            } catch (DataConversionException e) {
+                e.printStackTrace();
+            }
         }
+    }
 
+    private List<Strassen> legeStrassenAn() throws DataConversionException {
+        List<Strassen> strassenListe = new ArrayList<>();
+        List<Element> strassen = this.root.getChildren("Strasse");
+        for (Element current : strassen) {
+            int index = current.getAttribute("index").getIntValue();
+            String name = current.getChildText("Name");
+            int kaufpreis = Integer.parseInt(current.getChildText("Preis"));
+            List<Integer> mietstaffel = new ArrayList<>();
+            current.getChild("Mietpreise").getChildren("Miete").forEach(element -> {
+                mietstaffel.add(Integer.parseInt(element.getText()));
+            });
+            int hauspreis = Integer.parseInt(current.getChildText("Preis1Haus"));
+            strassenListe.add(new Strassen(index, name, kaufpreis, mietstaffel, hauspreis));
+        }
+        return strassenListe;
     }
 
     private Polizist legePolizistAn() throws DataConversionException {
