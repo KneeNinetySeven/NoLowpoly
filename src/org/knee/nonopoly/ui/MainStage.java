@@ -8,6 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
+import org.knee.nonopoly.entities.spielerStrategien.RestBudgetBetrachter;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
@@ -26,6 +28,9 @@ public class MainStage extends Application {
     private MenuBar menuBar;
 
     public MainStage() {
+        this.spiel = new Schiedsrichter();
+        this.spiel.registriereTeilnehmer("Nils", new AllesKaeufer());
+        this.spiel.registriereTeilnehmer("Matze", new RestBudgetBetrachter());
         //TODO: this.spiel = schiedsrichter;
     }
 
@@ -64,6 +69,7 @@ public class MainStage extends Application {
         layout.setCenter(context1);
         scene1 = new Scene(layout, 500, 500);
 
+        scene1.getStylesheets().add("Nonopoly.css");
         window.setScene(scene1);
         window.setTitle(windowTitle);
         window.show();
