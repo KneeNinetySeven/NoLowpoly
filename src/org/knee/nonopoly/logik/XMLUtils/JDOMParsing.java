@@ -1,4 +1,4 @@
-package org.knee.nonopoly.logik.util.XML;
+package org.knee.nonopoly.logik.XMLUtils;
 
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
