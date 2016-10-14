@@ -6,6 +6,7 @@ import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.Feld;
+import org.knee.nonopoly.felder.Los;
 import org.knee.nonopoly.logik.XMLUtils.JDOMParsing;
 import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.wuerfel.Wuerfel;
@@ -69,15 +70,22 @@ public class Schiedsrichter {
     public boolean spieleEinenSpielzug() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
-        // Verbleibende Teilnehmer sollen spielen können
-        if(aktiverSpieler.getImSpiel()){
-            Wurf wurf = wuerfel.wuerfeln();
-            bewegeSpieler(wurf);
 
+        // Verbleibende Teilnehmer sollen spielen können
+        if (aktiverSpieler.getImSpiel()) {
+            if (aktiverSpieler.getImGefaengnis() > 0) {
+                // Gefängnis-Insassen würfeln nicht
+                aktivesFeld.fuehrePflichtAktionAus(this);
+            } else {
+                Wurf wurf = wuerfel.wuerfeln();
+                bewegeSpieler(wurf);
+                aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
+                aktivesFeld.fuehrePflichtAktionAus(this);
+            }
         }
 
         // Nach dem Zug ist der nächste Spieler dran!
-        if(naechsterSpieler < teilnehmer.toArray().length){
+        if (naechsterSpieler <= teilnehmer.toArray().length) {
             naechsterSpieler++;
         } else {
             naechsterSpieler = 1;
@@ -86,6 +94,11 @@ public class Schiedsrichter {
     }
 
     public boolean spieleEineRunde() {
+
+        for (int zuegeBisEnde = teilnehmer.toArray().length - naechsterSpieler;
+             zuegeBisEnde <= teilnehmer.toArray().length; zuegeBisEnde++) {
+            spieleEinenSpielzug();
+        }
         return spielLäuftNoch();
     }
 
@@ -100,15 +113,27 @@ public class Schiedsrichter {
         return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
     }
 
-    private void bewegeSpieler(Wurf wurf){
+    private void bewegeSpieler(Wurf wurf) {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
-        aktiverSpieler.setPosition(aktiverSpieler.getPosition() + wurf.getSum());
+        int altePosition = aktiverSpieler.getPosition();
+        int neuePosition = aktiverSpieler.getPosition() + wurf.getSum();
+
+        if(40 < neuePosition ){
+            aktiverSpieler.setPosition(neuePosition - 40);
+        } else {
+            aktiverSpieler.setPosition(neuePosition);
+        }
+
+        if(altePosition > neuePosition){
+            Los feld = (Los) spielbrett.get(1);
+            bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
+        }
     }
 
-    private int countSpielerImSpiel(){
+    private int countSpielerImSpiel() {
         int imSpiel = 0;
         for (Spieler spieler : this.teilnehmer) {
-            if(spieler.getImSpiel()){
+            if (spieler.getImSpiel()) {
                 imSpiel++;
             }
         }

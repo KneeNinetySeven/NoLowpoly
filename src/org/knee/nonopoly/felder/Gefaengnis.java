@@ -26,10 +26,17 @@ public class Gefaengnis extends Feld {
      * <b>Pflichtaktion des Gefängnisses</b>
      * Landet ein Spieler auf dem Gefängnis, soll nichts passieren
      * Ist er im Gefängnis und hat noch Warterunden offen, wird diese Zahl angepasst
+     *
      * @param schiedsrichter
      */
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
-        schiedsrichter.getAktiverSpieler();
+        if (schiedsrichter.getAktiverSpieler().getImGefaengnis() > 0) {
+            schiedsrichter
+                    .getAktiverSpieler()
+                    .setImGefaengnis(schiedsrichter
+                            .getAktiverSpieler()
+                            .getImGefaengnis() - 1);
+        }
     }
 }
