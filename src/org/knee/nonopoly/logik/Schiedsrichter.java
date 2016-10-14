@@ -32,6 +32,7 @@ public class Schiedsrichter {
     private Steuertopf steuertopf;
     private Protokollant protokollant;
     private List<Feld> spielbrett;
+    private int rundenZaehler;
 
     // Parser
     private JDOMParsing jdomParser;
@@ -42,13 +43,14 @@ public class Schiedsrichter {
         this.setProtokollant(new Protokollant());
         this.bank = new Bank();
         this.steuertopf = new Steuertopf();
+        this.rundenZaehler = 0;
 
         // Spielbrett
         spielbrett = new ArrayList<Feld>();
 
         // Spieler
         this.teilnehmer = new ArrayList<Spieler>();
-        this.naechsterSpieler = 1;
+        this.naechsterSpieler = 0;
 
         try {
             this.jdomParser = new JDOMParsing("nichtStrassen.xml", "strassen.xml");
@@ -77,6 +79,7 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
 
+        protokollant.printAs("Aktiver Spieler: " + aktiverSpieler.getName());
         // Verbleibende Teilnehmer sollen spielen können
         if (aktiverSpieler.getImSpiel()) {
             if (aktiverSpieler.getImGefaengnis() > 0) {
@@ -84,25 +87,28 @@ public class Schiedsrichter {
                 aktivesFeld.fuehrePflichtAktionAus(this);
             } else {
                 Wurf wurf = wuerfel.wuerfeln();
+                protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + wurf.getWurf1() + " " + wurf.getWurf2());
                 bewegeSpieler(wurf);
                 aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
+                protokollant.printAs(aktiverSpieler.getName() + " steht auf Feld: " + aktivesFeld.getName());
                 aktivesFeld.fuehrePflichtAktionAus(this);
             }
         }
 
         // Nach dem Zug ist der nächste Spieler dran!
-        if (naechsterSpieler <= teilnehmer.toArray().length) {
+        if (naechsterSpieler < teilnehmer.toArray().length - 1) {
             naechsterSpieler++;
         } else {
-            naechsterSpieler = 1;
+            rundenZaehler++;
+            naechsterSpieler = 0;
+            protokollant.printAs("Rundenübertrag auf: " + rundenZaehler);
         }
         return spielLäuftNoch();
     }
 
     public boolean spieleEineRunde() {
-
         for (int zuegeBisEnde = teilnehmer.toArray().length - naechsterSpieler;
-             zuegeBisEnde <= teilnehmer.toArray().length; zuegeBisEnde++) {
+             zuegeBisEnde > 0; zuegeBisEnde--) {
             spieleEinenSpielzug();
         }
         return spielLäuftNoch();

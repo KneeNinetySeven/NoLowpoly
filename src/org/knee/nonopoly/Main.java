@@ -30,10 +30,11 @@ public class Main {
     }
 
     public void runGame(){
-        System.out.println("Spiel gestartet.");
-        schiedsrichter.registriereTeilnehmer("nils", new AllesKaeufer());
+        schiedsrichter.registriereTeilnehmer("Nils", new AllesKaeufer());
         schiedsrichter.registriereTeilnehmer("Matze", new StrassenMogul());
-
+        schiedsrichter.spieleEineRunde();
+        schiedsrichter.spieleEinenSpielzug();
+        schiedsrichter.spieleEineRunde();
         EreignisFeld ereignisFeld = new EreignisFeld(10, "Ereignis");
         GemeinschaftsFeld gemeinschaftsFeld = new GemeinschaftsFeld(11, "Gemeinschaftsfeld");
     }
