@@ -1,21 +1,19 @@
 package org.knee.nonopoly.felder;
 
-import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * Created by Nils on 24.09.2016.
  */
-public class FreiParken extends Feld {
-
-    public FreiParken(int index, String name) {
+public class Gefaengnis extends Feld {
+    public Gefaengnis(int index, String name) {
         super(index, name);
-        this.typ = FeldTypen.STEUERFELD;
+        this.typ = FeldTypen.GEFAENGNIS;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("FreiParken{");
+        final StringBuilder sb = new StringBuilder("Gefaengnis{");
         sb.append("index='").append(this.getIndex()).append('\'');
         sb.append('}');
         sb.append("name=").append(this.getName());
@@ -24,16 +22,14 @@ public class FreiParken extends Feld {
         return sb.toString();
     }
 
-
     /**
-     * <b> Pflichtaktion von FreiParken-Feldern </b>
-     * Überweist den Inhalt des gesamten Steuertopfes an den Spieler
+     * <b>Pflichtaktion des Gefängnisses</b>
+     * Landet ein Spieler auf dem Gefängnis, soll nichts passieren
+     * Ist er im Gefängnis und hat noch Warterunden offen, wird diese Zahl angepasst
      * @param schiedsrichter
      */
-
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
-        Steuertopf steuertopf = schiedsrichter.getSteuertopf();
-        steuertopf.ueberweiseAn(steuertopf.getGuthaben(), schiedsrichter.getAktiverSpieler());
+        schiedsrichter.getAktiverSpieler();
     }
 }

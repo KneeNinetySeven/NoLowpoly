@@ -30,6 +30,7 @@ public class Main {
     }
 
     public void runGame(){
+        System.out.println("Spiel gestartet.");
         schiedsrichter.registriereTeilnehmer("nils", new AllesKaeufer());
         schiedsrichter.registriereTeilnehmer("Matze", new StrassenMogul());
 

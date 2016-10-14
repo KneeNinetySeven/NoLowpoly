@@ -1,7 +1,7 @@
 package org.knee.nonopoly.felder;
 
-import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.Steuertopf;
+import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * Created by Nils on 24.09.2016.
@@ -23,8 +23,10 @@ public class SteuerFeld extends Feld {
     }
 
     @Override
-    public void fuehrePflichtAktionAus(Spieler spieler){
-        spieler.ueberweiseAn(this.getSteuer(), this.steuertopf);
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
+        schiedsrichter
+                .getAktiverSpieler()
+                .ueberweiseAn(steuer, schiedsrichter.getSteuertopf());
     }
 
     @Override

@@ -2,8 +2,9 @@
 .classpath
 .idea/
 .project
-*.eml
-*.iml
+NoNopoly.eml
+NoNopoly.iml
 NoNopoly.userlibraries
 out/
 /bin/
+felder.uml

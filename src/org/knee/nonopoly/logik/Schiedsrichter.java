@@ -1,9 +1,9 @@
 package org.knee.nonopoly.logik;
 
-import org.jdom2.DataConversionException;
 import org.jdom2.JDOMException;
 import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Spieler;
+import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.logik.XMLUtils.JDOMParsing;
@@ -20,22 +20,29 @@ import java.util.List;
  */
 public class Schiedsrichter {
 
+    // Spieler
     private ArrayList<Spieler> teilnehmer;
     private int naechsterSpieler;
+
+    // Spielwerkzeuge
     private Wuerfel wuerfel;
     private Bank bank;
+    private Steuertopf steuertopf;
     private Protokollant protokollant;
-    private JDOMParsing jdomParser;
     private List<Feld> spielbrett;
+
+    // Parser
+    private JDOMParsing jdomParser;
 
     public Schiedsrichter() {
         // Werkzeuge für den Schiedsrichter einrichten
         this.wuerfel = new Wuerfel();
         this.setProtokollant(new Protokollant());
         this.bank = new Bank();
+        this.steuertopf = new Steuertopf();
 
         // Spielbrett
-        this.spielbrett = new ArrayList<Feld>();
+        spielbrett = new ArrayList<Feld>();
 
         // Spieler
         this.teilnehmer = new ArrayList<Spieler>();
@@ -52,12 +59,6 @@ public class Schiedsrichter {
     }
 
     private void spielbrettAnlegen() {
-        try {
-            this.spielbrett = this.jdomParser.legeSpielbrettAn();
-            System.out.println(this.spielbrett.size());
-        } catch (DataConversionException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -132,5 +133,13 @@ public class Schiedsrichter {
 
     public ArrayList<Spieler> getTeilnehmer() {
         return teilnehmer;
+    }
+
+    public Spieler getAktiverSpieler() {
+        return teilnehmer.get(naechsterSpieler);
+    }
+
+    public Steuertopf getSteuertopf() {
+        return steuertopf;
     }
 }

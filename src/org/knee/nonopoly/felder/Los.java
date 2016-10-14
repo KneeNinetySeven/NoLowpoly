@@ -1,5 +1,7 @@
 package org.knee.nonopoly.felder;
 
+import org.knee.nonopoly.logik.Schiedsrichter;
+
 /**
  * Created by Nils on 24.09.2016.
  */
@@ -29,6 +31,11 @@ public class Los extends Feld {
 
     public void setUeberschreitung(int ueberschreitung) {
         this.ueberschreitung = ueberschreitung;
+    }
+
+    @Override
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
+        schiedsrichter.getBank().ueberweiseAn(getTreffer(), schiedsrichter.getAktiverSpieler());
     }
 
     @Override

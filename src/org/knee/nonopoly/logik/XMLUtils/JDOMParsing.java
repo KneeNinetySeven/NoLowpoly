@@ -89,11 +89,11 @@ public class JDOMParsing {
         return new FreiParken(index, name);
     }
 
-    private Gefängnis legeGefaengnisAn() throws DataConversionException {
+    private Gefaengnis legeGefaengnisAn() throws DataConversionException {
         Element gefaengnis = this.nichtStrassenRoot.getChild("Gefaengnis");
         int index = gefaengnis.getAttribute("index").getIntValue();
         String name = gefaengnis.getChildText("Name");
-        return new Gefängnis(index, name);
+        return new Gefaengnis(index, name);
     }
 
     private Los legeLosAn() throws DataConversionException {
