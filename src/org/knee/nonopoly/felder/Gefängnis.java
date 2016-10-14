@@ -7,6 +7,7 @@ package org.knee.nonopoly.felder;
 public class Gefängnis extends Feld {
     public Gefängnis(int index, String name) {
         super(index, name);
+        this.typ = FeldTypen.GEFAENGNIS;
     }
 
     @Override

@@ -14,6 +14,7 @@ public class FreiParken extends Feld {
 
     public FreiParken(int index, String name) {
         super(index, name);
+        this.typ = FeldTypen.STEUERFELD;
         //this.steuertopf = steuertopf;
     }
 
