@@ -12,6 +12,7 @@ public class Strassen extends ImmobilienFeld {
 
     public Strassen(int index, String name, int kaufpreis, List<Integer> mietStaffel, int hauspreis) {
         super(index, name, kaufpreis);
+        this.immobilienTyp = ImmobilienTypen.STRASSE;
         this.mietStaffel = mietStaffel;
         this.hauspreis = hauspreis;
     }

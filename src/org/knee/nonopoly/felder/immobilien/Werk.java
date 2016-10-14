@@ -11,6 +11,7 @@ public class Werk extends ImmobilienFeld {
 
     public Werk(int index, String name, int kaufpreis, List<Integer> faktoren) {
         super(index, name, kaufpreis);
+        this.immobilienTyp = ImmobilienTypen.WERK;
         this.faktoren = faktoren;
     }
 

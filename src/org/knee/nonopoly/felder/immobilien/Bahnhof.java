@@ -1,7 +1,5 @@
 package org.knee.nonopoly.felder.immobilien;
 
-import org.knee.nonopoly.felder.FeldTypen;
-
 import java.util.List;
 
 /**
@@ -15,7 +13,7 @@ public class Bahnhof extends ImmobilienFeld {
 
     public Bahnhof(int index, String name, int kaufpreis, List<Integer> mietStaffel) {
         super(index, name, kaufpreis);
-        this.typ = FeldTypen.IMMOBILIENFELD;
+        this.immobilienTyp = ImmobilienTypen.BAHNHOF;
         this.mietStaffel = mietStaffel;
     }
 

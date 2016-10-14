@@ -1,6 +1,6 @@
 package org.knee.nonopoly.felder;
 
-import org.knee.nonopoly.logik.pflichtAktionArgs.PflichtArguments;
+import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * Created by Nils on 24.09.2016.
@@ -21,7 +21,7 @@ public abstract class Feld {
         this.setName("Feld");
     }
 
-    public void fuehrePflichtAktionAus(PflichtArguments args){
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter){
 
     }
 
