@@ -31,7 +31,6 @@ public class MainStage extends Application {
         this.spiel = new Schiedsrichter();
         this.spiel.registriereTeilnehmer("Nils", new AllesKaeufer());
         this.spiel.registriereTeilnehmer("Matze", new RestBudgetBetrachter());
-        //TODO: this.spiel = schiedsrichter;
     }
 
     public static void main(String[] args){
