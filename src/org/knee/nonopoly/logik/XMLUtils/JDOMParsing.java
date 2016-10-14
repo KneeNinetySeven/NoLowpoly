@@ -55,6 +55,7 @@ public class JDOMParsing {
         felder.addAll(this.legeGefaengnisAn());
         felder.addAll(this.legeLosAn());
         felder.addAll(this.legePolizistAn());
+        felder.sort((feld1, feld2) -> feld1.getIndex() - feld2.getIndex());
         return felder;
     }
 
@@ -70,7 +71,7 @@ public class JDOMParsing {
                 mietstaffel.add(Integer.parseInt(element.getText()));
             });
             int hauspreis = Integer.parseInt(current.getChildText("Preis1Haus"));
-            strassenListe.add(index, new Strasse(index, name, kaufpreis, mietstaffel, hauspreis));
+            strassenListe.add(new Strasse(index, name, kaufpreis, mietstaffel, hauspreis));
         }
         return strassenListe;
     }
@@ -80,7 +81,7 @@ public class JDOMParsing {
         Element polizist = this.nichtStrassenRoot.getChild("Polizist");
         int index = polizist.getAttribute("index").getIntValue();
         String name = polizist.getChildText("Name");
-        polizisten.add(index, new Polizist(index, name));
+        polizisten.add(new Polizist(index, name));
         return polizisten;
     }
 
@@ -89,7 +90,7 @@ public class JDOMParsing {
         Element freiParken = this.nichtStrassenRoot.getChild("Freiparken");
         int index = freiParken.getAttribute("index").getIntValue();
         String name = freiParken.getChildText("Name");
-        freiParkens.add(index, new FreiParken(index, name));
+        freiParkens.add(new FreiParken(index, name));
         return freiParkens;
     }
 
@@ -98,7 +99,7 @@ public class JDOMParsing {
         Element gefaengnis = this.nichtStrassenRoot.getChild("Gefaengnis");
         int index = gefaengnis.getAttribute("index").getIntValue();
         String name = gefaengnis.getChildText("Name");
-        gefaengnises.add(index, new Gefaengnis(index, name));
+        gefaengnises.add(new Gefaengnis(index, name));
         return gefaengnises;
     }
 
@@ -109,7 +110,7 @@ public class JDOMParsing {
         String name = los.getChildText("Name");
         int treffer = Integer.parseInt(los.getChildText("Treffer"));
         int ueberschreitung = Integer.parseInt(los.getChildText("Ueberschreitung"));
-        loses.add(index, new Los(index, name, treffer, ueberschreitung));
+        loses.add(new Los(index, name, treffer, ueberschreitung));
         return loses;
     }
 
