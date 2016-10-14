@@ -5,8 +5,8 @@ import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.Feld;
+import org.knee.nonopoly.logik.XMLUtils.JDOMParsing;
 import org.knee.nonopoly.logik.logging.Protokollant;
-import org.knee.nonopoly.logik.util.XML.JDOMParsing;
 import org.knee.nonopoly.logik.wuerfel.Wuerfel;
 import org.knee.nonopoly.logik.wuerfel.Wurf;
 
