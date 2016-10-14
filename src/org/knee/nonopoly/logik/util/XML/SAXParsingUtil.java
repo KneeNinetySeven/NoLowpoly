@@ -16,6 +16,7 @@ import java.io.IOException;
  * <b>Inoperable</b>
  */
 
+@Deprecated
 public class SAXParsingUtil {
 
     private String filePath;
