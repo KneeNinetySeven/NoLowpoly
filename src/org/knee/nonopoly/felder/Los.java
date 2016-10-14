@@ -10,6 +10,7 @@ public class Los extends Feld {
 
     public Los(int index, String name, int treffer, int ueberschreitung) {
         super(index, name);
+        this.typ = FeldTypen.LOS;
         this.setTreffer(treffer);
         this.setUeberschreitung(ueberschreitung);
     }

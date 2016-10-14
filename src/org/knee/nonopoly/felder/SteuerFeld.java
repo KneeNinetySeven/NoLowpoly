@@ -13,6 +13,7 @@ public class SteuerFeld extends Feld {
 
     public SteuerFeld(int index, String name, Steuertopf steuertopf, int steuer) {
         super(index, name);
+        this.typ = FeldTypen.STEUERFELD;
         this.steuer = steuer;
         this.steuertopf = steuertopf;
     }
