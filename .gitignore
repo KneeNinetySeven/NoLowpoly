@@ -2,8 +2,8 @@
 .classpath
 .idea/
 .project
-NoNopoly.eml
-NoNopoly.iml
+*.eml
+*.iml
 NoNopoly.userlibraries
 out/
 /bin/

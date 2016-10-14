@@ -1,5 +1,6 @@
 package org.knee.nonopoly.logik;
 
+import org.jdom2.DataConversionException;
 import org.jdom2.JDOMException;
 import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Spieler;
@@ -34,14 +35,14 @@ public class Schiedsrichter {
         this.bank = new Bank();
 
         // Spielbrett
-        spielbrett = new ArrayList<Feld>();
+        this.spielbrett = new ArrayList<Feld>();
 
         // Spieler
         this.teilnehmer = new ArrayList<Spieler>();
         this.naechsterSpieler = 1;
 
         try {
-            this.jdomParser = new JDOMParsing("nichtStrassen.xml");
+            this.jdomParser = new JDOMParsing("nichtStrassen.xml", "strassen.xml");
         } catch (JDOMException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -51,7 +52,12 @@ public class Schiedsrichter {
     }
 
     private void spielbrettAnlegen() {
-        this.jdomParser.dateiVerarbeiten();
+        try {
+            this.spielbrett = this.jdomParser.legeSpielbrettAn();
+            System.out.println(this.spielbrett.size());
+        } catch (DataConversionException e) {
+            e.printStackTrace();
+        }
 
     }
 
