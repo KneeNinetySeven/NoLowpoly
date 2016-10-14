@@ -5,12 +5,12 @@ import java.util.List;
 /**
  * Created by Nils on 24.09.2016.
  */
-public class Strassen extends ImmobilienFeld {
+public class Strasse extends ImmobilienFeld {
 
     private List<Integer> mietStaffel;
     int hauspreis;
 
-    public Strassen(int index, String name, int kaufpreis, List<Integer> mietStaffel, int hauspreis) {
+    public Strasse(int index, String name, int kaufpreis, List<Integer> mietStaffel, int hauspreis) {
         super(index, name, kaufpreis);
         this.immobilienTyp = ImmobilienTypen.STRASSE;
         this.mietStaffel = mietStaffel;
@@ -19,7 +19,7 @@ public class Strassen extends ImmobilienFeld {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Strassen{");
+        final StringBuilder sb = new StringBuilder("Strasse{");
         sb.append("index=").append(this.getIndex());
         sb.append(", name=").append(this.getName());
         sb.append(", kaufpreis=").append(this.getKaufpreis());

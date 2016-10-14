@@ -12,7 +12,6 @@ public class GemeinschaftsFeld extends KartenFeld {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Gemeinschaftsfeld{");
         sb.append("index='").append(this.getIndex()).append('\'');
-        sb.append('}');
         sb.append("name='").append(this.getName()).append('\'');
         sb.append('}');
         return sb.toString();

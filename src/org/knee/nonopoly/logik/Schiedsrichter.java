@@ -1,5 +1,6 @@
 package org.knee.nonopoly.logik;
 
+import org.jdom2.DataConversionException;
 import org.jdom2.JDOMException;
 import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Spieler;
@@ -60,7 +61,12 @@ public class Schiedsrichter {
     }
 
     private void spielbrettAnlegen() {
-
+        try {
+            spielbrett = jdomParser.legeSpielbrettAn();
+        } catch (DataConversionException e) {
+            e.printStackTrace();
+        }
+        spielbrett.forEach(System.out::println);
     }
 
     public void registriereTeilnehmer(String name, Strategie strategie) {

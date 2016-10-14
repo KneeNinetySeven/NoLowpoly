@@ -42,9 +42,7 @@ public class Los extends Feld {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Los{");
         sb.append("index='").append(this.getIndex()).append('\'');
-        sb.append('}');
         sb.append("name=").append(this.getName());
-        sb.append('}');
         sb.append("treffer=").append(treffer);
         sb.append(", ueberschreitung=").append(ueberschreitung);
         sb.append('}');

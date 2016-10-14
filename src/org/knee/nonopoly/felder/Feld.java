@@ -21,8 +21,17 @@ public abstract class Feld {
         this.setName("Feld");
     }
 
-    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter){
+    @Override
+    public String toString() {
+        return "Feld{" +
+                "index=" + index +
+                ", name='" + name + '\'' +
+                ", typ=" + typ +
+                '}';
+    }
 
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter){
+        // Tut nichts
     }
 
     public boolean istVomTyp(FeldTypen testType) {

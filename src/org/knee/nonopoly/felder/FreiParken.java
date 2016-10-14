@@ -17,9 +17,7 @@ public class FreiParken extends Feld {
     public String toString() {
         final StringBuilder sb = new StringBuilder("FreiParken{");
         sb.append("index='").append(this.getIndex()).append('\'');
-        sb.append('}');
         sb.append("name=").append(this.getName());
-        sb.append('}');
         sb.append('}');
         return sb.toString();
     }

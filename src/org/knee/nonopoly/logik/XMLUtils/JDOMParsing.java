@@ -8,7 +8,7 @@ import org.jdom2.input.SAXBuilder;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.felder.*;
 import org.knee.nonopoly.felder.immobilien.Bahnhof;
-import org.knee.nonopoly.felder.immobilien.Strassen;
+import org.knee.nonopoly.felder.immobilien.Strasse;
 import org.knee.nonopoly.felder.immobilien.Werk;
 import org.knee.nonopoly.felder.kartenFelder.EreignisFeld;
 import org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld;
@@ -51,15 +51,15 @@ public class JDOMParsing {
         felder.addAll(this.legeGemeinschaftsfelderAn());
         felder.addAll(this.legeEreignisfelderAn());
         felder.addAll(this.legeSteuerfelderAn());
-        felder.add(this.legeFreiParkenAn());
-        felder.add(this.legeGefaengnisAn());
-        felder.add(this.legeLosAn());
-        felder.add(this.legePolizistAn());
+        felder.addAll(this.legeFreiParkenAn());
+        felder.addAll(this.legeGefaengnisAn());
+        felder.addAll(this.legeLosAn());
+        felder.addAll(this.legePolizistAn());
         return felder;
     }
 
-    private List<Strassen> legeStrassenAn() throws DataConversionException {
-        List<Strassen> strassenListe = new ArrayList<>();
+    private List<Strasse> legeStrassenAn() throws DataConversionException {
+        List<Strasse> strassenListe = new ArrayList<>();
         List<Element> strassen = this.strassenRoot.getChildren("Strasse");
         for (Element current : strassen) {
             int index = current.getAttribute("index").getIntValue();
@@ -70,39 +70,47 @@ public class JDOMParsing {
                 mietstaffel.add(Integer.parseInt(element.getText()));
             });
             int hauspreis = Integer.parseInt(current.getChildText("Preis1Haus"));
-            strassenListe.add(new Strassen(index, name, kaufpreis, mietstaffel, hauspreis));
+            strassenListe.add(index, new Strasse(index, name, kaufpreis, mietstaffel, hauspreis));
         }
         return strassenListe;
     }
 
-    private Polizist legePolizistAn() throws DataConversionException {
+    private List<Polizist> legePolizistAn() throws DataConversionException {
+        List<Polizist> polizisten = new ArrayList<>();
         Element polizist = this.nichtStrassenRoot.getChild("Polizist");
         int index = polizist.getAttribute("index").getIntValue();
         String name = polizist.getChildText("Name");
-        return new Polizist(index, name);
+        polizisten.add(index, new Polizist(index, name));
+        return polizisten;
     }
 
-    private FreiParken legeFreiParkenAn() throws DataConversionException {
+    private List<FreiParken> legeFreiParkenAn() throws DataConversionException {
+        List<FreiParken> freiParkens = new ArrayList<>();
         Element freiParken = this.nichtStrassenRoot.getChild("Freiparken");
         int index = freiParken.getAttribute("index").getIntValue();
         String name = freiParken.getChildText("Name");
-        return new FreiParken(index, name);
+        freiParkens.add(index, new FreiParken(index, name));
+        return freiParkens;
     }
 
-    private Gefaengnis legeGefaengnisAn() throws DataConversionException {
+    private List<Gefaengnis> legeGefaengnisAn() throws DataConversionException {
+        List<Gefaengnis> gefaengnises = new ArrayList<>();
         Element gefaengnis = this.nichtStrassenRoot.getChild("Gefaengnis");
         int index = gefaengnis.getAttribute("index").getIntValue();
         String name = gefaengnis.getChildText("Name");
-        return new Gefaengnis(index, name);
+        gefaengnises.add(index, new Gefaengnis(index, name));
+        return gefaengnises;
     }
 
-    private Los legeLosAn() throws DataConversionException {
+    private List<Los> legeLosAn() throws DataConversionException {
+        List<Los> loses = new ArrayList<>();
         Element los = this.nichtStrassenRoot.getChild("Los");
         int index = los.getAttribute("index").getIntValue();
         String name = los.getChildText("Name");
         int treffer = Integer.parseInt(los.getChildText("Treffer"));
         int ueberschreitung = Integer.parseInt(los.getChildText("Ueberschreitung"));
-        return new Los(index, name, treffer, ueberschreitung);
+        loses.add(index, new Los(index, name, treffer, ueberschreitung));
+        return loses;
     }
 
     private List<SteuerFeld> legeSteuerfelderAn() throws DataConversionException {
@@ -115,7 +123,6 @@ public class JDOMParsing {
             steuerFeldListe.add(new SteuerFeld(index, name, new Steuertopf(), steuer));
         }
         return steuerFeldListe;
-//        TODO: Steuertopf richtig implementieren
     }
 
     private List<Bahnhof> legeBahnhoefeAn() throws DataConversionException {
