@@ -61,11 +61,12 @@ public class Schiedsrichter {
 
     public boolean spieleEinenSpielzug() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
+        Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
         // Verbleibende Teilnehmer sollen spielen können
         if(aktiverSpieler.getImSpiel()){
             Wurf wurf = wuerfel.wuerfeln();
             bewegeSpieler(wurf);
-            spielbrett.get(aktiverSpieler.getPosition()).fuehrePflichtAktionAus(aktiverSpieler);
+
         }
 
         // Nach dem Zug ist der nächste Spieler dran!
