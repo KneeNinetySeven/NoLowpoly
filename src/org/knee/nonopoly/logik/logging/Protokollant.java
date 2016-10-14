@@ -11,9 +11,11 @@ import java.util.ArrayList;
 public class Protokollant {
 
     private StringBuilder logOutput;
+    private int count;
 
     public Protokollant() {
         this.logOutput = new StringBuilder();
+        count = 0;
     }
 
     public void addToLog(String s){
@@ -27,9 +29,14 @@ public class Protokollant {
 
     public void printSpieler(ArrayList<Spieler> spielerListe){
         System.out.println("--- SPIELER ---");
-        for(Spieler s : spielerListe){
-            System.out.println(s.toString());
-        }
+        spielerListe.forEach(System.out::println);
     }
+
+    public void printAs(String s){
+        System.out.println("[ SCHIEDSRICHTER ]::"+count+"\t" + s);
+        count++;
+    }
+
+
 
 }

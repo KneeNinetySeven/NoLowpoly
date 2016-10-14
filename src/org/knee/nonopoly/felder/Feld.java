@@ -1,6 +1,6 @@
 package org.knee.nonopoly.felder;
 
-import org.knee.nonopoly.entities.Spieler;
+import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * Created by Nils on 24.09.2016.
@@ -19,11 +19,19 @@ public abstract class Feld {
 
     public Feld() {
         this.setName("Feld");
-        System.out.println(this.getName() + ": creating...");
     }
 
-    public void fuehrePflichtAktionAus(Spieler spieler){
+    @Override
+    public String toString() {
+        return "Feld{" +
+                "index=" + index +
+                ", name='" + name + '\'' +
+                ", typ=" + typ +
+                '}';
+    }
 
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter){
+        // Tut nichts
     }
 
     public boolean istVomTyp(FeldTypen testType) {

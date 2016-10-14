@@ -1,5 +1,6 @@
 package org.knee.nonopoly.felder.immobilien;
 
+import org.knee.nonopoly.entities.Entity;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 
@@ -9,6 +10,7 @@ import org.knee.nonopoly.felder.FeldTypen;
 public abstract class ImmobilienFeld extends Feld {
 
     private int kaufpreis;
+    public Entity besitzer;
     public ImmobilienTypen immobilienTyp;
 
     public ImmobilienFeld(int index, String name, int kaufpreis) {

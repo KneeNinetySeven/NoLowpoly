@@ -1,4 +1,4 @@
-package org.knee.nonopoly.logik.util.XML;
+package org.knee.nonopoly.logik.XMLUtils;
 
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
@@ -8,6 +8,7 @@ import org.jdom2.input.SAXBuilder;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.felder.*;
 import org.knee.nonopoly.felder.immobilien.Bahnhof;
+import org.knee.nonopoly.felder.immobilien.Strasse;
 import org.knee.nonopoly.felder.immobilien.Werk;
 import org.knee.nonopoly.felder.kartenFelder.EreignisFeld;
 import org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld;
@@ -21,70 +22,101 @@ import java.util.List;
  * Created by Adrian on 05.10.2016.
  * TODO: XML-Validierung
  * TODO: Exception-Handling
- *
+ * TODO: Strings externalisieren
  */
 public class JDOMParsing {
 
-    private String filepath;
-    private Document doc;
-    private Element root;
+    private String strassenPath;
+    private String nichtStrassenPath;
+    private Document strassenDoc;
+    private Document nichtStrassenDoc;
+    private Element strassenRoot;
+    private Element nichtStrassenRoot;
 
-    public JDOMParsing(String filepath) throws JDOMException, IOException {
-        this.filepath = filepath;
-        this.doc = new SAXBuilder().build(filepath);
-        this.root = doc.getRootElement();
+    public JDOMParsing(String nichtStrassenPath, String strassenPath) throws JDOMException, IOException {
+        this.strassenPath = strassenPath;
+        this.nichtStrassenPath = nichtStrassenPath;
+        this.strassenDoc = new SAXBuilder().build(strassenPath);
+        this.nichtStrassenDoc = new SAXBuilder().build(nichtStrassenPath);
+        this.strassenRoot = strassenDoc.getRootElement();
+        this.nichtStrassenRoot = nichtStrassenDoc.getRootElement();
     }
 
-    public void dateiVerarbeiten() {
-        try {
-            this.legeBahnhoefeAn().forEach(System.out::println);
-            this.legeWerkeAn().forEach(System.out::println);
-            this.legeEreignisfelderAn().forEach(System.out::println);
-            this.legeGemeinschaftsfelderAn().forEach(System.out::println);
-            this.legeSteuerfelderAn().forEach(System.out::println);
-            System.out.println(this.legeLosAn());
-            System.out.println(this.legeGefaengnisAn());
-            System.out.println(this.legeFreiParkenAn());
-            System.out.println(this.legePolizistAn());
-        } catch (DataConversionException e) {
-            e.printStackTrace();
+
+    public List<Feld> legeSpielbrettAn() throws DataConversionException {
+        List<Feld> felder = new ArrayList<>();
+        felder.addAll(this.legeStrassenAn());
+        felder.addAll(this.legeBahnhoefeAn());
+        felder.addAll(this.legeWerkeAn());
+        felder.addAll(this.legeGemeinschaftsfelderAn());
+        felder.addAll(this.legeEreignisfelderAn());
+        felder.addAll(this.legeSteuerfelderAn());
+        felder.addAll(this.legeFreiParkenAn());
+        felder.addAll(this.legeGefaengnisAn());
+        felder.addAll(this.legeLosAn());
+        felder.addAll(this.legePolizistAn());
+        felder.sort((feld1, feld2) -> feld1.getIndex() - feld2.getIndex());
+        return felder;
+    }
+
+    private List<Strasse> legeStrassenAn() throws DataConversionException {
+        List<Strasse> strassenListe = new ArrayList<>();
+        List<Element> strassen = this.strassenRoot.getChildren("Strasse");
+        for (Element current : strassen) {
+            int index = current.getAttribute("index").getIntValue();
+            String name = current.getChildText("Name");
+            int kaufpreis = Integer.parseInt(current.getChildText("Preis"));
+            List<Integer> mietstaffel = new ArrayList<>();
+            current.getChild("Mietpreise").getChildren("Miete").forEach(element -> {
+                mietstaffel.add(Integer.parseInt(element.getText()));
+            });
+            int hauspreis = Integer.parseInt(current.getChildText("Preis1Haus"));
+            strassenListe.add(new Strasse(index, name, kaufpreis, mietstaffel, hauspreis));
         }
-
+        return strassenListe;
     }
 
-    private Polizist legePolizistAn() throws DataConversionException {
-        Element polizist = this.root.getChild("Polizist");
+    private List<Polizist> legePolizistAn() throws DataConversionException {
+        List<Polizist> polizisten = new ArrayList<>();
+        Element polizist = this.nichtStrassenRoot.getChild("Polizist");
         int index = polizist.getAttribute("index").getIntValue();
         String name = polizist.getChildText("Name");
-        return new Polizist(index, name);
+        polizisten.add(new Polizist(index, name));
+        return polizisten;
     }
 
-    private FreiParken legeFreiParkenAn() throws DataConversionException {
-        Element freiParken = this.root.getChild("Freiparken");
+    private List<FreiParken> legeFreiParkenAn() throws DataConversionException {
+        List<FreiParken> freiParkens = new ArrayList<>();
+        Element freiParken = this.nichtStrassenRoot.getChild("Freiparken");
         int index = freiParken.getAttribute("index").getIntValue();
         String name = freiParken.getChildText("Name");
-        return new FreiParken(index, name);
+        freiParkens.add(new FreiParken(index, name));
+        return freiParkens;
     }
 
-    private Gefängnis legeGefaengnisAn() throws DataConversionException {
-        Element gefaengnis = this.root.getChild("Gefaengnis");
+    private List<Gefaengnis> legeGefaengnisAn() throws DataConversionException {
+        List<Gefaengnis> gefaengnises = new ArrayList<>();
+        Element gefaengnis = this.nichtStrassenRoot.getChild("Gefaengnis");
         int index = gefaengnis.getAttribute("index").getIntValue();
         String name = gefaengnis.getChildText("Name");
-        return new Gefängnis(index, name);
+        gefaengnises.add(new Gefaengnis(index, name));
+        return gefaengnises;
     }
 
-    private Los legeLosAn() throws DataConversionException {
-        Element los = this.root.getChild("Los");
+    private List<Los> legeLosAn() throws DataConversionException {
+        List<Los> loses = new ArrayList<>();
+        Element los = this.nichtStrassenRoot.getChild("Los");
         int index = los.getAttribute("index").getIntValue();
         String name = los.getChildText("Name");
         int treffer = Integer.parseInt(los.getChildText("Treffer"));
         int ueberschreitung = Integer.parseInt(los.getChildText("Ueberschreitung"));
-        return new Los(index, name, treffer, ueberschreitung);
+        loses.add(new Los(index, name, treffer, ueberschreitung));
+        return loses;
     }
 
     private List<SteuerFeld> legeSteuerfelderAn() throws DataConversionException {
         List<SteuerFeld> steuerFeldListe = new ArrayList<>();
-        List<Element> steuerfelder = this.root.getChild("Steuerfelder").getChildren("Steuerfeld");
+        List<Element> steuerfelder = this.nichtStrassenRoot.getChild("Steuerfelder").getChildren("Steuerfeld");
         for (Element current : steuerfelder) {
             int index = current.getAttribute("index").getIntValue();
             String name = current.getChildText("Name");
@@ -92,12 +124,11 @@ public class JDOMParsing {
             steuerFeldListe.add(new SteuerFeld(index, name, new Steuertopf(), steuer));
         }
         return steuerFeldListe;
-//        TODO: Steuertopf richtig implementieren
     }
 
     private List<Bahnhof> legeBahnhoefeAn() throws DataConversionException {
         List<Bahnhof> bahnhofListe = new ArrayList<>();
-        List<Element> bahnhoefe = this.root.getChild("Bahnhoefe").getChildren("Bahnhof");
+        List<Element> bahnhoefe = this.nichtStrassenRoot.getChild("Bahnhoefe").getChildren("Bahnhof");
         for (Element current : bahnhoefe) {
             int index = current.getAttribute("index").getIntValue();
             String name = current.getChild("Name").getText();
@@ -113,7 +144,7 @@ public class JDOMParsing {
 
     private List<Werk> legeWerkeAn() throws DataConversionException {
         List<Werk> werkListe = new ArrayList<>();
-        List<Element> werke = this.root.getChild("Werke").getChildren("Werk");
+        List<Element> werke = this.nichtStrassenRoot.getChild("Werke").getChildren("Werk");
         for (Element current : werke) {
             int index = current.getAttribute("index").getIntValue();
             String name = current.getChild("Name").getText();
@@ -129,7 +160,7 @@ public class JDOMParsing {
 
     private List<KartenFeld> legeEreignisfelderAn() throws DataConversionException {
         List<KartenFeld> ereignisFeldListe = new ArrayList<>();
-        List<Element> ereignisfelder = this.root.getChild("Ereignisfelder").getChildren("Ereignisfeld");
+        List<Element> ereignisfelder = this.nichtStrassenRoot.getChild("Ereignisfelder").getChildren("Ereignisfeld");
         for (Element current : ereignisfelder) {
             int index = current.getAttribute("index").getIntValue();
             String name = current.getChildText("Name");
@@ -140,7 +171,7 @@ public class JDOMParsing {
 
     private List<KartenFeld> legeGemeinschaftsfelderAn() throws DataConversionException {
         List<KartenFeld> gemeinschaftsFeldListe = new ArrayList<>();
-        List<Element> gemeinschaftsfelder = this.root.getChild("Gemeinschaftsfelder").getChildren("Gemeinschaftsfeld");
+        List<Element> gemeinschaftsfelder = this.nichtStrassenRoot.getChild("Gemeinschaftsfelder").getChildren("Gemeinschaftsfeld");
         for (Element current : gemeinschaftsfelder) {
             int index = current.getAttribute("index").getIntValue();
             String name = current.getChildText("Name");

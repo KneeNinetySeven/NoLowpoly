@@ -13,6 +13,10 @@ public class Wurf {
         this.setWurf2(wurf2);
     }
 
+    public int getSum(){
+        return getWurf1() + getWurf2();
+    }
+
     public int getWurf1() {
         return wurf1;
     }
