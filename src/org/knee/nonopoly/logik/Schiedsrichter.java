@@ -169,10 +169,6 @@ public class Schiedsrichter {
         return bank;
     }
 
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
     public Protokollant getProtokollant() {
         return protokollant;
     }
