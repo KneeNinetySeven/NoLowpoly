@@ -1,5 +1,6 @@
 package org.knee.nonopoly.felder.immobilien;
 
+import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
@@ -20,19 +21,17 @@ public class Werk extends ImmobilienFeld {
 
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
-        if(besitzer == schiedsrichter.getBank()){
-            if(schiedsrichter
-                    .getAktiverSpieler()
-                    .getStrategie()
-                    .erlaubtFeldKauf(schiedsrichter.getAktiverSpieler(), this)){
-                anSpielerVerkaufen(schiedsrichter.getAktiverSpieler());
-            }
-        }
-    }
+        Spieler aktiverSpieler = schiedsrichter.getAktiverSpieler();
+        Bank bank = schiedsrichter.getBank();
 
-    private void anSpielerVerkaufen(Spieler spieler){
-        spieler.ueberweiseAn(getKaufpreis(), besitzer);
-        besitzer = spieler;
+        if(besitzer == schiedsrichter.getBank()){
+            if(aktiverSpieler.getStrategie().erlaubtFeldKauf(schiedsrichter.getAktiverSpieler(), this)){
+                wirdGekauftDurchSpieler(aktiverSpieler, bank);
+            }
+        } else {
+            int miete = schiedsrichter.getLetzterWurf().getSum() * 80;
+            aktiverSpieler.ueberweiseAn(miete, besitzer);
+        }
     }
 
     @Override

@@ -28,7 +28,7 @@ public class MainStage extends Application {
     private MenuBar menuBar;
 
     public MainStage() {
-        this.spiel = new Schiedsrichter();
+//        this.spiel = new Schiedsrichter();
         this.spiel.registriereTeilnehmer("Nils", new AllesKaeufer());
         this.spiel.registriereTeilnehmer("Matze", new RestBudgetBetrachter());
     }

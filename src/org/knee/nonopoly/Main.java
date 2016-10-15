@@ -22,7 +22,7 @@ public class Main {
 
     public Main() {
         schiedsrichter = new Schiedsrichter();
-        this.ui = new MainStage();
+//        this.ui = new MainStage();
     }
 
     public static void  main(String[] args){
@@ -34,7 +34,10 @@ public class Main {
         schiedsrichter.registriereTeilnehmer("Matze", new StrassenMogul());
         schiedsrichter.zahleStartkapitalAus();
         schiedsrichter.spieleEineRunde();
-        schiedsrichter.spieleEinenSpielzug();
+        schiedsrichter.spieleEineRunde();
+        schiedsrichter.spieleEineRunde();
+        schiedsrichter.spieleEineRunde();
+        schiedsrichter.spieleEineRunde();
         schiedsrichter.spieleEineRunde();
         EreignisFeld ereignisFeld = new EreignisFeld(10, "Ereignis");
         GemeinschaftsFeld gemeinschaftsFeld = new GemeinschaftsFeld(11, "Gemeinschaftsfeld");

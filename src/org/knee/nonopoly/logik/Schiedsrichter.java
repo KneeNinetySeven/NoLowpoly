@@ -29,6 +29,7 @@ public class Schiedsrichter {
 
     // Spielwerkzeuge
     private Wuerfel wuerfel;
+    private Wurf letzterWurf;
     private Bank bank;
     private Steuertopf steuertopf;
     private Protokollant protokollant;
@@ -70,7 +71,10 @@ public class Schiedsrichter {
         } catch (DataConversionException e) {
             e.printStackTrace();
         }
-        spielbrett.forEach(System.out::println);
+
+        spielbrett.forEach(feld -> {
+            getProtokollant().printAs("Anlegen von: " + feld.getName() + "\t \t" + feld.getIndex() + ":" + spielbrett.indexOf(feld));
+        });
     }
 
     public void registriereTeilnehmer(String name, Strategie strategie) {
@@ -81,18 +85,21 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
 
-        protokollant.printAs("Aktiver Spieler: " + aktiverSpieler.getName());
+        protokollant.printAs("Aktiver Spieler: " + aktiverSpieler.getName() + " [" + aktiverSpieler.getGuthaben() + "]");
         // Verbleibende Teilnehmer sollen spielen können
         if (aktiverSpieler.getImSpiel()) {
             if (aktiverSpieler.getImGefaengnis() > 0) {
                 // Gefängnis-Insassen würfeln nicht
                 aktivesFeld.fuehrePflichtAktionAus(this);
             } else {
-                Wurf wurf = wuerfel.wuerfeln();
-                protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + wurf.getWurf1() + " " + wurf.getWurf2());
-                bewegeSpieler(wurf);
+                letzterWurf = wuerfel.wuerfeln();
+                protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
+                bewegeSpieler();
                 aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
-                protokollant.printAs(aktiverSpieler.getName() + " steht auf Feld: " + aktivesFeld.getName());
+                protokollant.printAs(aktiverSpieler.getName()
+                        + " steht auf Feld: "
+                        + aktivesFeld.getName()
+                        + " (" + (aktivesFeld.getIndex() + 1) + ")");
                 aktivesFeld.fuehrePflichtAktionAus(this);
             }
         }
@@ -134,20 +141,17 @@ public class Schiedsrichter {
         return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
     }
 
-    private void bewegeSpieler(Wurf wurf) {
+    private void bewegeSpieler() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
-        int altePosition = aktiverSpieler.getPosition();
-        int neuePosition = aktiverSpieler.getPosition() + wurf.getSum();
+        int neuePosition = aktiverSpieler.getPosition() + letzterWurf.getSum();
 
-        if (40 < neuePosition) {
-            aktiverSpieler.setPosition(neuePosition - 40);
+        if (39 < neuePosition) {
+            aktiverSpieler.setPosition(neuePosition - 39);
+            Los feld = (Los) spielbrett.get(0);
+            bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
+            getProtokollant().printAs(aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
         } else {
             aktiverSpieler.setPosition(neuePosition);
-        }
-
-        if (altePosition > neuePosition) {
-            Los feld = (Los) spielbrett.get(1);
-            bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
         }
     }
 
@@ -163,6 +167,10 @@ public class Schiedsrichter {
                 .stream()
                 .filter((Feld f) -> f.istVomTyp(FeldTypen.IMMOBILIENFELD))
                 .forEach(feld -> feld.initialisiereBesitzer(getBank()));
+    }
+
+    public List<Feld> getSpielbrett() {
+        return spielbrett;
     }
 
     public Bank getBank() {
@@ -183,6 +191,10 @@ public class Schiedsrichter {
 
     public Spieler getAktiverSpieler() {
         return teilnehmer.get(naechsterSpieler);
+    }
+
+    public Wurf getLetzterWurf(){
+        return letzterWurf;
     }
 
     public Steuertopf getSteuertopf() {

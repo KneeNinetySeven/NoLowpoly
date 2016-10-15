@@ -27,11 +27,12 @@ public class Strasse extends ImmobilienFeld {
         Spieler aktiverSpieler = schiedsrichter.getAktiverSpieler();
         if (this.besitzer == schiedsrichter.getBank()){
             if(aktiverSpieler.getStrategie().erlaubtFeldKauf(aktiverSpieler, this)){
-                schiedsrichter.getProtokollant().printAs(aktiverSpieler.getName() + " kauft die " + getName());
+                schiedsrichter.getProtokollant().printAs(aktiverSpieler.getName() + " kauft " + getName());
                 wirdGekauftDurchSpieler(aktiverSpieler, schiedsrichter.getBank());
             }
         } else if(this.besitzer == aktiverSpieler){
             if(aktiverSpieler.getStrategie().erlaubtHausbau(aktiverSpieler, this) & getHausanzahl() < 6){
+                schiedsrichter.getProtokollant().printAs(aktiverSpieler + " baut ein neues Haus");
                 wirdNeuBebaut(aktiverSpieler, schiedsrichter.getBank());
             }
         } else {
@@ -39,13 +40,9 @@ public class Strasse extends ImmobilienFeld {
         }
     }
 
-    public void wirdGekauftDurchSpieler(Spieler spieler, Bank bank){
-        spieler.ueberweiseAn(getKaufpreis(), bank);
-        besitzer = spieler;
-    }
-
     public void wirdNeuBebaut(Spieler spieler, Bank bank){
-
+        spieler.ueberweiseAn(hauspreis, bank);
+        baueHaus();
     }
 
     public void baueHaus(){

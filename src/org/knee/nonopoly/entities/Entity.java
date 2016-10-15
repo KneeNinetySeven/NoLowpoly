@@ -12,6 +12,7 @@ public abstract class Entity {
     protected Entity() {
         this.setGuthaben(0);
         this.setName("");
+        this.setImSpiel(true);
     }
 
     public int getGuthaben() {

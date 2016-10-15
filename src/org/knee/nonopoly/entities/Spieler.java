@@ -27,6 +27,7 @@ public class Spieler extends Entity {
         this.setGuthaben(0);
         this.setPosition(0);
         this.setName("");
+        this.setImSpiel(true);
     }
 
     public void geheInsGefaengnis(){

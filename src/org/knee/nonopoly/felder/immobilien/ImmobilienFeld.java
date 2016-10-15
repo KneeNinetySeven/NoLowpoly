@@ -2,6 +2,7 @@ package org.knee.nonopoly.felder.immobilien;
 
 import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Entity;
+import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 
@@ -24,6 +25,13 @@ public abstract class ImmobilienFeld extends Feld {
     public void initialisiereBesitzer(Bank bank){
         this.besitzer = bank;
     }
+
+    public void wirdGekauftDurchSpieler(Spieler spieler, Bank bank){
+        spieler.ueberweiseAn(getKaufpreis(), bank);
+        besitzer = spieler;
+    }
+
+
 
     public boolean istImmobilienTyp(ImmobilienTypen testImmoTyp){
         return this.immobilienTyp == testImmoTyp;
