@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
@@ -18,7 +15,33 @@
       </MenuBar>
    </top>
    <left>
-      <VBox id="spielerListe" prefHeight="502.0" prefWidth="283.0" BorderPane.alignment="CENTER" />
+      <VBox id="spielerListe" prefHeight="502.0" prefWidth="283.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane>
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="Name" />
+                              <Label layoutX="10.0" layoutY="10.0" text="Position" />
+                              <Label layoutX="10.0" layoutY="31.0" text="Guthaben" />
+                              <Label layoutX="10.0" layoutY="52.0" text="Strategie" />
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <Label text="NameData" />
+                              <Label layoutX="10.0" layoutY="10.0" text="PositionData" />
+                              <Label layoutX="10.0" layoutY="31.0" text="GuthabenData" />
+                              <Label layoutX="10.0" layoutY="52.0" text="StrategieData" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children></VBox>
    </left>
    <center>
       <Pane id="spielfeldArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />

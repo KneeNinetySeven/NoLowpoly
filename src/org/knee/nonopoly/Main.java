@@ -6,7 +6,6 @@ import org.knee.nonopoly.entities.spielerStrategien.StrassenMogul;
 import org.knee.nonopoly.felder.kartenFelder.EreignisFeld;
 import org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld;
 import org.knee.nonopoly.logik.Schiedsrichter;
-import org.knee.nonopoly.ui.MainStage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +16,10 @@ import java.util.List;
 public class Main {
 
     Schiedsrichter schiedsrichter;
-    MainStage ui;
     List<Spieler> teilnehmer = new ArrayList<Spieler>();
 
     public Main() {
         schiedsrichter = new Schiedsrichter();
-        this.ui = new MainStage();
     }
 
     public static void  main(String[] args){
