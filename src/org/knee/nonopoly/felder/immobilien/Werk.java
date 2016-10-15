@@ -24,7 +24,7 @@ public class Werk extends ImmobilienFeld {
             if(schiedsrichter
                     .getAktiverSpieler()
                     .getStrategie()
-                    .erlaubtFeldKauf(schiedsrichter.getAktiverSpieler())){
+                    .erlaubtFeldKauf(schiedsrichter.getAktiverSpieler(), this)){
                 anSpielerVerkaufen(schiedsrichter.getAktiverSpieler());
             }
         }

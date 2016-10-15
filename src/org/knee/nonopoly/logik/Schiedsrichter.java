@@ -7,6 +7,7 @@ import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.Feld;
+import org.knee.nonopoly.felder.FeldTypen;
 import org.knee.nonopoly.felder.Los;
 import org.knee.nonopoly.logik.XMLUtils.JDOMParsing;
 import org.knee.nonopoly.logik.logging.Protokollant;
@@ -60,6 +61,7 @@ public class Schiedsrichter {
             e.printStackTrace();
         }
         this.spielbrettAnlegen();
+        this.besitzerInitialisieren();
     }
 
     private void spielbrettAnlegen() {
@@ -101,7 +103,7 @@ public class Schiedsrichter {
         } else {
             rundenZaehler++;
             naechsterSpieler = 0;
-            protokollant.printAs("Rundenübertrag auf: " + rundenZaehler);
+            protokollant.printAs("\t ** Rundenübertrag auf: " + rundenZaehler);
         }
         return spielLäuftNoch();
     }
@@ -120,6 +122,13 @@ public class Schiedsrichter {
         }
     }
 
+    public void zahleStartkapitalAus() {
+        getBank().setGuthaben(200000);
+        getTeilnehmer().forEach((Spieler s) -> {
+            getBank().ueberweiseAn(30000, s);
+        });
+    }
+
     private boolean spielLäuftNoch() {
         int nochImSpiel = countSpielerImSpiel();
         return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
@@ -130,26 +139,30 @@ public class Schiedsrichter {
         int altePosition = aktiverSpieler.getPosition();
         int neuePosition = aktiverSpieler.getPosition() + wurf.getSum();
 
-        if(40 < neuePosition ){
+        if (40 < neuePosition) {
             aktiverSpieler.setPosition(neuePosition - 40);
         } else {
             aktiverSpieler.setPosition(neuePosition);
         }
 
-        if(altePosition > neuePosition){
+        if (altePosition > neuePosition) {
             Los feld = (Los) spielbrett.get(1);
             bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
         }
     }
 
     private int countSpielerImSpiel() {
-        int imSpiel = 0;
-        for (Spieler spieler : this.teilnehmer) {
-            if (spieler.getImSpiel()) {
-                imSpiel++;
-            }
-        }
-        return imSpiel;
+        return Math.toIntExact(
+                teilnehmer
+                        .stream()
+                        .filter((Spieler s) -> s.isImSpiel()).count());
+    }
+
+    private void besitzerInitialisieren() {
+        spielbrett
+                .stream()
+                .filter((Feld f) -> f.istVomTyp(FeldTypen.IMMOBILIENFELD))
+                .forEach(feld -> feld.initialisiereBesitzer(getBank()));
     }
 
     public Bank getBank() {

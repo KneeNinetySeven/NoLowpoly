@@ -39,8 +39,16 @@ public abstract class Entity {
     }
 
     public void ueberweiseAn(int geldMenge, Entity ziel){
-        this.belasteMit(geldMenge);
-        ziel.gutschreibenAn(geldMenge);
+        if(pruefeBonitaet(geldMenge)) {
+            this.belasteMit(geldMenge);
+            ziel.gutschreibenAn(geldMenge);
+        } else {
+            System.err.println(this.getName() + " hat doch garnicht genug Geld dafür!");
+        }
+    }
+
+    private boolean pruefeBonitaet(int geldMenge){
+        return this.getGuthaben() > geldMenge;
     }
 
     private void gutschreibenAn(int geldMenge){

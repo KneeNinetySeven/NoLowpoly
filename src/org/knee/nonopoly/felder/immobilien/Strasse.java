@@ -27,6 +27,7 @@ public class Strasse extends ImmobilienFeld {
         Spieler aktiverSpieler = schiedsrichter.getAktiverSpieler();
         if (this.besitzer == schiedsrichter.getBank()){
             if(aktiverSpieler.getStrategie().erlaubtFeldKauf(aktiverSpieler, this)){
+                schiedsrichter.getProtokollant().printAs(aktiverSpieler.getName() + " kauft die " + getName());
                 wirdGekauftDurchSpieler(aktiverSpieler, schiedsrichter.getBank());
             }
         } else if(this.besitzer == aktiverSpieler){
@@ -34,7 +35,7 @@ public class Strasse extends ImmobilienFeld {
                 wirdNeuBebaut(aktiverSpieler, schiedsrichter.getBank());
             }
         } else {
-
+            zahleMiete(aktiverSpieler);
         }
     }
 
@@ -49,6 +50,10 @@ public class Strasse extends ImmobilienFeld {
 
     public void baueHaus(){
         this.setHausanzahl(getHausanzahl() + 1);
+    }
+
+    public void zahleMiete(Spieler spieler){
+        spieler.ueberweiseAn(mietStaffel.get(getHausanzahl()), besitzer);
     }
 
     @Override

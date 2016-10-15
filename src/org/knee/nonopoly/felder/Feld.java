@@ -1,5 +1,6 @@
 package org.knee.nonopoly.felder;
 
+import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
@@ -28,6 +29,10 @@ public abstract class Feld {
                 ", name='" + name + '\'' +
                 ", typ=" + typ +
                 '}';
+    }
+
+    public void initialisiereBesitzer(Bank bank){
+
     }
 
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter){

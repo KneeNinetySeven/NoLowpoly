@@ -32,6 +32,7 @@ public class Main {
     public void runGame(){
         schiedsrichter.registriereTeilnehmer("Nils", new AllesKaeufer());
         schiedsrichter.registriereTeilnehmer("Matze", new StrassenMogul());
+        schiedsrichter.zahleStartkapitalAus();
         schiedsrichter.spieleEineRunde();
         schiedsrichter.spieleEinenSpielzug();
         schiedsrichter.spieleEineRunde();
