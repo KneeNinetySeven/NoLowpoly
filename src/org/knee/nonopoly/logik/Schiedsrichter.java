@@ -73,7 +73,9 @@ public class Schiedsrichter {
         }
 
         spielbrett.forEach(feld -> {
-            getProtokollant().printAs("Anlegen von: " + feld.getName() + "\t \t" + feld.getIndex() + ":" + spielbrett.indexOf(feld));
+            getProtokollant().printAs("Anlegen auf: " + getSpielbrett().indexOf(feld)
+                    + " Index: " + feld.getIndex()
+                    + " von: " + feld.getName());
         });
     }
 
@@ -193,7 +195,7 @@ public class Schiedsrichter {
         return teilnehmer.get(naechsterSpieler);
     }
 
-    public Wurf getLetzterWurf(){
+    public Wurf getLetzterWurf() {
         return letzterWurf;
     }
 
