@@ -30,11 +30,21 @@ public class Gefaengnis extends Feld {
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         if (schiedsrichter.getAktiverSpieler().getImGefaengnis() > 0) {
+            // Logging
+            schiedsrichter
+                    .getProtokollant()
+                    .printAs(schiedsrichter
+                            .getAktiverSpieler()
+                            .getName() + " bleibt diese Runde im Gefängnis sitzen.");
+
+            // Wartezeit anrechnen
             schiedsrichter
                     .getAktiverSpieler()
                     .setImGefaengnis(schiedsrichter
                             .getAktiverSpieler()
                             .getImGefaengnis() - 1);
+        } else {
+            schiedsrichter.getProtokollant().printAs(schiedsrichter.getAktiverSpieler().getName() + " steht vor dem Gefängnis");
         }
     }
 }
