@@ -147,8 +147,8 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         int neuePosition = aktiverSpieler.getPosition() + letzterWurf.getSum();
 
-        if (39 < neuePosition) {
-            aktiverSpieler.setPosition(neuePosition - 39);
+        if ((spielbrett.size() - 1) < neuePosition) {
+            aktiverSpieler.setPosition(neuePosition - spielbrett.size() - 1);
             Los feld = (Los) spielbrett.get(0);
             bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
             getProtokollant().printAs(aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
