@@ -50,10 +50,10 @@ public class Schiedsrichter {
         this.rundenZaehler = 0;
 
         // Spielbrett
-        spielbrett = new ArrayList<Feld>();
+        spielbrett = new ArrayList<>();
 
         // Spieler
-        this.teilnehmer = new ArrayList<Spieler>();
+        this.teilnehmer = new ArrayList<>();
         this.naechsterSpieler = 0;
 
         try {
@@ -77,11 +77,16 @@ public class Schiedsrichter {
             e.printStackTrace();
         }
 
-        spielbrett.forEach(feld -> {
-            getProtokollant().printAs("Anlegen auf: " + getSpielbrett().indexOf(feld)
-                    + " Index: " + feld.getIndex()
-                    + " von: " + feld.getName());
+        spielbrett.stream().forEach(feld -> {
+            if(feld.getIndex() != spielbrett.indexOf(feld)){
+                System.out.println("Feld " + feld.getName());
+            }
         });
+
+        spielbrett.forEach(feld -> getProtokollant().printAs(
+                "Anlegen auf: " + getSpielbrett().indexOf(feld)
+                + " Index: " + feld.getIndex()
+                + " von: " + feld.getName()));
     }
 
     /**
@@ -120,7 +125,7 @@ public class Schiedsrichter {
                 protokollant.printAs(aktiverSpieler.getName()
                         + " steht auf Feld: "
                         + aktivesFeld.getName()
-                        + " (" + (aktivesFeld.getIndex() + 1) + ")");
+                        + " (" + (aktivesFeld.getIndex()) + ")");
                 aktivesFeld.fuehrePflichtAktionAus(this);
             }
         }
@@ -182,11 +187,7 @@ public class Schiedsrichter {
     /**
      * Bewegt den Spieler auf das nächste Feld.
      * Verwendet wird der letzte Würfelwurf.
-     * <p>
-     * <b>Hier gibt es einen Fehler, den ich nicht verstehe:
-     * Der Spieler bewegt sich auf die richtige Position, steht aber auf dem falschen Feld</b>
      */
-    @Deprecated
     private void bewegeSpieler() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         int neuePosition = (aktiverSpieler.getPosition() + letzterWurf.getSum());

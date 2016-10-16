@@ -2,6 +2,7 @@ package org.knee.nonopoly.entities;
 
 /**
  * Created by Nils on 09.09.2016.
+ * <p>
  * Implementiert alle grundlegenden Funktionen, die von den Entitäten ausgeführt werden können sollen
  */
 public abstract class Entity {
@@ -22,12 +23,13 @@ public abstract class Entity {
     }
 
     /**
-     * Überweist eine bestimmte Menge an Geld von einem Entity zum nächsten
+     * Überweist eine bestimmte Menge an Geld von einem {@link Entity} zum nächsten
+     *
      * @param geldMenge Menge des zu transferierenden Geldes
-     * @param ziel Ziel-Entity der Überweisung
+     * @param ziel      Ziel-{@link Entity} der Überweisung
      */
-    public void ueberweiseAn(int geldMenge, Entity ziel){
-        if(pruefeBonitaet(geldMenge)) {
+    public void ueberweiseAn(int geldMenge, Entity ziel) {
+        if (pruefeBonitaet(geldMenge)) {
             this.belasteMit(geldMenge);
             ziel.gutschreibenAn(geldMenge);
         } else {
@@ -37,23 +39,26 @@ public abstract class Entity {
 
     /**
      * Prüft, ob genug Geld zur Verfügung steht.
+     *
      * @param geldMenge Menge des Geldes, das vorhanden sein soll
      * @return Gibt zurück, ob genug Geld zur Verfügung bereitsteht
      */
-    private boolean pruefeBonitaet(int geldMenge){
+    private boolean pruefeBonitaet(int geldMenge) {
         return this.getGuthaben() > geldMenge;
     }
 
     /**
      * Schreibt auf dem Konto die angegebene Summe gut
+     *
      * @param geldMenge
      */
-    private void gutschreibenAn(int geldMenge){
+    private void gutschreibenAn(int geldMenge) {
         this.guthaben = this.guthaben + geldMenge;
     }
 
     /**
      * Zieht dem angegebenenen Konto die Summe an Geld ab
+     *
      * @param geldMenge
      */
     private void belasteMit(int geldMenge) {
@@ -61,8 +66,8 @@ public abstract class Entity {
     }
 
     @Override
-    public String toString(){
-        return("UNDEFINED ENTITY");
+    public String toString() {
+        return ("UNDEFINED ENTITY");
     }
 
     public int getGuthaben() {

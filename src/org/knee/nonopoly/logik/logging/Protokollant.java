@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Nils on 24.09.2016.
- *
+ * <p>
  * Der Protokollant verwaltet die Konsolenausgaben und Logs
  */
 
@@ -22,9 +22,10 @@ public class Protokollant {
 
     /**
      * Fügt einen String in die Logdatei an
+     *
      * @param s String, der ins Log angefügt werden soll
      */
-    public void addToLog(String s){
+    public void addToLog(String s) {
         this.logOutput.append("\n");
         this.logOutput.append(s);
     }
@@ -32,27 +33,25 @@ public class Protokollant {
     /**
      * @return Gibt das derzeitige Log zurück
      */
-    public String getLogOutput(){
+    public String getLogOutput() {
         return this.logOutput.toString();
     }
 
     /**
      * Gibt eine Liste der Spieler auf der Konsole aus
      */
-    public void printSpieler(ArrayList<Spieler> spielerListe){
+    public void printSpieler(ArrayList<Spieler> spielerListe) {
         System.out.println("--- SPIELER ---");
         spielerListe.forEach(System.out::println);
     }
 
     /**
-     *
      * @param s String, der als Konsolenlog ausgegeben werden soll
      */
-    public void printAs(String s){
-        System.out.println("[ SCHIEDSRICHTER ]::"+count+"\t" + s);
+    public void printAs(String s) {
+        System.out.println("[ SCHIEDSRICHTER ]::" + count + "\t" + s);
         count++;
     }
-
 
 
 }

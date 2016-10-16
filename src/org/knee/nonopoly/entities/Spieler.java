@@ -5,6 +5,8 @@ import org.knee.nonopoly.karten.Karte;
 
 /**
  * Created by Nils on 09.09.2016.
+ *
+ *
  */
 public class Spieler extends Entity {
 
