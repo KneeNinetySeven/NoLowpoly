@@ -11,13 +11,9 @@ public abstract class Strategie {
 
     private String name;
 
-    public boolean erlaubtHausbau(Spieler spieler, Strasse feld){
-        return feld.getHauspreis() < spieler.getGuthaben();
-    }
+    public abstract boolean erlaubtHausbau(Spieler spieler, Strasse feld);
 
-    public boolean erlaubtFeldKauf(Spieler spieler, ImmobilienFeld feld){
-        return feld.getKaufpreis() < spieler.getGuthaben();
-    }
+    public abstract boolean erlaubtFeldKauf(Spieler spieler, ImmobilienFeld feld);
 
     public String getName() {
         return name;
