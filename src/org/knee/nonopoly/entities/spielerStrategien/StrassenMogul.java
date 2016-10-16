@@ -2,6 +2,7 @@ package org.knee.nonopoly.entities.spielerStrategien;
 
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.felder.immobilien.ImmobilienFeld;
+import org.knee.nonopoly.felder.immobilien.ImmobilienTypen;
 import org.knee.nonopoly.felder.immobilien.Strasse;
 
 /**
@@ -15,7 +16,7 @@ public class StrassenMogul extends Strategie {
 
     @Override
     public boolean erlaubtFeldKauf(Spieler spieler, ImmobilienFeld feld) {
-        return feld.getKaufpreis() < spieler.getGuthaben();
+        return feld.getKaufpreis() < spieler.getGuthaben() && feld.istImmobilienTyp(ImmobilienTypen.STRASSE);
     }
 
     @Override
