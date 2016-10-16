@@ -68,7 +68,7 @@ public class MainStage extends Application {
         layout.setCenter(context1);
         scene1 = new Scene(layout, 500, 500);
 
-        scene1.getStylesheets().add("Nonopoly.css");
+        scene1.getStylesheets().add("org/knee/nonopoly/ui/Nonopoly.css");
         window.setScene(scene1);
         window.setTitle(windowTitle);
         window.show();
