@@ -4,6 +4,7 @@ import java.util.Random;
 
 /**
  * Created by Nils on 24.09.2016.
+ * Ist in der Lage Zufallszahlen zwischen 1 und 6 zurückzugeben
  */
 public class Wuerfel {
 
@@ -11,9 +12,6 @@ public class Wuerfel {
     private int wurf2;
     private Random generator;
 
-    /**
-     *
-     */
     public Wuerfel(){
         this.wurf1 = 0;
         this.wurf2 = 0;

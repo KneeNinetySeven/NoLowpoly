@@ -9,6 +9,10 @@ import org.knee.nonopoly.felder.immobilien.Strasse;
  */
 public abstract class Strategie {
 
+    protected Strategie(){
+
+    }
+
     private String name;
 
     public abstract boolean erlaubtHausbau(Spieler spieler, Strasse feld);

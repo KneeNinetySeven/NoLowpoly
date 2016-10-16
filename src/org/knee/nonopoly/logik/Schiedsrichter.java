@@ -20,6 +20,8 @@ import java.util.List;
 
 /**
  * Created by Nils on 11.09.2016.
+ *
+ * Die Klasse Schiedsrichter übernimmt die Regisseurs-Rolle beim Spiel
  */
 public class Schiedsrichter {
 
@@ -65,6 +67,9 @@ public class Schiedsrichter {
         this.besitzerInitialisieren();
     }
 
+    /**
+     * Legt ein Spielbrett mittels XMLParser an
+     */
     private void spielbrettAnlegen() {
         try {
             spielbrett = jdomParser.legeSpielbrettAn();
@@ -79,15 +84,29 @@ public class Schiedsrichter {
         });
     }
 
+    /**
+     * Erstellt einen neuen Eintrag in der Liste der teilnehmenden Spieler
+     * Generiert ein neues Objekt des Klasse Spieler
+     *
+     * @param name      Name des Spielers
+     * @param strategie Strategie des anzulegenden Spielers
+     */
     public void registriereTeilnehmer(String name, Strategie strategie) {
         this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
     }
 
+    /**
+     * Lässt den Schiedsrichter einen Spielzug ausrichten
+     *
+     * @return Gibt zurück, ob das Spiel noch läuft
+     */
     public boolean spieleEinenSpielzug() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
 
-        protokollant.printAs("Aktiver Spieler: " + aktiverSpieler.getName() + " [" + aktiverSpieler.getGuthaben() + "]");
+        protokollant.printAs("Aktiver Spieler: "
+                + aktiverSpieler.getName()
+                + " [" + aktiverSpieler.getGuthaben() + " | " + aktiverSpieler.getPosition() + "]");
         // Verbleibende Teilnehmer sollen spielen können
         if (aktiverSpieler.getImSpiel()) {
             if (aktiverSpieler.getImGefaengnis() > 0) {
@@ -117,6 +136,11 @@ public class Schiedsrichter {
         return spielLäuftNoch();
     }
 
+    /**
+     * Spielt so lange Züge, bis die Runde beendet ist
+     *
+     * @return Gibt zurück, ob das Spiel weitergeht
+     */
     public boolean spieleEineRunde() {
         for (int zuegeBisEnde = teilnehmer.toArray().length - naechsterSpieler;
              zuegeBisEnde > 0; zuegeBisEnde--) {
@@ -125,12 +149,19 @@ public class Schiedsrichter {
         return spielLäuftNoch();
     }
 
+    /**
+     * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
+     */
     public void spieleSpielZuEnde() {
         while (this.spieleEineRunde()) {
             // DO NOTHING
         }
     }
 
+    /**
+     * Zahlt das Startkapital an alle Spieler aus.
+     * Das Kapital wird von der Bank zur Verfügung gestellt
+     */
     public void zahleStartkapitalAus() {
         getBank().setGuthaben(200000);
         getTeilnehmer().forEach((Spieler s) -> {
@@ -138,25 +169,47 @@ public class Schiedsrichter {
         });
     }
 
+    /**
+     * Ermittelt anhand des Bankguthabens und der Spielereigenschaften, ob das Spiel weiterläuft
+     *
+     * @return Gibt zurück, ob das Spiel beendet ist
+     */
     private boolean spielLäuftNoch() {
         int nochImSpiel = countSpielerImSpiel();
         return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
     }
 
+    /**
+     * Bewegt den Spieler auf das nächste Feld.
+     * Verwendet wird der letzte Würfelwurf.
+     * <p>
+     * <b>Hier gibt es einen Fehler, den ich nicht verstehe:
+     * Der Spieler bewegt sich auf die richtige Position, steht aber auf dem falschen Feld</b>
+     */
+    @Deprecated
     private void bewegeSpieler() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
-        int neuePosition = aktiverSpieler.getPosition() + letzterWurf.getSum();
-
+        int neuePosition = (aktiverSpieler.getPosition() + letzterWurf.getSum());
+        System.out.println("CROSSCHECK: "
+                + letzterWurf.getWurf1() + " | "
+                + letzterWurf.getWurf2() + " | "
+                + letzterWurf.getSum() + " \n >> \t "
+                + aktiverSpieler.getPosition() + " --> " + neuePosition);
         if ((spielbrett.size() - 1) < neuePosition) {
-            aktiverSpieler.setPosition(neuePosition - spielbrett.size() - 1);
+            // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen
+            aktiverSpieler.setPosition(neuePosition - spielbrett.size());
             Los feld = (Los) spielbrett.get(0);
             bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
             getProtokollant().printAs(aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
         } else {
+            // Die Spielerposition wird gesetzt
             aktiverSpieler.setPosition(neuePosition);
         }
     }
 
+    /**
+     * @return Gibt zurück, wie viele Spieler noch im Spiel sind
+     */
     private int countSpielerImSpiel() {
         return Math.toIntExact(
                 teilnehmer
@@ -164,6 +217,9 @@ public class Schiedsrichter {
                         .filter((Spieler s) -> s.isImSpiel()).count());
     }
 
+    /**
+     * Setzt intial den Besitzer aller Immobilien als Bank
+     */
     private void besitzerInitialisieren() {
         spielbrett
                 .stream()

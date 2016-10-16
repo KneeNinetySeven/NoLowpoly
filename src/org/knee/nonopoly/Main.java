@@ -19,6 +19,9 @@ public class Main {
         new Main().runGame();
     }
 
+    /**
+     * Lässt den Schiedsrichter (noch) nur die richtigen Dinge tun
+     */
     public void runGame(){
         schiedsrichter.registriereTeilnehmer("Nils", new AllesKaeufer());
         schiedsrichter.registriereTeilnehmer("Matze", new StrassenMogul());
