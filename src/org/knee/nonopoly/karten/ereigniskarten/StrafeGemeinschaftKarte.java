@@ -1,14 +1,15 @@
-package org.knee.nonopoly.karten.gemeinschaftskarten;
+package org.knee.nonopoly.karten.ereigniskarten;
 
 import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Adrian Stölken
+ *         Ereigniskarte 11
  */
-public class GefaengnisKarte implements Karte {
+public class StrafeGemeinschaftKarte implements Karte {
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-
+// TODO: Implement
     }
 }

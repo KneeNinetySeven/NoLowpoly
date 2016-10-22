@@ -4,11 +4,12 @@ import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Adrian
+ * Gemeinschaftskarte 10
  */
-public class GefaengnisKarte implements Karte {
+public class SchoenheitspreisKarte implements Karte {
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-
+        schiedsrichter.getBank().ueberweiseAn(200, schiedsrichter.getAktiverSpieler());
     }
 }

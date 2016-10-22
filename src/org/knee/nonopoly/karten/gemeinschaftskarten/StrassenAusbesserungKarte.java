@@ -4,11 +4,11 @@ import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Adrian
  */
-public class GefaengnisKarte implements Karte {
+public class StrassenAusbesserungKarte implements Karte {
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-
+        // TODO: Implement; wie bei der Häuser Renovierung brauchen wir auch hierfür ein Attribut Besitzer je Strasse
     }
 }

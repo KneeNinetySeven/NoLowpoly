@@ -1,5 +1,7 @@
 package org.knee.nonopoly.karten;
 
+import org.knee.nonopoly.logik.Schiedsrichter;
+
 /**
  * Created by Nils on 24.09.2016.
  *
@@ -9,6 +11,6 @@ package org.knee.nonopoly.karten;
  */
 public interface Karte {
 
-    void fuehreKartenAktionAus();
+    void fuehreKartenAktionAus(Schiedsrichter schiedsrichter);
 
 }
