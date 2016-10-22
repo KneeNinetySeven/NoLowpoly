@@ -5,7 +5,7 @@ import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * @author Adrian Stölken
- * Gemeinschaftskarte 4
+ *         Gemeinschaftskarte 4
  */
 public class JahresrenteKarte implements Karte {
     @Override

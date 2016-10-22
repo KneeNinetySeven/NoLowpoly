@@ -6,7 +6,7 @@ import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * @author Adrian
- * Gemeinschaftskarte 2
+ *         Gemeinschaftskarte 2
  */
 public class GeburtstagKarte implements Karte {
     @Override

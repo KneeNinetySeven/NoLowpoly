@@ -4,12 +4,12 @@ import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * @author Adrian Stölken
+ * @author Adrian
  *         Ereigniskarte 11
  */
 public class StrafeGemeinschaftKarte implements Karte {
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-// TODO: Implement
+        // TODO: Implement nehmen einer Gemeinschaftskarte
     }
 }

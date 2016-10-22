@@ -5,7 +5,7 @@ import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * @author Adrian
- * Gemeinschaftskarte 16
+ *         Gemeinschaftskarte 16
  */
 public class SchulgeldKarte implements Karte {
     @Override

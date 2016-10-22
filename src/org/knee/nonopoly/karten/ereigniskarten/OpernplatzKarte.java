@@ -1,12 +1,10 @@
 package org.knee.nonopoly.karten.ereigniskarten;
 
-import org.knee.nonopoly.felder.Feld;
-import org.knee.nonopoly.felder.Los;
 import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * @author Adrian Stölken
+ * @author Adrian
  * Ereigniskarte 13
  */
 public class OpernplatzKarte implements Karte{

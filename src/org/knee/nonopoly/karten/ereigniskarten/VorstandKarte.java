@@ -5,7 +5,7 @@ import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * @author Adrian Stölken
+ * @author Adrian
  *         Ereigniskarte 16
  */
 

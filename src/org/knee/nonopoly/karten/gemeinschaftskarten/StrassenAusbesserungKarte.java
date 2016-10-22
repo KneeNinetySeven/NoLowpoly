@@ -5,6 +5,7 @@ import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * @author Adrian
+ *         Gemeinschaftskarte 1
  */
 public class StrassenAusbesserungKarte implements Karte {
     @Override

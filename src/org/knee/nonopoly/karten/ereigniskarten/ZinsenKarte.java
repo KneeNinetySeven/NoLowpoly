@@ -4,8 +4,8 @@ import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * @author Adrian Stölken
- * Ereigniskarte 10
+ * @author Adrian
+ *         Ereigniskarte 10
  */
 public class ZinsenKarte implements Karte {
     @Override
