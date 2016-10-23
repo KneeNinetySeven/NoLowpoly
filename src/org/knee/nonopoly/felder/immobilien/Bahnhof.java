@@ -3,7 +3,7 @@ package org.knee.nonopoly.felder.immobilien;
 import java.util.List;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Nils
  */
 public class Bahnhof extends ImmobilienFeld {
 

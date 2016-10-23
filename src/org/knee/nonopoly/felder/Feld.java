@@ -44,9 +44,7 @@ public abstract class Feld {
      *
      * @param schiedsrichter
      */
-    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
-        // Tut nichts
-    }
+    public abstract void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter);
 
     public boolean istVomTyp(FeldTypen testType) {
         return this.typ == testType;

@@ -30,6 +30,9 @@ public class Spieler extends Entity {
         return spieler;
     }
 
+    /**
+     * Konstruktor
+     */
     protected Spieler() {
         super();
         this.setGuthaben(0);
@@ -39,24 +42,40 @@ public class Spieler extends Entity {
         this.pascheInFolge = 0;
     }
 
+    /**
+     * Zählt den Pasch-Counter dieser Folge hoch.
+     * @return Gibt zurück, ob es sich schon um das dritte Pasch handelt
+     */
     public boolean registrierePasch(){
         this.pascheInFolge = this.pascheInFolge++;
         return pascheInFolge == 3;
     }
 
+    /**
+     * Nullt die Paschserie wieder
+     */
     public void pascheZuruecksetzen(){
         this.pascheInFolge = 0;
     }
 
+    /**
+     * Spieler wird ins Gefängnis gebracht
+     */
     public void geheInsGefaengnis(){
         setPosition(10);
         setImGefaengnis(3);
     }
 
+    /**
+     * Spielt die Gefängniskarte aus und gibt sie ab
+     */
     public void gefaengniskarteSpielen(){
         this.getGefaengnisFreiKarte().abgeben();
     }
 
+    /**
+     * Spieler wird wieder freigelassen
+     */
     public void verlasseDasGefängnis(){
         setImGefaengnis(0);
     }

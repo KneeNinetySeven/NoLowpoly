@@ -9,15 +9,29 @@ import org.knee.nonopoly.felder.immobilien.Strasse;
  */
 public class AllesKaeufer extends Strategie {
 
+    /**
+     * Konstruktor
+     */
     public AllesKaeufer() {
         this.setName("Alles-Kauefer");
     }
 
+
+    /**
+     * @param spieler
+     * @param feld
+     * @return Gibt zurück, ob ein Feld, nach der Strategie, gekauft werden darf
+     */
     @Override
     public boolean erlaubtFeldKauf(Spieler spieler, ImmobilienFeld feld) {
         return feld.getKaufpreis() < spieler.getGuthaben();
     }
 
+    /**
+     * @param spieler
+     * @param feld
+     * @return Gibt zurück, ob ein Haus, nach der Strategie, gebaut werden darf
+     */
     @Override
     public boolean erlaubtHausbau(Spieler spieler, Strasse feld) {
         return feld.getHauspreis() < spieler.getGuthaben();
