@@ -10,7 +10,9 @@ import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 import org.knee.nonopoly.felder.Los;
 import org.knee.nonopoly.karten.Karte;
-import org.knee.nonopoly.karten.gemeinschaftskarten.GefaengnisKarte;
+import org.knee.nonopoly.karten.ereigniskarten.*;
+import org.knee.nonopoly.karten.gemeinschaftskarten.*;
+import org.knee.nonopoly.karten.gemeinschaftskarten.DividendenKarte;
 import org.knee.nonopoly.logik.XMLUtils.JDOMParsing;
 import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.wuerfel.Wuerfel;
@@ -104,12 +106,43 @@ public class Schiedsrichter {
      */
     private void legeKartenAn(){
         ArrayList<Karte> tmp = new ArrayList<>();
+
+        //Gemeinschaftskarten
+        tmp.add(new ArztKarte());
+        tmp.add(new BankIrrtumKarte());
+        tmp.add(new DividendenKarte());
+        tmp.add(new ErbschaftKarte());
+        tmp.add(new EStRueckzahlungKarte());
+        tmp.add(new GeburtstagKarte());
         tmp.add(new GefaengnisKarte());
+        tmp.add(new JahresrenteKarte());
+        tmp.add(new KrankenhausKarte());
+        tmp.add(new KreuzwortraetselKarte());
+        tmp.add(new LagerverkaeufeKarte());
+        tmp.add(new org.knee.nonopoly.karten.gemeinschaftskarten.LosKarte());
+        tmp.add(new SchoenheitspreisKarte());
+        tmp.add(new SchulgeldKarte());
+        tmp.add(new StrassenAusbesserungKarte());
+
         // Hier sollen die Karten gemischt werden. Daher eine tmp Liste
         gemeinschaftsKarten.addAll(tmp);
 
+        // Ereigniskarten
         tmp = new ArrayList<>();
-        tmp.add(new GefaengnisKarte());
+        tmp.add(new BadstrasseKarte());
+        tmp.add(new DividendenKarte());
+        tmp.add(new DreiFelderZurueckKarte());
+        tmp.add(new HaeuserRenovierenKarte());
+        tmp.add(new org.knee.nonopoly.karten.ereigniskarten.LosKarte());
+        tmp.add(new NaechsterBahnhofKarte());
+        tmp.add(new OpernplatzKarte());
+        tmp.add(new SchlossalleeKarte());
+        tmp.add(new SeestrasseKarte());
+        tmp.add(new StrafeGemeinschaftKarte());
+        tmp.add(new SuedbahnhofKarte());
+        tmp.add(new VorstandKarte());
+        tmp.add(new ZinsenKarte());
+        tmp.add(new ZuSchnellKarte());
         // Ereigniskarten werden gemischt.
         ereignisKarten.addAll(tmp);
     }
