@@ -13,23 +13,39 @@ public class Spieler extends Entity {
     private boolean imSpiel;
     private int imGefaengnis;
     private GefaengnisKarte gefaengnisFreiKarte;
+    private int pascheInFolge;
     private int position;
     private Strategie strategie;
 
+    /**
+     * Erstellt einen vollständigen Spieler
+     * @param name
+     * @param strategie
+     * @return
+     */
     public static final Spieler spielerErzeugen(String name, Strategie strategie){
         Spieler spieler = new Spieler();
         spieler.setName(name);
-        spieler.setImSpiel(true);
         spieler.setStrategie(strategie);
         return spieler;
     }
 
-    public Spieler() {
+    protected Spieler() {
         super();
         this.setGuthaben(0);
         this.setPosition(0);
         this.setName("");
         this.setImSpiel(true);
+        this.pascheInFolge = 0;
+    }
+
+    public boolean registrierePasch(){
+        this.pascheInFolge = this.pascheInFolge++;
+        return pascheInFolge == 3;
+    }
+
+    public void pascheZuruecksetzen(){
+        this.pascheInFolge = 0;
     }
 
     public void geheInsGefaengnis(){

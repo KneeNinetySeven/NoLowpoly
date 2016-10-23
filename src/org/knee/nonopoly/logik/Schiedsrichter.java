@@ -176,8 +176,6 @@ public class Schiedsrichter {
                 // Gefängnis-Insassen würfeln nicht
                 aktivesFeld.fuehrePflichtAktionAus(this);
             } else {
-                letzterWurf = wuerfel.wuerfeln();
-                protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
                 bewegeSpieler();
                 aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
                 protokollant.printAs(aktiverSpieler.getName()
@@ -248,6 +246,23 @@ public class Schiedsrichter {
      */
     private void bewegeSpieler() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
+
+        letzterWurf = wuerfel.wuerfeln();
+        protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
+
+        // Auf Pasche überprüfen
+        if(letzterWurf.istPasch()){
+            if(aktiverSpieler.registrierePasch()) {
+                // Beim dritten Pasch ins Gefängnis verschieben, statt auf dem Feld
+                aktiverSpieler.geheInsGefaengnis();
+                return;
+            }
+        } else {
+            // Paschserie unterbrechen
+            aktiverSpieler.pascheZuruecksetzen();
+        }
+
+        // Felderzahl betrachten
         int neuePosition = (aktiverSpieler.getPosition() + letzterWurf.getSum());
         if ((spielbrett.size() - 1) < neuePosition) {
             // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen

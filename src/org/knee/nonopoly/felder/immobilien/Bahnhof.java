@@ -9,8 +9,14 @@ public class Bahnhof extends ImmobilienFeld {
 
     private List<Integer> mietStaffel;
 
-
-
+    /**
+     * Konstruktor
+     *
+     * @param index
+     * @param name
+     * @param kaufpreis
+     * @param mietStaffel
+     */
     public Bahnhof(int index, String name, int kaufpreis, List<Integer> mietStaffel) {
         super(index, name, kaufpreis);
         this.immobilienTyp = ImmobilienTypen.BAHNHOF;

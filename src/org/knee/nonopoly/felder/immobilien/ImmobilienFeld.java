@@ -11,10 +11,17 @@ import org.knee.nonopoly.felder.FeldTypen;
  */
 public abstract class ImmobilienFeld extends Feld {
 
-    private int kaufpreis;
+    private final int kaufpreis;
     public Entity besitzer;
     public ImmobilienTypen immobilienTyp;
 
+    /**
+     * Konstruktor
+     *
+     * @param index
+     * @param name
+     * @param kaufpreis
+     */
     public ImmobilienFeld(int index, String name, int kaufpreis) {
         super(index, name);
         this.kaufpreis = kaufpreis;
@@ -22,26 +29,36 @@ public abstract class ImmobilienFeld extends Feld {
         this.immobilienTyp = ImmobilienTypen.ABSTRACT;
     }
 
-    public void initialisiereBesitzer(Bank bank){
+    /**
+     * Implementiert die Initialisierungssequenz zur Festlegung des Initialbesitzers (Bank)
+     *
+     * @param bank Bank-Objekt, das als Initialbesitzer festgelegt werden soll
+     */
+    @Override
+    public void initialisiereBesitzer(Bank bank) {
         this.besitzer = bank;
     }
 
-    public void wirdGekauftDurchSpieler(Spieler spieler, Bank bank){
+    /**
+     * Verkauft das Feld an den angegebenen Spieler und nimmt diesem auch das Geld dafür ab
+     *
+     * @param spieler
+     * @param bank
+     */
+    public void wirdGekauftDurchSpieler(Spieler spieler, Bank bank) {
         spieler.ueberweiseAn(getKaufpreis(), bank);
         besitzer = spieler;
     }
 
-
-
-    public boolean istImmobilienTyp(ImmobilienTypen testImmoTyp){
+    /**
+     * @param testImmoTyp
+     * @return Gibt zurück, ob das Feld vom selben Immobilientyp ist, wie übergeben
+     */
+    public boolean istImmobilienTyp(ImmobilienTypen testImmoTyp) {
         return this.immobilienTyp == testImmoTyp;
     }
 
     public int getKaufpreis() {
         return kaufpreis;
-    }
-
-    public void setKaufpreis(int kaufpreis) {
-        this.kaufpreis = kaufpreis;
     }
 }
