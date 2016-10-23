@@ -4,7 +4,8 @@ import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Nils
+ *         Implementiert die Basis für jedes Spielfeld
  */
 public abstract class Feld {
 
@@ -12,7 +13,13 @@ public abstract class Feld {
     private String name;
     public FeldTypen typ;
 
-    public Feld(int index, String name){
+    /**
+     * Konstruktor
+     *
+     * @param index Index des neuen Feldes
+     * @param name  Name des neuen Feldes
+     */
+    public Feld(int index, String name) {
         this.index = index;
         this.name = name;
         this.typ = FeldTypen.ABSTRACT;
@@ -22,22 +29,22 @@ public abstract class Feld {
         this.setName("Feld");
     }
 
-    @Override
-    public String toString() {
-        return "Feld{" +
-                "index=" + index +
-                ", name='" + name + '\'' +
-                ", typ=" + typ +
-                '}';
-    }
-
-    public void initialisiereBesitzer(Bank bank){
+    /**
+     * Implementiert die Initialisierungssequenz zur Festlegung des Initialbesitzers (Bank)
+     *
+     * @param bank Bank-Objekt, das als Initialbesitzer festgelegt werden soll
+     */
+    public void initialisiereBesitzer(Bank bank) {
 
     }
 
-    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter){
-        // Tut nichts
-    }
+    /**
+     * Führt die Aktion des Feldes für den aktiven Spieler aus
+     * Wird in den einzelnen Feldern überschrieben
+     *
+     * @param schiedsrichter
+     */
+    public abstract void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter);
 
     public boolean istVomTyp(FeldTypen testType) {
         return this.typ == testType;
@@ -51,7 +58,16 @@ public abstract class Feld {
         this.name = name;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return this.index;
+    }
+
+    @Override
+    public String toString() {
+        return "Feld{" +
+                "index=" + index +
+                ", name='" + name + '\'' +
+                ", typ=" + typ +
+                '}';
     }
 }

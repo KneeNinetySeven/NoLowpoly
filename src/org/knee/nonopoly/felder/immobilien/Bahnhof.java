@@ -3,14 +3,20 @@ package org.knee.nonopoly.felder.immobilien;
 import java.util.List;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Nils
  */
 public class Bahnhof extends ImmobilienFeld {
 
     private List<Integer> mietStaffel;
 
-
-
+    /**
+     * Konstruktor
+     *
+     * @param index
+     * @param name
+     * @param kaufpreis
+     * @param mietStaffel
+     */
     public Bahnhof(int index, String name, int kaufpreis, List<Integer> mietStaffel) {
         super(index, name, kaufpreis);
         this.immobilienTyp = ImmobilienTypen.BAHNHOF;
