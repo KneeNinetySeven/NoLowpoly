@@ -1,11 +1,19 @@
 package org.knee.nonopoly.felder.kartenFelder;
 
+import org.knee.nonopoly.logik.Schiedsrichter;
+
 /**
  * Created by Nils on 24.09.2016.
  */
 public class EreignisFeld extends KartenFeld {
     public EreignisFeld(int index, String name) {
         super(index, name);
+        this.kartenTyp = KartenTypen.EREIGNISFELD;
+    }
+
+    @Override
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
+        schiedsrichter.naechsteEreigniskarte();
     }
 
     @Override

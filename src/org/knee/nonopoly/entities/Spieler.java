@@ -1,7 +1,7 @@
 package org.knee.nonopoly.entities;
 
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
-import org.knee.nonopoly.karten.Karte;
+import org.knee.nonopoly.karten.gemeinschaftskarten.GefaengnisKarte;
 
 /**
  * Created by Nils on 09.09.2016.
@@ -12,7 +12,7 @@ public class Spieler extends Entity {
 
     private boolean imSpiel;
     private int imGefaengnis;
-    private Karte gefaengnisFreiKarte;
+    private GefaengnisKarte gefaengnisFreiKarte;
     private int position;
     private Strategie strategie;
 
@@ -33,8 +33,16 @@ public class Spieler extends Entity {
     }
 
     public void geheInsGefaengnis(){
-        setPosition(11);
+        setPosition(10);
         setImGefaengnis(3);
+    }
+
+    public void gefaengniskarteSpielen(){
+        this.getGefaengnisFreiKarte().abgeben();
+    }
+
+    public void verlasseDasGefängnis(){
+        setImGefaengnis(0);
     }
 
     @Override
@@ -71,11 +79,11 @@ public class Spieler extends Entity {
         this.imGefaengnis = imGefaengnis;
     }
 
-    public Karte getGefaengnisFreiKarte() {
+    public GefaengnisKarte getGefaengnisFreiKarte() {
         return gefaengnisFreiKarte;
     }
 
-    public void setGefaengnisFreiKarte(Karte gefaengnisFreiKarte) {
+    public void setGefaengnisFreiKarte(GefaengnisKarte gefaengnisFreiKarte) {
         this.gefaengnisFreiKarte = gefaengnisFreiKarte;
     }
 }

@@ -29,22 +29,35 @@ public class Gefaengnis extends Feld {
      */
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
-        if (schiedsrichter.getAktiverSpieler().getImGefaengnis() > 0) {
-            // Logging
-            schiedsrichter
-                    .getProtokollant()
-                    .printAs(schiedsrichter
-                            .getAktiverSpieler()
-                            .getName() + " bleibt diese Runde im Gefängnis sitzen.");
 
-            // Wartezeit anrechnen
-            schiedsrichter
-                    .getAktiverSpieler()
-                    .setImGefaengnis(schiedsrichter
-                            .getAktiverSpieler()
-                            .getImGefaengnis() - 1);
+        if (schiedsrichter.getAktiverSpieler().getImGefaengnis() > 0) {
+            if(schiedsrichter.getAktiverSpieler().getGefaengnisFreiKarte() == null) {
+                // Logging
+                schiedsrichter
+                        .getProtokollant()
+                        .printAs(schiedsrichter
+                                .getAktiverSpieler()
+                                .getName() + " bleibt diese Runde im Gefängnis sitzen.");
+
+                // Wartezeit anrechnen
+                schiedsrichter
+                        .getAktiverSpieler()
+                        .setImGefaengnis(schiedsrichter
+                                .getAktiverSpieler()
+                                .getImGefaengnis() - 1);
+            } else {
+                // Logging
+                schiedsrichter
+                        .getProtokollant()
+                        .printAs(schiedsrichter
+                                .getAktiverSpieler()
+                                .getName() + " entflieht dem Gefängnis mit der Gefängnis-Frei-Karte.");
+                schiedsrichter.getAktiverSpieler().verlasseDasGefängnis();
+                schiedsrichter.getAktiverSpieler().gefaengniskarteSpielen();
+                schiedsrichter.getAktiverSpieler().setGefaengnisFreiKarte(null);
+            }
         } else {
-            schiedsrichter.getProtokollant().printAs(schiedsrichter.getAktiverSpieler().getName() + " steht vor dem Gefängnis");
+            schiedsrichter.getProtokollant().printAs(schiedsrichter.getAktiverSpieler().getName() + " steht vor dem Gefängnis und tut nix.");
         }
     }
 }

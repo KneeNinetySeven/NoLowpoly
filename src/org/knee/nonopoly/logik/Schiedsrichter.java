@@ -9,6 +9,8 @@ import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 import org.knee.nonopoly.felder.Los;
+import org.knee.nonopoly.karten.Karte;
+import org.knee.nonopoly.karten.gemeinschaftskarten.GefaengnisKarte;
 import org.knee.nonopoly.logik.XMLUtils.JDOMParsing;
 import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.wuerfel.Wuerfel;
@@ -38,6 +40,12 @@ public class Schiedsrichter {
     private List<Feld> spielbrett;
     private int rundenZaehler;
 
+    // Aktionskarten
+    private int gemeinschaftsKartenPointer;
+    private List<Karte> gemeinschaftsKarten;
+    private int ereignisKartenPointer;
+    private List<Karte> ereignisKarten;
+
     // Parser
     private JDOMParsing jdomParser;
 
@@ -48,6 +56,14 @@ public class Schiedsrichter {
         this.bank = new Bank();
         this.steuertopf = new Steuertopf();
         this.rundenZaehler = 0;
+
+        // Aktionskarten
+        this.gemeinschaftsKartenPointer = 0;
+        this.ereignisKartenPointer = 0;
+        this.gemeinschaftsKarten = new ArrayList<>();
+        this.ereignisKarten = new ArrayList<>();
+
+        this.legeKartenAn();
 
         // Spielbrett
         spielbrett = new ArrayList<>();
@@ -77,16 +93,25 @@ public class Schiedsrichter {
             e.printStackTrace();
         }
 
-        spielbrett.stream().forEach(feld -> {
-            if(feld.getIndex() != spielbrett.indexOf(feld)){
-                System.out.println("Feld " + feld.getName());
-            }
-        });
-
         spielbrett.forEach(feld -> getProtokollant().printAs(
                 "Anlegen auf: " + getSpielbrett().indexOf(feld)
                 + " Index: " + feld.getIndex()
                 + " von: " + feld.getName()));
+    }
+
+    /**
+     * Legt die Aktionskarten an und auf die entsprechenden Kartenstapel
+     */
+    private void legeKartenAn(){
+        ArrayList<Karte> tmp = new ArrayList<>();
+        tmp.add(new GefaengnisKarte());
+        // Hier sollen die Karten gemischt werden. Daher eine tmp Liste
+        gemeinschaftsKarten.addAll(tmp);
+
+        tmp = new ArrayList<>();
+        tmp.add(new GefaengnisKarte());
+        // Ereigniskarten werden gemischt.
+        ereignisKarten.addAll(tmp);
     }
 
     /**
@@ -191,11 +216,6 @@ public class Schiedsrichter {
     private void bewegeSpieler() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         int neuePosition = (aktiverSpieler.getPosition() + letzterWurf.getSum());
-        System.out.println("CROSSCHECK: "
-                + letzterWurf.getWurf1() + " | "
-                + letzterWurf.getWurf2() + " | "
-                + letzterWurf.getSum() + " \n >> \t "
-                + aktiverSpieler.getPosition() + " --> " + neuePosition);
         if ((spielbrett.size() - 1) < neuePosition) {
             // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen
             aktiverSpieler.setPosition(neuePosition - spielbrett.size());
@@ -226,6 +246,30 @@ public class Schiedsrichter {
                 .stream()
                 .filter((Feld f) -> f.istVomTyp(FeldTypen.IMMOBILIENFELD))
                 .forEach(feld -> feld.initialisiereBesitzer(getBank()));
+    }
+
+    /**
+     * Führt die nächste Gemeinschaftskarte aus
+     */
+    public void naechsteGemeinschaftskarte(){
+        if(gemeinschaftsKartenPointer == gemeinschaftsKarten.size()) {
+            this.gemeinschaftsKartenPointer = 0;
+        }
+        this.gemeinschaftsKarten.get(gemeinschaftsKartenPointer).fuehreKartenAktionAus(this);
+        getProtokollant().printAs(this.gemeinschaftsKarten.get(gemeinschaftsKartenPointer).toString() + " wurde gezogen.");
+        this.gemeinschaftsKartenPointer++;
+    }
+
+    /**
+     * Führt die nächste Ereigniskarte aus
+     */
+    public void naechsteEreigniskarte(){
+        if(ereignisKartenPointer == ereignisKarten.size()) {
+            ereignisKartenPointer = 0;
+        }
+        ereignisKarten.get(ereignisKartenPointer).fuehreKartenAktionAus(this);
+        getProtokollant().printAs( ereignisKarten.get(ereignisKartenPointer) + " wurde gezogen.");
+        this.ereignisKartenPointer++;
     }
 
     public List<Feld> getSpielbrett() {
