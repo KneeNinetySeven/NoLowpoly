@@ -77,6 +77,7 @@ public class Strasse extends ImmobilienFeld {
      * Lässt den übergebenen Spieler die Miete nach Bebauung der Strasse zahlen
      * @param spieler
      */
+    @Override
     public void zahleMiete(Spieler spieler) {
         spieler.ueberweiseAn(mietStaffel.get(getHausanzahl()), besitzer);
     }

@@ -50,6 +50,8 @@ public abstract class ImmobilienFeld extends Feld {
         besitzer = spieler;
     }
 
+    public abstract void zahleMiete(Spieler spieler);
+
     /**
      * @param testImmoTyp
      * @return Gibt zurück, ob das Feld vom selben Immobilientyp ist, wie übergeben

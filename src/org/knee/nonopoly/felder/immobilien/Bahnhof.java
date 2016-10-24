@@ -1,5 +1,8 @@
 package org.knee.nonopoly.felder.immobilien;
 
+import org.knee.nonopoly.entities.Spieler;
+import org.knee.nonopoly.logik.Schiedsrichter;
+
 import java.util.List;
 
 /**
@@ -21,6 +24,36 @@ public class Bahnhof extends ImmobilienFeld {
         super(index, name, kaufpreis);
         this.immobilienTyp = ImmobilienTypen.BAHNHOF;
         this.mietStaffel = mietStaffel;
+    }
+
+    /**
+     * Führt die Aktion des Feldes für den aktiven Spieler aus
+     * Wird in den einzelnen Feldern überschrieben
+     *
+     * @param schiedsrichter
+     */
+    @Override
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
+        Spieler aktiverSpieler = schiedsrichter.getAktiverSpieler();
+
+        if (this.besitzer == aktiverSpieler) {
+            return;
+        } else if (this.besitzer == schiedsrichter.getBank()) {
+
+            if (aktiverSpieler.getStrategie().erlaubtFeldKauf(aktiverSpieler, this)) {
+                wirdGekauftDurchSpieler(aktiverSpieler, schiedsrichter.getBank());
+            } else {
+                return;
+            }
+
+        } else {
+            zahleMiete(aktiverSpieler);
+        }
+    }
+
+    @Override
+    public void zahleMiete(Spieler spieler) {
+        spieler.ueberweiseAn(mietStaffel.get(1), besitzer);
     }
 
     @Override
