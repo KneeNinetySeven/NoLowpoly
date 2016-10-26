@@ -12,6 +12,7 @@ import java.util.List;
 public class Werk extends ImmobilienFeld {
 
     private List<Integer> faktoren;
+    private int naechsteMiete;
 
     /**
      * Konstruktor
@@ -43,9 +44,20 @@ public class Werk extends ImmobilienFeld {
                 wirdGekauftDurchSpieler(aktiverSpieler, bank);
             }
         } else {
-            int miete = schiedsrichter.getLetzterWurf().getSum() * 80;
-            aktiverSpieler.ueberweiseAn(miete, besitzer);
+            naechsteMiete = schiedsrichter.getLetzterWurf().getSum() * 80;
+            zahleMiete(aktiverSpieler);
         }
+    }
+
+    /**
+     * Lässt den übergebenen Spieler Miete zahlen
+     *
+     * @param spieler
+     */
+    @Override
+    public void zahleMiete(Spieler spieler) {
+        spieler.ueberweiseAn(naechsteMiete, besitzer);
+
     }
 
     @Override

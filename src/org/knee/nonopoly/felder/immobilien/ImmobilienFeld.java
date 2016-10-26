@@ -50,6 +50,10 @@ public abstract class ImmobilienFeld extends Feld {
         besitzer = spieler;
     }
 
+    /**
+     * Lässt den übergebenen Spieler Miete zahlen
+     * @param spieler
+     */
     public abstract void zahleMiete(Spieler spieler);
 
     /**
