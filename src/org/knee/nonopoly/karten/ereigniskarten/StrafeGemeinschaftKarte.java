@@ -10,6 +10,6 @@ import org.knee.nonopoly.logik.Schiedsrichter;
 public class StrafeGemeinschaftKarte implements Karte {
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-        // TODO: Implement nehmen einer Gemeinschaftskarte
+        schiedsrichter.naechsteGemeinschaftskarte();
     }
 }

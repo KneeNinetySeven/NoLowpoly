@@ -1,7 +1,6 @@
 package org.knee.nonopoly;
 
 import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
-import org.knee.nonopoly.entities.spielerStrategien.StrassenMogul;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
@@ -24,13 +23,14 @@ public class Main {
      */
     public void runGame(){
         schiedsrichter.registriereTeilnehmer("Nils", new AllesKaeufer());
-        schiedsrichter.registriereTeilnehmer("Matze", new StrassenMogul());
+        schiedsrichter.registriereTeilnehmer("Adrian", new AllesKaeufer());
+        schiedsrichter.registriereTeilnehmer("Matze", new AllesKaeufer());
         schiedsrichter.zahleStartkapitalAus();
+        schiedsrichter.spieleEinenSpielzug();
         schiedsrichter.spieleEineRunde();
         schiedsrichter.spieleEineRunde();
         schiedsrichter.spieleEineRunde();
         schiedsrichter.spieleEineRunde();
-        schiedsrichter.spieleEineRunde();
-        schiedsrichter.spieleEineRunde();
+
     }
 }

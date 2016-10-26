@@ -14,6 +14,13 @@ public class Wurf {
     }
 
     /**
+     * @return Gibt zurück, ob es sich bei dem Objekt um ein Pasch handelt
+     */
+    public boolean istPasch() {
+        return wurf1 == wurf2;
+    }
+
+    /**
      * @return Gibt die Augensumme der Würfel zurück
      */
     public int getSum() {

@@ -9,6 +9,10 @@ import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 import org.knee.nonopoly.felder.Los;
+import org.knee.nonopoly.karten.Karte;
+import org.knee.nonopoly.karten.ereigniskarten.*;
+import org.knee.nonopoly.karten.gemeinschaftskarten.*;
+import org.knee.nonopoly.karten.gemeinschaftskarten.DividendenKarte;
 import org.knee.nonopoly.logik.XMLUtils.JDOMParsing;
 import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.wuerfel.Wuerfel;
@@ -38,6 +42,12 @@ public class Schiedsrichter {
     private List<Feld> spielbrett;
     private int rundenZaehler;
 
+    // Aktionskarten
+    private int gemeinschaftsKartenPointer;
+    private List<Karte> gemeinschaftsKarten;
+    private int ereignisKartenPointer;
+    private List<Karte> ereignisKarten;
+
     // Parser
     private JDOMParsing jdomParser;
 
@@ -48,6 +58,14 @@ public class Schiedsrichter {
         this.bank = new Bank();
         this.steuertopf = new Steuertopf();
         this.rundenZaehler = 0;
+
+        // Aktionskarten
+        this.gemeinschaftsKartenPointer = 0;
+        this.ereignisKartenPointer = 0;
+        this.gemeinschaftsKarten = new ArrayList<>();
+        this.ereignisKarten = new ArrayList<>();
+
+        this.legeKartenAn();
 
         // Spielbrett
         spielbrett = new ArrayList<>();
@@ -77,16 +95,56 @@ public class Schiedsrichter {
             e.printStackTrace();
         }
 
-        spielbrett.stream().forEach(feld -> {
-            if(feld.getIndex() != spielbrett.indexOf(feld)){
-                System.out.println("Feld " + feld.getName());
-            }
-        });
-
         spielbrett.forEach(feld -> getProtokollant().printAs(
                 "Anlegen auf: " + getSpielbrett().indexOf(feld)
                 + " Index: " + feld.getIndex()
                 + " von: " + feld.getName()));
+    }
+
+    /**
+     * Legt die Aktionskarten an und auf die entsprechenden Kartenstapel
+     */
+    private void legeKartenAn(){
+        ArrayList<Karte> tmp = new ArrayList<>();
+
+        //Gemeinschaftskarten
+        tmp.add(new ArztKarte());
+        tmp.add(new BankIrrtumKarte());
+        tmp.add(new DividendenKarte());
+        tmp.add(new ErbschaftKarte());
+        tmp.add(new EStRueckzahlungKarte());
+        tmp.add(new GeburtstagKarte());
+        tmp.add(new GefaengnisKarte());
+        tmp.add(new JahresrenteKarte());
+        tmp.add(new KrankenhausKarte());
+        tmp.add(new KreuzwortraetselKarte());
+        tmp.add(new LagerverkaeufeKarte());
+        tmp.add(new org.knee.nonopoly.karten.gemeinschaftskarten.LosKarte());
+        tmp.add(new SchoenheitspreisKarte());
+        tmp.add(new SchulgeldKarte());
+        tmp.add(new StrassenAusbesserungKarte());
+
+        // Hier sollen die Karten gemischt werden. Daher eine tmp Liste
+        gemeinschaftsKarten.addAll(tmp);
+
+        // Ereigniskarten
+        tmp = new ArrayList<>();
+        tmp.add(new BadstrasseKarte());
+        tmp.add(new DividendenKarte());
+        tmp.add(new DreiFelderZurueckKarte());
+        tmp.add(new HaeuserRenovierenKarte());
+        tmp.add(new org.knee.nonopoly.karten.ereigniskarten.LosKarte());
+        tmp.add(new NaechsterBahnhofKarte());
+        tmp.add(new OpernplatzKarte());
+        tmp.add(new SchlossalleeKarte());
+        tmp.add(new SeestrasseKarte());
+        tmp.add(new StrafeGemeinschaftKarte());
+        tmp.add(new SuedbahnhofKarte());
+        tmp.add(new VorstandKarte());
+        tmp.add(new ZinsenKarte());
+        tmp.add(new ZuSchnellKarte());
+        // Ereigniskarten werden gemischt.
+        ereignisKarten.addAll(tmp);
     }
 
     /**
@@ -118,8 +176,6 @@ public class Schiedsrichter {
                 // Gefängnis-Insassen würfeln nicht
                 aktivesFeld.fuehrePflichtAktionAus(this);
             } else {
-                letzterWurf = wuerfel.wuerfeln();
-                protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
                 bewegeSpieler();
                 aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
                 protokollant.printAs(aktiverSpieler.getName()
@@ -190,12 +246,24 @@ public class Schiedsrichter {
      */
     private void bewegeSpieler() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
+
+        letzterWurf = wuerfel.wuerfeln();
+        protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
+
+        // Auf Pasche überprüfen
+        if(letzterWurf.istPasch()){
+            if(aktiverSpieler.registrierePasch()) {
+                // Beim dritten Pasch ins Gefängnis verschieben, statt auf dem Feld
+                aktiverSpieler.geheInsGefaengnis();
+                return;
+            }
+        } else {
+            // Paschserie unterbrechen
+            aktiverSpieler.pascheZuruecksetzen();
+        }
+
+        // Felderzahl betrachten
         int neuePosition = (aktiverSpieler.getPosition() + letzterWurf.getSum());
-        System.out.println("CROSSCHECK: "
-                + letzterWurf.getWurf1() + " | "
-                + letzterWurf.getWurf2() + " | "
-                + letzterWurf.getSum() + " \n >> \t "
-                + aktiverSpieler.getPosition() + " --> " + neuePosition);
         if ((spielbrett.size() - 1) < neuePosition) {
             // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen
             aktiverSpieler.setPosition(neuePosition - spielbrett.size());
@@ -226,6 +294,30 @@ public class Schiedsrichter {
                 .stream()
                 .filter((Feld f) -> f.istVomTyp(FeldTypen.IMMOBILIENFELD))
                 .forEach(feld -> feld.initialisiereBesitzer(getBank()));
+    }
+
+    /**
+     * Führt die nächste Gemeinschaftskarte aus
+     */
+    public void naechsteGemeinschaftskarte(){
+        if(gemeinschaftsKartenPointer == gemeinschaftsKarten.size()) {
+            this.gemeinschaftsKartenPointer = 0;
+        }
+        this.gemeinschaftsKarten.get(gemeinschaftsKartenPointer).fuehreKartenAktionAus(this);
+        getProtokollant().printAs(this.gemeinschaftsKarten.get(gemeinschaftsKartenPointer).toString() + " wurde gezogen.");
+        this.gemeinschaftsKartenPointer++;
+    }
+
+    /**
+     * Führt die nächste Ereigniskarte aus
+     */
+    public void naechsteEreigniskarte(){
+        if(ereignisKartenPointer == ereignisKarten.size()) {
+            ereignisKartenPointer = 0;
+        }
+        ereignisKarten.get(ereignisKartenPointer).fuehreKartenAktionAus(this);
+        getProtokollant().printAs( ereignisKarten.get(ereignisKartenPointer) + " wurde gezogen.");
+        this.ereignisKartenPointer++;
     }
 
     public List<Feld> getSpielbrett() {

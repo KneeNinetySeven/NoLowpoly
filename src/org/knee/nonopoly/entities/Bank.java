@@ -8,7 +8,7 @@ package org.knee.nonopoly.entities;
 public class Bank extends Entity {
 
     /**
-     * Die Bank hat ein intiales Kapital von 200000
+     * Konstruktor
      */
     public Bank() {
         super();

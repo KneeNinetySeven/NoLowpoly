@@ -12,6 +12,14 @@ public class SteuerFeld extends Feld {
     private int steuer;
     private Steuertopf steuertopf;
 
+    /**
+     * Konstruktor
+     *
+     * @param index
+     * @param name
+     * @param steuertopf
+     * @param steuer
+     */
     public SteuerFeld(int index, String name, Steuertopf steuertopf, int steuer) {
         super(index, name);
         this.typ = FeldTypen.STEUERFELD;
@@ -19,13 +27,16 @@ public class SteuerFeld extends Feld {
         this.steuertopf = steuertopf;
     }
 
-    public int getSteuer() {
-        return steuer;
-    }
-
+    /**
+     * Führt die Aktion des Feldes für den aktiven Spieler aus
+     * Wird in den einzelnen Feldern überschrieben
+     *
+     * @param schiedsrichter
+     */
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         Spieler aktiverSpieler = schiedsrichter.getAktiverSpieler();
+        
         schiedsrichter.getProtokollant().printAs(aktiverSpieler.getName() + " zahlt " + steuer + " Mücken an Steuern ");
         aktiverSpieler.ueberweiseAn(steuer, schiedsrichter.getSteuertopf());
     }

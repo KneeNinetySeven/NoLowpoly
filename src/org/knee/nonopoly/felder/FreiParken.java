@@ -13,19 +13,10 @@ public class FreiParken extends Feld {
         this.typ = FeldTypen.STEUERFELD;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("FreiParken{");
-        sb.append("index='").append(this.getIndex()).append('\'');
-        sb.append("name=").append(this.getName());
-        sb.append('}');
-        return sb.toString();
-    }
-
-
     /**
      * <b> Pflichtaktion von FreiParken-Feldern </b>
      * Überweist den Inhalt des gesamten Steuertopfes an den Spieler
+     *
      * @param schiedsrichter
      */
 
@@ -33,5 +24,14 @@ public class FreiParken extends Feld {
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         Steuertopf steuertopf = schiedsrichter.getSteuertopf();
         steuertopf.ueberweiseAn(steuertopf.getGuthaben(), schiedsrichter.getAktiverSpieler());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("FreiParken{");
+        sb.append("index='").append(this.getIndex()).append('\'');
+        sb.append("name=").append(this.getName());
+        sb.append('}');
+        return sb.toString();
     }
 }

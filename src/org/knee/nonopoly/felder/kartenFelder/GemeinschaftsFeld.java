@@ -1,11 +1,30 @@
 package org.knee.nonopoly.felder.kartenFelder;
 
+import org.knee.nonopoly.logik.Schiedsrichter;
+
 /**
- * Created by Nils on 24.09.2016.
+ * @author Nils
  */
 public class GemeinschaftsFeld extends KartenFeld {
+
+    /**
+     * Konstruktor
+     * @param index
+     * @param name
+     */
     public GemeinschaftsFeld(int index, String name) {
         super(index, name);
+        this.kartenTyp = KartenTypen.GEMEINSCHAFTSFELD;
+    }
+
+    /**
+     * Führt die Aktion des Feldes für den aktiven Spieler aus
+     *
+     * @param schiedsrichter
+     */
+    @Override
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
+        schiedsrichter.naechsteGemeinschaftskarte();
     }
 
     @Override

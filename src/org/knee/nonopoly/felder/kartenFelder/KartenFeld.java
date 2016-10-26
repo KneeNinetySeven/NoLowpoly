@@ -12,6 +12,11 @@ public abstract class KartenFeld extends Feld {
     private String name;
     public KartenTypen kartenTyp;
 
+    /**
+     * Konstruktor
+     * @param index Index des neuen Felds
+     * @param name Name des neuen Felds
+     */
     public KartenFeld(int index, String name) {
         this.index = index;
         this.name = name;
@@ -19,6 +24,12 @@ public abstract class KartenFeld extends Feld {
         this.kartenTyp = KartenTypen.ABSTRACT;
     }
 
+    /**
+     * Führt die Aktion des Feldes für den aktiven Spieler aus
+     * Wird in den einzelnen Feldern überschrieben
+     *
+     * @param schiedsrichter
+     */
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter
@@ -28,6 +39,10 @@ public abstract class KartenFeld extends Feld {
                         .getName() + " zieht eine Karte auf dem " + this.getName());
     }
 
+    /**
+     * @param testKartenTyp
+     * @return Gibt zurück, ob der Typ des Kartenfeldes mit dem übergebenen übereinstimmt
+     */
     public boolean istKartenTyp(KartenTypen testKartenTyp) {
         return this.kartenTyp == testKartenTyp;
     }

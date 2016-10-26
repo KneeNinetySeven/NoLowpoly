@@ -5,18 +5,32 @@ import org.knee.nonopoly.felder.immobilien.ImmobilienFeld;
 import org.knee.nonopoly.felder.immobilien.Strasse;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Nils
  */
 public abstract class Strategie {
 
+    private String name;
+
+    /**
+     * Konstruktor
+     */
     protected Strategie(){
 
     }
 
-    private String name;
-
+    /**
+     * @param spieler
+     * @param feld
+     * @return Gibt zurück, ob ein Haus, nach der Strategie, gebaut werden darf
+     */
     public abstract boolean erlaubtHausbau(Spieler spieler, Strasse feld);
 
+    /**
+     *
+     * @param spieler
+     * @param feld
+     * @return Gibt zurück, ob ein Feld, nach der Strategie, gekauft werden darf
+     */
     public abstract boolean erlaubtFeldKauf(Spieler spieler, ImmobilienFeld feld);
 
     public String getName() {
