@@ -7,7 +7,6 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  * @author Adrian
  *         Gemeinschaftskarte 8
  *         identisch zu Ereigniskarte 4
- *         TODO: Zusammenfassen?
  */
 public class LosKarte implements Karte {
     @Override
