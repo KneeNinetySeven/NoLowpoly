@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.knee.nonopoly.felder</OriginalElement>
+  <nodes>
+    <node x="425.2600732600732" y="106.0">org.knee.nonopoly.felder.Polizist</node>
+    <node x="414.66666666666663" y="0.0">org.knee.nonopoly.felder.Feld</node>
+    <node x="202.0" y="273.0">org.knee.nonopoly.felder.kartenFelder.KartenTypen</node>
+    <node x="0.0" y="273.0">org.knee.nonopoly.felder.immobilien.ImmobilienTypen</node>
+    <node x="0.0" y="354.0">org.knee.nonopoly.felder.FeldTypen</node>
+    <node x="599.6666666666666" y="192.0">org.knee.nonopoly.felder.immobilien.Bahnhof</node>
+    <node x="715.6666666666666" y="192.0">org.knee.nonopoly.felder.immobilien.Strassen</node>
+    <node x="178.66666666666663" y="192.0">org.knee.nonopoly.felder.kartenFelder.EreignisFeld</node>
+    <node x="573.5" y="106.0">org.knee.nonopoly.felder.immobilien.ImmobilienFeld</node>
+    <node x="127.0" y="106.0">org.knee.nonopoly.felder.SteuerFeld</node>
+    <node x="0.0" y="106.0">org.knee.nonopoly.felder.Gefängnis</node>
+    <node x="504.66666666666663" y="192.0">org.knee.nonopoly.felder.immobilien.Werk</node>
+    <node x="319.66666666666663" y="192.0">org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld</node>
+    <node x="738.5" y="106.0">org.knee.nonopoly.felder.FreiParken</node>
+    <node x="258.0" y="106.0">org.knee.nonopoly.felder.kartenFelder.KartenFeld</node>
+    <node x="867.5" y="106.0">org.knee.nonopoly.felder.Los</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.knee.nonopoly.felder.immobilien.Werk" target="org.knee.nonopoly.felder.immobilien.ImmobilienFeld">
+      <point x="0.0" y="-18.0" />
+      <point x="542.1666666666666" y="167.0" />
+      <point x="597.6666666666666" y="167.0" />
+      <point x="-48.33333333333337" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.FreiParken" target="org.knee.nonopoly.felder.Feld">
+      <point x="0.0" y="-18.0" />
+      <point x="793.0" y="66.0" />
+      <point x="468.8809523809524" y="66.0" />
+      <point x="19.714285714285722" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld" target="org.knee.nonopoly.felder.kartenFelder.KartenFeld">
+      <point x="0.0" y="-18.0" />
+      <point x="402.16666666666663" y="167.0" />
+      <point x="342.0" y="167.0" />
+      <point x="28.0" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.Los" target="org.knee.nonopoly.felder.Feld">
+      <point x="0.0" y="-18.0" />
+      <point x="899.0" y="56.0" />
+      <point x="478.7380952380952" y="56.0" />
+      <point x="29.571428571428555" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.Gefängnis" target="org.knee.nonopoly.felder.Feld">
+      <point x="0.0" y="-18.0" />
+      <point x="53.5" y="66.0" />
+      <point x="419.5952380952381" y="66.0" />
+      <point x="-29.571428571428555" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.immobilien.Strassen" target="org.knee.nonopoly.felder.immobilien.ImmobilienFeld">
+      <point x="0.0" y="-18.0" />
+      <point x="763.1666666666666" y="167.0" />
+      <point x="694.3333333333334" y="167.0" />
+      <point x="48.33333333333337" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.immobilien.Bahnhof" target="org.knee.nonopoly.felder.immobilien.ImmobilienFeld">
+      <point x="0.0" y="-18.0" />
+      <point x="647.6666666666666" y="167.0" />
+      <point x="646.0" y="167.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.immobilien.ImmobilienFeld" target="org.knee.nonopoly.felder.Feld">
+      <point x="0.0" y="-18.0" />
+      <point x="646.0" y="76.0" />
+      <point x="459.0238095238095" y="76.0" />
+      <point x="9.857142857142833" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.SteuerFeld" target="org.knee.nonopoly.felder.Feld">
+      <point x="0.0" y="-18.0" />
+      <point x="182.5" y="76.0" />
+      <point x="429.45238095238096" y="76.0" />
+      <point x="-19.714285714285722" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.Polizist" target="org.knee.nonopoly.felder.Feld">
+      <point x="0.0" y="-18.0" />
+      <point x="469.2600732600732" y="86.0" />
+      <point x="449.16666666666663" y="86.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.kartenFelder.EreignisFeld" target="org.knee.nonopoly.felder.kartenFelder.KartenFeld">
+      <point x="0.0" y="-18.0" />
+      <point x="239.16666666666663" y="167.0" />
+      <point x="286.0" y="167.0" />
+      <point x="-28.0" y="18.0" />
+    </edge>
+    <edge source="org.knee.nonopoly.felder.kartenFelder.KartenFeld" target="org.knee.nonopoly.felder.Feld">
+      <point x="0.0" y="-18.0" />
+      <point x="314.0" y="86.0" />
+      <point x="439.30952380952374" y="86.0" />
+      <point x="-9.85714285714289" y="18.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="478.0" y="106.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

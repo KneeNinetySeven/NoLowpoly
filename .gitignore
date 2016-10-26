@@ -6,5 +6,4 @@ NoNopoly.eml
 NoNopoly.iml
 NoNopoly.userlibraries
 out/
-/bin/
-felder.uml
+exportToHTML/

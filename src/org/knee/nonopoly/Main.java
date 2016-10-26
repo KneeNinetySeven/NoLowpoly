@@ -1,14 +1,7 @@
 package org.knee.nonopoly;
 
-import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
-import org.knee.nonopoly.entities.spielerStrategien.StrassenMogul;
-import org.knee.nonopoly.felder.kartenFelder.EreignisFeld;
-import org.knee.nonopoly.felder.kartenFelder.GemeinschaftsFeld;
 import org.knee.nonopoly.logik.Schiedsrichter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Nils on 09.09.2016.
@@ -16,7 +9,6 @@ import java.util.List;
 public class Main {
 
     Schiedsrichter schiedsrichter;
-    List<Spieler> teilnehmer = new ArrayList<Spieler>();
 
     public Main() {
         schiedsrichter = new Schiedsrichter();
@@ -26,13 +18,19 @@ public class Main {
         new Main().runGame();
     }
 
+    /**
+     * Lässt den Schiedsrichter (noch) nur die richtigen Dinge tun
+     */
     public void runGame(){
         schiedsrichter.registriereTeilnehmer("Nils", new AllesKaeufer());
-        schiedsrichter.registriereTeilnehmer("Matze", new StrassenMogul());
-        schiedsrichter.spieleEineRunde();
+        schiedsrichter.registriereTeilnehmer("Adrian", new AllesKaeufer());
+        schiedsrichter.registriereTeilnehmer("Matze", new AllesKaeufer());
+        schiedsrichter.zahleStartkapitalAus();
         schiedsrichter.spieleEinenSpielzug();
         schiedsrichter.spieleEineRunde();
-        EreignisFeld ereignisFeld = new EreignisFeld(10, "Ereignis");
-        GemeinschaftsFeld gemeinschaftsFeld = new GemeinschaftsFeld(11, "Gemeinschaftsfeld");
+        schiedsrichter.spieleEineRunde();
+        schiedsrichter.spieleEineRunde();
+        schiedsrichter.spieleEineRunde();
+
     }
 }

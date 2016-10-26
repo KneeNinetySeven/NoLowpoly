@@ -1,17 +1,15 @@
-package org.knee.nonopoly.karten.gemeinschaftskarten;
+package org.knee.nonopoly.karten.ereigniskarten;
 
 import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * @author Adrian
- * Gemeinschaftskarte 9
+ * @author Adrian Stölken
+ *         Ereigniskarte 9
  */
 public class DividendenKarte implements Karte {
-
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-        schiedsrichter.getBank().ueberweiseAn(900, schiedsrichter.getAktiverSpieler());
+        schiedsrichter.getBank().ueberweiseAn(1000, schiedsrichter.getAktiverSpieler());
     }
-
 }

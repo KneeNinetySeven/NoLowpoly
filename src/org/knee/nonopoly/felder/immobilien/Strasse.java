@@ -7,7 +7,7 @@ import org.knee.nonopoly.logik.Schiedsrichter;
 import java.util.List;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Nils
  */
 public class Strasse extends ImmobilienFeld {
 
@@ -15,6 +15,15 @@ public class Strasse extends ImmobilienFeld {
     private List<Integer> mietStaffel;
     int hauspreis;
 
+    /**
+     * Konstruktor
+     *
+     * @param index
+     * @param name
+     * @param kaufpreis
+     * @param mietStaffel
+     * @param hauspreis
+     */
     public Strasse(int index, String name, int kaufpreis, List<Integer> mietStaffel, int hauspreis) {
         super(index, name, kaufpreis);
         this.immobilienTyp = ImmobilienTypen.STRASSE;
@@ -22,33 +31,55 @@ public class Strasse extends ImmobilienFeld {
         this.hauspreis = hauspreis;
     }
 
+    /**
+     * Führt die Aktion des Feldes für den aktiven Spieler aus
+     * Wird in den einzelnen Feldern überschrieben
+     *
+     * @param schiedsrichter
+     */
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         Spieler aktiverSpieler = schiedsrichter.getAktiverSpieler();
-        if (this.besitzer == schiedsrichter.getBank()){
-            if(aktiverSpieler.getStrategie().erlaubtFeldKauf(aktiverSpieler, this)){
+        if (this.besitzer == schiedsrichter.getBank()) {
+            if (aktiverSpieler.getStrategie().erlaubtFeldKauf(aktiverSpieler, this)) {
+                schiedsrichter.getProtokollant().printAs(aktiverSpieler.getName() + " kauft " + getName());
                 wirdGekauftDurchSpieler(aktiverSpieler, schiedsrichter.getBank());
             }
-        } else if(this.besitzer == aktiverSpieler){
-            if(aktiverSpieler.getStrategie().erlaubtHausbau(aktiverSpieler, this) & getHausanzahl() < 6){
+        } else if (this.besitzer == aktiverSpieler) {
+            if (aktiverSpieler.getStrategie().erlaubtHausbau(aktiverSpieler, this) & getHausanzahl() < 6) {
+                schiedsrichter.getProtokollant().printAs(aktiverSpieler + " baut ein neues Haus");
                 wirdNeuBebaut(aktiverSpieler, schiedsrichter.getBank());
             }
         } else {
-
+            zahleMiete(aktiverSpieler);
         }
     }
 
-    public void wirdGekauftDurchSpieler(Spieler spieler, Bank bank){
-        spieler.ueberweiseAn(getKaufpreis(), bank);
-        besitzer = spieler;
+    /**
+     * Bebaut die Strasse mit einem Weiteren Haus
+     *
+     * @param spieler
+     * @param bank
+     */
+    public void wirdNeuBebaut(Spieler spieler, Bank bank) {
+        spieler.ueberweiseAn(hauspreis, bank);
+        baueHaus();
     }
 
-    public void wirdNeuBebaut(Spieler spieler, Bank bank){
-
-    }
-
-    public void baueHaus(){
+    /**
+     * Erhöht die Häuseranzahl um Eins
+     */
+    public void baueHaus() {
         this.setHausanzahl(getHausanzahl() + 1);
+    }
+
+    /**
+     * Lässt den übergebenen Spieler die Miete nach Bebauung der Strasse zahlen
+     * @param spieler
+     */
+    @Override
+    public void zahleMiete(Spieler spieler) {
+        spieler.ueberweiseAn(mietStaffel.get(getHausanzahl()), besitzer);
     }
 
     @Override
@@ -75,7 +106,4 @@ public class Strasse extends ImmobilienFeld {
         return hauspreis;
     }
 
-    public void setHauspreis(int hauspreis) {
-        this.hauspreis = hauspreis;
-    }
 }

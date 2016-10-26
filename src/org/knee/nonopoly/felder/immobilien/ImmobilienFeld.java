@@ -1,6 +1,8 @@
 package org.knee.nonopoly.felder.immobilien;
 
+import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Entity;
+import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 
@@ -9,10 +11,17 @@ import org.knee.nonopoly.felder.FeldTypen;
  */
 public abstract class ImmobilienFeld extends Feld {
 
-    private int kaufpreis;
+    private final int kaufpreis;
     public Entity besitzer;
     public ImmobilienTypen immobilienTyp;
 
+    /**
+     * Konstruktor
+     *
+     * @param index
+     * @param name
+     * @param kaufpreis
+     */
     public ImmobilienFeld(int index, String name, int kaufpreis) {
         super(index, name);
         this.kaufpreis = kaufpreis;
@@ -20,15 +29,42 @@ public abstract class ImmobilienFeld extends Feld {
         this.immobilienTyp = ImmobilienTypen.ABSTRACT;
     }
 
-    public boolean istImmobilienTyp(ImmobilienTypen testImmoTyp){
+    /**
+     * Implementiert die Initialisierungssequenz zur Festlegung des Initialbesitzers (Bank)
+     *
+     * @param bank Bank-Objekt, das als Initialbesitzer festgelegt werden soll
+     */
+    @Override
+    public void initialisiereBesitzer(Bank bank) {
+        this.besitzer = bank;
+    }
+
+    /**
+     * Verkauft das Feld an den angegebenen Spieler und nimmt diesem auch das Geld dafür ab
+     *
+     * @param spieler
+     * @param bank
+     */
+    public void wirdGekauftDurchSpieler(Spieler spieler, Bank bank) {
+        spieler.ueberweiseAn(getKaufpreis(), bank);
+        besitzer = spieler;
+    }
+
+    /**
+     * Lässt den übergebenen Spieler Miete zahlen
+     * @param spieler
+     */
+    public abstract void zahleMiete(Spieler spieler);
+
+    /**
+     * @param testImmoTyp
+     * @return Gibt zurück, ob das Feld vom selben Immobilientyp ist, wie übergeben
+     */
+    public boolean istImmobilienTyp(ImmobilienTypen testImmoTyp) {
         return this.immobilienTyp == testImmoTyp;
     }
 
     public int getKaufpreis() {
         return kaufpreis;
-    }
-
-    public void setKaufpreis(int kaufpreis) {
-        this.kaufpreis = kaufpreis;
     }
 }

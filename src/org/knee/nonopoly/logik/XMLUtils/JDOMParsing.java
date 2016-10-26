@@ -63,7 +63,7 @@ public class JDOMParsing {
         List<Strasse> strassenListe = new ArrayList<>();
         List<Element> strassen = this.strassenRoot.getChildren("Strasse");
         for (Element current : strassen) {
-            int index = current.getAttribute("index").getIntValue();
+            int index = (current.getAttribute("index").getIntValue() - 1);
             String name = current.getChildText("Name");
             int kaufpreis = Integer.parseInt(current.getChildText("Preis"));
             List<Integer> mietstaffel = new ArrayList<>();
@@ -79,7 +79,7 @@ public class JDOMParsing {
     private List<Polizist> legePolizistAn() throws DataConversionException {
         List<Polizist> polizisten = new ArrayList<>();
         Element polizist = this.nichtStrassenRoot.getChild("Polizist");
-        int index = polizist.getAttribute("index").getIntValue();
+        int index = (polizist.getAttribute("index").getIntValue() - 1);
         String name = polizist.getChildText("Name");
         polizisten.add(new Polizist(index, name));
         return polizisten;
@@ -88,7 +88,7 @@ public class JDOMParsing {
     private List<FreiParken> legeFreiParkenAn() throws DataConversionException {
         List<FreiParken> freiParkens = new ArrayList<>();
         Element freiParken = this.nichtStrassenRoot.getChild("Freiparken");
-        int index = freiParken.getAttribute("index").getIntValue();
+        int index = (freiParken.getAttribute("index").getIntValue() - 1);
         String name = freiParken.getChildText("Name");
         freiParkens.add(new FreiParken(index, name));
         return freiParkens;
@@ -97,7 +97,7 @@ public class JDOMParsing {
     private List<Gefaengnis> legeGefaengnisAn() throws DataConversionException {
         List<Gefaengnis> gefaengnises = new ArrayList<>();
         Element gefaengnis = this.nichtStrassenRoot.getChild("Gefaengnis");
-        int index = gefaengnis.getAttribute("index").getIntValue();
+        int index = (gefaengnis.getAttribute("index").getIntValue() - 1);
         String name = gefaengnis.getChildText("Name");
         gefaengnises.add(new Gefaengnis(index, name));
         return gefaengnises;
@@ -106,7 +106,7 @@ public class JDOMParsing {
     private List<Los> legeLosAn() throws DataConversionException {
         List<Los> loses = new ArrayList<>();
         Element los = this.nichtStrassenRoot.getChild("Los");
-        int index = los.getAttribute("index").getIntValue();
+        int index = (los.getAttribute("index").getIntValue() - 1);
         String name = los.getChildText("Name");
         int treffer = Integer.parseInt(los.getChildText("Treffer"));
         int ueberschreitung = Integer.parseInt(los.getChildText("Ueberschreitung"));
@@ -118,7 +118,7 @@ public class JDOMParsing {
         List<SteuerFeld> steuerFeldListe = new ArrayList<>();
         List<Element> steuerfelder = this.nichtStrassenRoot.getChild("Steuerfelder").getChildren("Steuerfeld");
         for (Element current : steuerfelder) {
-            int index = current.getAttribute("index").getIntValue();
+            int index = (current.getAttribute("index").getIntValue() - 1);
             String name = current.getChildText("Name");
             int steuer = Integer.parseInt(current.getChildText("Preis"));
             steuerFeldListe.add(new SteuerFeld(index, name, new Steuertopf(), steuer));
@@ -130,7 +130,7 @@ public class JDOMParsing {
         List<Bahnhof> bahnhofListe = new ArrayList<>();
         List<Element> bahnhoefe = this.nichtStrassenRoot.getChild("Bahnhoefe").getChildren("Bahnhof");
         for (Element current : bahnhoefe) {
-            int index = current.getAttribute("index").getIntValue();
+            int index = (current.getAttribute("index").getIntValue() - 1);
             String name = current.getChild("Name").getText();
             int kaufpreis = Integer.parseInt(current.getChildText("Preis"));
             List<Integer> mietstaffel = new ArrayList<>();
@@ -146,7 +146,7 @@ public class JDOMParsing {
         List<Werk> werkListe = new ArrayList<>();
         List<Element> werke = this.nichtStrassenRoot.getChild("Werke").getChildren("Werk");
         for (Element current : werke) {
-            int index = current.getAttribute("index").getIntValue();
+            int index = (current.getAttribute("index").getIntValue() - 1);
             String name = current.getChild("Name").getText();
             int kaufpreis = Integer.parseInt(current.getChildText("Preis"));
             List<Integer> faktoren = new ArrayList<>();
@@ -162,7 +162,7 @@ public class JDOMParsing {
         List<KartenFeld> ereignisFeldListe = new ArrayList<>();
         List<Element> ereignisfelder = this.nichtStrassenRoot.getChild("Ereignisfelder").getChildren("Ereignisfeld");
         for (Element current : ereignisfelder) {
-            int index = current.getAttribute("index").getIntValue();
+            int index = (current.getAttribute("index").getIntValue() - 1);
             String name = current.getChildText("Name");
             ereignisFeldListe.add(new EreignisFeld(index, name));
         }
@@ -173,7 +173,7 @@ public class JDOMParsing {
         List<KartenFeld> gemeinschaftsFeldListe = new ArrayList<>();
         List<Element> gemeinschaftsfelder = this.nichtStrassenRoot.getChild("Gemeinschaftsfelder").getChildren("Gemeinschaftsfeld");
         for (Element current : gemeinschaftsfelder) {
-            int index = current.getAttribute("index").getIntValue();
+            int index = (current.getAttribute("index").getIntValue() - 1);
             String name = current.getChildText("Name");
             gemeinschaftsFeldListe.add(new GemeinschaftsFeld(index, name));
         }

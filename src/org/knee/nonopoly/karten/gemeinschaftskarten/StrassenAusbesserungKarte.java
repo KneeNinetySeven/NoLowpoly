@@ -5,13 +5,11 @@ import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * @author Adrian
- * Gemeinschaftskarte 9
+ *         Gemeinschaftskarte 1
  */
-public class DividendenKarte implements Karte {
-
+public class StrassenAusbesserungKarte implements Karte {
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-        schiedsrichter.getBank().ueberweiseAn(900, schiedsrichter.getAktiverSpieler());
+        // TODO: Implement; wie bei der Häuser Renovierung brauchen wir auch hierfür ein Attribut Besitzer je Strasse
     }
-
 }

@@ -10,11 +10,29 @@ public class Los extends Feld {
     private int treffer;
     private int ueberschreitung;
 
+    /**
+     * Konstruktor
+     *
+     * @param index
+     * @param name
+     * @param treffer
+     * @param ueberschreitung
+     */
     public Los(int index, String name, int treffer, int ueberschreitung) {
         super(index, name);
         this.typ = FeldTypen.LOS;
         this.setTreffer(treffer);
         this.setUeberschreitung(ueberschreitung);
+    }
+
+    /**
+     * Führt die Aktion des Feldes für den aktiven Spieler aus
+     *
+     * @param schiedsrichter
+     */
+    @Override
+    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
+        schiedsrichter.getBank().ueberweiseAn(getTreffer(), schiedsrichter.getAktiverSpieler());
     }
 
     public int getTreffer() {
@@ -31,11 +49,6 @@ public class Los extends Feld {
 
     public void setUeberschreitung(int ueberschreitung) {
         this.ueberschreitung = ueberschreitung;
-    }
-
-    @Override
-    public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
-        schiedsrichter.getBank().ueberweiseAn(getTreffer(), schiedsrichter.getAktiverSpieler());
     }
 
     @Override

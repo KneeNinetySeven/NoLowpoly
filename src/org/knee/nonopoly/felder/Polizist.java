@@ -11,6 +11,11 @@ public class Polizist extends Feld {
         this.typ = FeldTypen.POLIZIST;
     }
 
+    /**
+     * Führt die Aktion des Feldes für den aktiven Spieler aus
+     *
+     * @param schiedsrichter
+     */
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getAktiverSpieler().geheInsGefaengnis();

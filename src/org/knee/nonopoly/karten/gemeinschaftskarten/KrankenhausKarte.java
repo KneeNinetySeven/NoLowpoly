@@ -5,13 +5,12 @@ import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * @author Adrian
- * Gemeinschaftskarte 9
+ *         Gemeinschaftskarte 11
  */
-public class DividendenKarte implements Karte {
+public class KrankenhausKarte implements Karte {
 
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-        schiedsrichter.getBank().ueberweiseAn(900, schiedsrichter.getAktiverSpieler());
+        schiedsrichter.getAktiverSpieler().ueberweiseAn(2000, schiedsrichter.getBank());
     }
-
 }
