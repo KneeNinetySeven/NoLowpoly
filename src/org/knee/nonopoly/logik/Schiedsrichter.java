@@ -19,7 +19,9 @@ import org.knee.nonopoly.logik.wuerfel.Wuerfel;
 import org.knee.nonopoly.logik.wuerfel.Wurf;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,13 +45,12 @@ public class Schiedsrichter {
     private int rundenZaehler;
 
     // Aktionskarten
-    private int gemeinschaftsKartenPointer;
-    private List<Karte> gemeinschaftsKarten;
-    private int ereignisKartenPointer;
-    private List<Karte> ereignisKarten;
+    private ArrayDeque<Karte> gemeinschaftsKarten;
+    private ArrayDeque<Karte> ereignisKarten;
 
     // Parser
     private JDOMParsing jdomParser;
+
 
     public Schiedsrichter() {
         // Werkzeuge für den Schiedsrichter einrichten
@@ -60,10 +61,8 @@ public class Schiedsrichter {
         this.rundenZaehler = 0;
 
         // Aktionskarten
-        this.gemeinschaftsKartenPointer = 0;
-        this.ereignisKartenPointer = 0;
-        this.gemeinschaftsKarten = new ArrayList<>();
-        this.ereignisKarten = new ArrayList<>();
+        this.gemeinschaftsKarten = new ArrayDeque<>();
+        this.ereignisKarten = new ArrayDeque<>();
 
         this.legeKartenAn();
 
@@ -124,7 +123,7 @@ public class Schiedsrichter {
         tmp.add(new SchulgeldKarte());
         tmp.add(new StrassenAusbesserungKarte());
 
-        // Hier sollen die Karten gemischt werden. Daher eine tmp Liste
+        Collections.shuffle(tmp); // Gemeinschaftskarten werden gemischt
         gemeinschaftsKarten.addAll(tmp);
 
         // Ereigniskarten
@@ -143,7 +142,8 @@ public class Schiedsrichter {
         tmp.add(new VorstandKarte());
         tmp.add(new ZinsenKarte());
         tmp.add(new ZuSchnellKarte());
-        // Ereigniskarten werden gemischt.
+
+        Collections.shuffle(tmp); // Ereigniskarten werden gemischt
         ereignisKarten.addAll(tmp);
     }
 
@@ -300,24 +300,16 @@ public class Schiedsrichter {
      * Führt die nächste Gemeinschaftskarte aus
      */
     public void naechsteGemeinschaftskarte(){
-        if(gemeinschaftsKartenPointer == gemeinschaftsKarten.size()) {
-            this.gemeinschaftsKartenPointer = 0;
-        }
-        this.gemeinschaftsKarten.get(gemeinschaftsKartenPointer).fuehreKartenAktionAus(this);
-        getProtokollant().printAs(this.gemeinschaftsKarten.get(gemeinschaftsKartenPointer).toString() + " wurde gezogen.");
-        this.gemeinschaftsKartenPointer++;
+        this.gemeinschaftsKarten.getFirst().fuehreKartenAktionAus(this);
+        this.gemeinschaftsKarten.addLast(this.gemeinschaftsKarten.pollFirst());
     }
 
     /**
      * Führt die nächste Ereigniskarte aus
      */
     public void naechsteEreigniskarte(){
-        if(ereignisKartenPointer == ereignisKarten.size()) {
-            ereignisKartenPointer = 0;
-        }
-        ereignisKarten.get(ereignisKartenPointer).fuehreKartenAktionAus(this);
-        getProtokollant().printAs( ereignisKarten.get(ereignisKartenPointer) + " wurde gezogen.");
-        this.ereignisKartenPointer++;
+        this.ereignisKarten.getFirst().fuehreKartenAktionAus(this);
+        this.ereignisKarten.addLast(this.ereignisKarten.pollFirst());
     }
 
     public List<Feld> getSpielbrett() {
