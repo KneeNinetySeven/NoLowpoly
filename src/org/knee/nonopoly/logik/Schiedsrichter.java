@@ -154,7 +154,7 @@ public class Schiedsrichter {
      * @param name      Name des Spielers
      * @param strategie Strategie des anzulegenden Spielers
      */
-    public void registriereTeilnehmer(String name, Strategie strategie) {
+    public void registriereSpieler(String name, Strategie strategie) {
         this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
     }
 

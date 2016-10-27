@@ -22,9 +22,9 @@ public class Main {
      * Lässt den Schiedsrichter (noch) nur die richtigen Dinge tun
      */
     public void runGame(){
-        schiedsrichter.registriereTeilnehmer("Nils", new AllesKaeufer());
-        schiedsrichter.registriereTeilnehmer("Adrian", new AllesKaeufer());
-        schiedsrichter.registriereTeilnehmer("Matze", new AllesKaeufer());
+        schiedsrichter.registriereSpieler("Nils", new AllesKaeufer());
+        schiedsrichter.registriereSpieler("Adrian", new AllesKaeufer());
+        schiedsrichter.registriereSpieler("Matze", new AllesKaeufer());
         schiedsrichter.zahleStartkapitalAus();
         schiedsrichter.spieleEinenSpielzug();
         schiedsrichter.spieleEineRunde();
