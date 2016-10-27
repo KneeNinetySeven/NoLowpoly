@@ -5,10 +5,16 @@ import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * @author Adrian Stölken
+ * @author Adrian
  * Ereigniskarte 7
  */
 public class SeestrasseKarte implements Karte {
+
+    /**
+     * Der Spieler rückt zur Seestrasse vor.
+     * Es wird dabei berücksichtigt, ob er über Los kommt oder nicht.
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         if(schiedsrichter.getAktiverSpieler().getPosition() > 11){ // Spieler kommt über Los

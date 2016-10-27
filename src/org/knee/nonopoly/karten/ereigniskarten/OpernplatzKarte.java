@@ -9,6 +9,10 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  */
 public class OpernplatzKarte implements Karte{
 
+    /**
+     *
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         if(schiedsrichter.getAktiverSpieler().getPosition() > 24){ // Spieler kommt über Los

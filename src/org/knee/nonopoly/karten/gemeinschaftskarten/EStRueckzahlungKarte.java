@@ -8,6 +8,10 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  * Gemeinschaftskarte 12
  */
 public class EStRueckzahlungKarte implements Karte {
+    /**
+     * Der Spieler erhält eine ESt-Rückzahlung.
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getBank().ueberweiseAn(400, schiedsrichter.getAktiverSpieler());

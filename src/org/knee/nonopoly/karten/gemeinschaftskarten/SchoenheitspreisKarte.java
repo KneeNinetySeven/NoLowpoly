@@ -8,6 +8,10 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  *         Gemeinschaftskarte 10
  */
 public class SchoenheitspreisKarte implements Karte {
+    /**
+     * Der Spieler erhält eine Zahlung als Preis für einen Schönheitswettbewerb.
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getBank().ueberweiseAn(200, schiedsrichter.getAktiverSpieler());

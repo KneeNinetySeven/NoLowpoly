@@ -19,8 +19,7 @@ import org.knee.nonopoly.logik.wuerfel.Wuerfel;
 import org.knee.nonopoly.logik.wuerfel.Wurf;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Nils on 11.09.2016.
@@ -43,13 +42,12 @@ public class Schiedsrichter {
     private int rundenZaehler;
 
     // Aktionskarten
-    private int gemeinschaftsKartenPointer;
-    private List<Karte> gemeinschaftsKarten;
-    private int ereignisKartenPointer;
-    private List<Karte> ereignisKarten;
+    private Queue<Karte> gemeinschaftsKarten;
+    private Queue<Karte> ereignisKarten;
 
     // Parser
     private JDOMParsing jdomParser;
+
 
     public Schiedsrichter() {
         // Werkzeuge für den Schiedsrichter einrichten
@@ -60,10 +58,8 @@ public class Schiedsrichter {
         this.rundenZaehler = 0;
 
         // Aktionskarten
-        this.gemeinschaftsKartenPointer = 0;
-        this.ereignisKartenPointer = 0;
-        this.gemeinschaftsKarten = new ArrayList<>();
-        this.ereignisKarten = new ArrayList<>();
+        this.gemeinschaftsKarten = new ArrayDeque<>();
+        this.ereignisKarten = new ArrayDeque<>();
 
         this.legeKartenAn();
 
@@ -124,7 +120,7 @@ public class Schiedsrichter {
         tmp.add(new SchulgeldKarte());
         tmp.add(new StrassenAusbesserungKarte());
 
-        // Hier sollen die Karten gemischt werden. Daher eine tmp Liste
+        Collections.shuffle(tmp); // Gemeinschaftskarten werden gemischt
         gemeinschaftsKarten.addAll(tmp);
 
         // Ereigniskarten
@@ -143,7 +139,8 @@ public class Schiedsrichter {
         tmp.add(new VorstandKarte());
         tmp.add(new ZinsenKarte());
         tmp.add(new ZuSchnellKarte());
-        // Ereigniskarten werden gemischt.
+
+        Collections.shuffle(tmp); // Ereigniskarten werden gemischt
         ereignisKarten.addAll(tmp);
     }
 
@@ -154,7 +151,7 @@ public class Schiedsrichter {
      * @param name      Name des Spielers
      * @param strategie Strategie des anzulegenden Spielers
      */
-    public void registriereTeilnehmer(String name, Strategie strategie) {
+    public void registriereSpieler(String name, Strategie strategie) {
         this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
     }
 
@@ -297,27 +294,21 @@ public class Schiedsrichter {
     }
 
     /**
-     * Führt die nächste Gemeinschaftskarte aus
+     * Führt die nächste Gemeinschaftskarte aus und legt die gezogene Karte
+     * wieder unter den Stapel.
      */
     public void naechsteGemeinschaftskarte(){
-        if(gemeinschaftsKartenPointer == gemeinschaftsKarten.size()) {
-            this.gemeinschaftsKartenPointer = 0;
-        }
-        this.gemeinschaftsKarten.get(gemeinschaftsKartenPointer).fuehreKartenAktionAus(this);
-        getProtokollant().printAs(this.gemeinschaftsKarten.get(gemeinschaftsKartenPointer).toString() + " wurde gezogen.");
-        this.gemeinschaftsKartenPointer++;
+        this.gemeinschaftsKarten.peek().fuehreKartenAktionAus(this);
+        this.gemeinschaftsKarten.add(this.gemeinschaftsKarten.poll());
     }
 
     /**
-     * Führt die nächste Ereigniskarte aus
+     * Führt die nächste Ereigniskarte aus und legt die gezogene Karte
+     * wieder unter den Stapel.
      */
     public void naechsteEreigniskarte(){
-        if(ereignisKartenPointer == ereignisKarten.size()) {
-            ereignisKartenPointer = 0;
-        }
-        ereignisKarten.get(ereignisKartenPointer).fuehreKartenAktionAus(this);
-        getProtokollant().printAs( ereignisKarten.get(ereignisKartenPointer) + " wurde gezogen.");
-        this.ereignisKartenPointer++;
+        this.ereignisKarten.peek().fuehreKartenAktionAus(this);
+        this.ereignisKarten.add(this.ereignisKarten.poll());
     }
 
     public List<Feld> getSpielbrett() {

@@ -7,9 +7,13 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  * @author Adrian
  *         Gemeinschaftskarte 8
  *         identisch zu Ereigniskarte 4
- *         TODO: Zusammenfassen?
  */
 public class LosKarte implements Karte {
+
+    /**
+     * Der Spieler rückt vor bis auf Los.
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getAktiverSpieler().setPosition(0);

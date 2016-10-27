@@ -4,10 +4,14 @@ import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * @author Adrian Stölken
+ * @author Adrian
  * Ereigniskarte 4
  */
 public class LosKarte implements Karte{
+    /**
+     * Der Spieler rückt vor bis auf Los.
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getAktiverSpieler().setPosition(0);

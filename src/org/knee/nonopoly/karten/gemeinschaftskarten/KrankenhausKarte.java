@@ -9,6 +9,10 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  */
 public class KrankenhausKarte implements Karte {
 
+    /**
+     * Der Spieler zahlt einen festen Betrag für einen Krankenhausaufenthalt.
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getAktiverSpieler().ueberweiseAn(2000, schiedsrichter.getBank());

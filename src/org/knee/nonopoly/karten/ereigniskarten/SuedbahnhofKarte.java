@@ -8,6 +8,12 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  *         Ereigniskarte 6
  */
 public class SuedbahnhofKarte implements Karte {
+
+    /**
+     * Der Spieler rückt bis zum Südbahnhof vor.
+     * Es wird berücksichtigt, ob er über Los kommt.
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         if (schiedsrichter.getAktiverSpieler().getPosition() > 5) { // Spieler kommt über Los

@@ -12,9 +12,11 @@ import org.knee.nonopoly.felder.FeldTypen;
 public abstract class ImmobilienFeld extends Feld {
 
     private final int kaufpreis;
-    public Entity besitzer;
-    public ImmobilienTypen immobilienTyp;
 
+    public Entity besitzer;
+
+
+    public ImmobilienTypen immobilienTyp;
     /**
      * Konstruktor
      *
@@ -66,5 +68,9 @@ public abstract class ImmobilienFeld extends Feld {
 
     public int getKaufpreis() {
         return kaufpreis;
+    }
+
+    public Entity getBesitzer() {
+        return besitzer;
     }
 }

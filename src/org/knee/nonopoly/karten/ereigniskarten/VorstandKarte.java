@@ -10,10 +10,12 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  */
 
 public class VorstandKarte implements Karte {
+    /**
+     * Der Spieler überweist jedem anderen aktiven Spieler einen festen Betrag.
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-        schiedsrichter.getTeilnehmer().stream().filter(Spieler::getImSpiel).forEach(spieler -> {
-            schiedsrichter.getAktiverSpieler().ueberweiseAn(1000, spieler);
-        });
+        schiedsrichter.getTeilnehmer().stream().filter(Spieler::getImSpiel).forEach(spieler -> schiedsrichter.getAktiverSpieler().ueberweiseAn(1000, spieler));
     }
 }

@@ -4,12 +4,16 @@ import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
- * Created by Nils on 24.09.2016.
+ * @author Nils
  */
 public class GefaengnisKarte implements Karte {
 
     private boolean istVergeben = false;
 
+    /**
+     *
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         if(!this.istVergeben){
