@@ -19,10 +19,7 @@ import org.knee.nonopoly.logik.wuerfel.Wuerfel;
 import org.knee.nonopoly.logik.wuerfel.Wurf;
 
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Nils on 11.09.2016.
@@ -45,8 +42,8 @@ public class Schiedsrichter {
     private int rundenZaehler;
 
     // Aktionskarten
-    private ArrayDeque<Karte> gemeinschaftsKarten;
-    private ArrayDeque<Karte> ereignisKarten;
+    private Queue<Karte> gemeinschaftsKarten;
+    private Queue<Karte> ereignisKarten;
 
     // Parser
     private JDOMParsing jdomParser;
@@ -297,19 +294,21 @@ public class Schiedsrichter {
     }
 
     /**
-     * Führt die nächste Gemeinschaftskarte aus
+     * Führt die nächste Gemeinschaftskarte aus und legt die gezogene Karte
+     * wieder unter den Stapel.
      */
     public void naechsteGemeinschaftskarte(){
-        this.gemeinschaftsKarten.getFirst().fuehreKartenAktionAus(this);
-        this.gemeinschaftsKarten.addLast(this.gemeinschaftsKarten.pollFirst());
+        this.gemeinschaftsKarten.peek().fuehreKartenAktionAus(this);
+        this.gemeinschaftsKarten.add(this.gemeinschaftsKarten.poll());
     }
 
     /**
-     * Führt die nächste Ereigniskarte aus
+     * Führt die nächste Ereigniskarte aus und legt die gezogene Karte
+     * wieder unter den Stapel.
      */
     public void naechsteEreigniskarte(){
-        this.ereignisKarten.getFirst().fuehreKartenAktionAus(this);
-        this.ereignisKarten.addLast(this.ereignisKarten.pollFirst());
+        this.ereignisKarten.peek().fuehreKartenAktionAus(this);
+        this.ereignisKarten.add(this.ereignisKarten.poll());
     }
 
     public List<Feld> getSpielbrett() {
