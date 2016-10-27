@@ -8,6 +8,10 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  * Ereigniskarte 1
  */
 public class BadstrasseKarte implements Karte {
+    /**
+     * Der Spieler rückt vor bis zur Badstrasse
+     * @param schiedsrichter
+     */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getAktiverSpieler().setPosition(1);
