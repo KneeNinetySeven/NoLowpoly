@@ -1,11 +1,9 @@
 package org.knee.nonopoly.ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.scene.layout.VBox;
+import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
+import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
  * Created by Nils on 26.10.2016.
@@ -13,27 +11,22 @@ import java.util.ResourceBundle;
  */
 public class Controller {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    Schiedsrichter schiedsrichter;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+    @FXML
+    private VBox spielerListe;
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-
+        schiedsrichter = new Schiedsrichter();
+        schiedsrichter.getTeilnehmer().forEach(s -> spielerListe.getChildren().add(new SpielerNode(s).generate()));
     }
 
     @FXML
-    TextArea textArea;
-
-    @FXML
-    Label label;
-
-    @FXML
-    protected void buttonPressed() {
-        System.out.println("Test");
+    protected void spielerHinzufuegen() {
+        schiedsrichter.registriereSpieler("Nils", new AllesKaeufer());
+        spielerListe.getChildren().add(new SpielerNode(schiedsrichter.getTeilnehmer().get(0)).generate());
     }
 
 }

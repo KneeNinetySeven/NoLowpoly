@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.knee.nonopoly.ui.Controller">
@@ -8,42 +9,72 @@
         <menus>
           <Menu mnemonicParsing="false" text="Spieler">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#buttonPressed" text="Hinzufügen" />
+              <MenuItem mnemonicParsing="false" onAction="#spielerHinzufuegen" text="Hinzufügen" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
    <left>
-      <VBox id="spielerListe" prefHeight="502.0" prefWidth="283.0" BorderPane.alignment="CENTER">
-         <children>
-            <Pane>
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <VBox>
+       <VBox fx:id="spielerListe" prefHeight="509.0" prefWidth="218.0" BorderPane.alignment="CENTER">
+           <children>
+               <Pane>
+                   <children>
+                       <HBox prefHeight="100.0" prefWidth="284.0">
                            <children>
-                              <Label text="Name" />
-                              <Label layoutX="10.0" layoutY="10.0" text="Position" />
-                              <Label layoutX="10.0" layoutY="31.0" text="Guthaben" />
-                              <Label layoutX="10.0" layoutY="52.0" text="Strategie" />
+                               <VBox spacing="5.0">
+                                   <children>
+                                       <Label text="Name" />
+                                       <Label layoutX="10.0" layoutY="10.0" text="Position" />
+                                       <Label layoutX="10.0" layoutY="31.0" text="Guthaben" />
+                                       <Label layoutX="10.0" layoutY="52.0" text="Strategie" />
+                                   </children>
+                               </VBox>
+                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" spacing="5.0">
+                                   <children>
+                                       <Label text="NameData" />
+                                       <Label layoutX="10.0" layoutY="10.0" text="PositionData" />
+                                       <Label layoutX="10.0" layoutY="31.0" text="GuthabenData" />
+                                       <Label layoutX="10.0" layoutY="52.0" text="StrategieData" />
+                                   </children>
+                                   <padding>
+                                       <Insets left="10.0" />
+                                   </padding>
+                               </VBox>
                            </children>
-                        </VBox>
-                        <VBox layoutX="10.0" layoutY="10.0">
-                           <children>
-                              <Label text="NameData" />
-                              <Label layoutX="10.0" layoutY="10.0" text="PositionData" />
-                              <Label layoutX="10.0" layoutY="31.0" text="GuthabenData" />
-                              <Label layoutX="10.0" layoutY="52.0" text="StrategieData" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-               </children>
-            </Pane>
-         </children></VBox>
+                       </HBox>
+                   </children>
+               </Pane>
+           </children>
+       </VBox>
    </left>
    <center>
-      <Pane id="spielfeldArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane id="spielfeldArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="500.0" prefWidth="664.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" percentWidth="11.5" prefWidth="32.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" percentWidth="11.5" prefWidth="37.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" percentWidth="11.5" prefWidth="41.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" percentWidth="11.5" prefWidth="43.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.0" minWidth="10.0" percentWidth="11.5" prefWidth="44.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="10.0" percentWidth="11.5" prefWidth="46.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="493.0" minWidth="10.0" percentWidth="11.5" prefWidth="46.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="513.0" minWidth="10.0" percentWidth="11.5" prefWidth="233.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="569.0" minWidth="10.0" percentWidth="11.5" prefWidth="70.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="11.5" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children></Pane>
    </center>
 </BorderPane>
