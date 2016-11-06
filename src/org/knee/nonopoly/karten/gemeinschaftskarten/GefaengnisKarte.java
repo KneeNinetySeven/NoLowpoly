@@ -11,8 +11,8 @@ public class GefaengnisKarte implements Karte {
     private boolean istVergeben = false;
 
     /**
-     *
-     * @param schiedsrichter
+     * Führt die Pflichtaktion beim ziehen einer Gefängniskarte aus.
+     * @param schiedsrichter Der Schiedsrichter
      */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
@@ -20,7 +20,10 @@ public class GefaengnisKarte implements Karte {
             schiedsrichter.getAktiverSpieler().setGefaengnisFreiKarte(this);
             this.istVergeben = true;
         } else {
+            // Ist das überhaupt eine Gemeinschaftskarte?!
+            //                          \/
             //schiedsrichter.naechsteGemeinschaftskarte();
+
             schiedsrichter.getProtokollant().printAs("Die Gefängniskarte wurde schon vergeben. Gebe nächste Karte aus...");
         }
     }

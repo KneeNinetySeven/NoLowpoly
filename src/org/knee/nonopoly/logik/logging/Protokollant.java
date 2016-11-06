@@ -49,7 +49,7 @@ public class Protokollant {
      * @param s String, der als Konsolenlog ausgegeben werden soll
      */
     public void printAs(String s) {
-        System.out.println("[ SCHIEDSRICHTER ]::" + count + "\t" + s);
+        System.out.printf("[%5s.%14s] %30s \n", new String[]{String.valueOf(count), "SCHIEDSRICHTER", s});
         count++;
     }
 
