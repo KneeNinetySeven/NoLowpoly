@@ -70,6 +70,7 @@ public class Werk extends ImmobilienFeld {
         sb.append("kaufpreis=").append(this.getKaufpreis());
         sb.append('}');
         sb.append("faktoren=").append(faktoren);
+        sb.append(", besitzer={").append(this.getBesitzer()).append("}");
         sb.append('}');
         return sb.toString();
     }

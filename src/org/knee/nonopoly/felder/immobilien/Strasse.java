@@ -46,7 +46,7 @@ public class Strasse extends ImmobilienFeld {
                 wirdGekauftDurchSpieler(aktiverSpieler, schiedsrichter.getBank());
             }
         } else if (this.besitzer == aktiverSpieler) {
-            if (aktiverSpieler.getStrategie().erlaubtHausbau(aktiverSpieler, this) & getHausanzahl() < 6) {
+            if (aktiverSpieler.getStrategie().erlaubtHausbau(aktiverSpieler, this) && (getHausanzahl() <= 6)) {
                 schiedsrichter.getProtokollant().printAs(aktiverSpieler + " baut ein neues Haus");
                 wirdNeuBebaut(aktiverSpieler, schiedsrichter.getBank());
             }
@@ -62,8 +62,8 @@ public class Strasse extends ImmobilienFeld {
      * @param bank
      */
     public void wirdNeuBebaut(Spieler spieler, Bank bank) {
-        spieler.ueberweiseAn(hauspreis, bank);
-        baueHaus();
+            spieler.ueberweiseAn(hauspreis, bank);
+            baueHaus();
     }
 
     /**
@@ -79,17 +79,20 @@ public class Strasse extends ImmobilienFeld {
      */
     @Override
     public void zahleMiete(Spieler spieler) {
-        spieler.ueberweiseAn(mietStaffel.get(getHausanzahl()), besitzer);
+        if (getHausanzahl()>0){
+            spieler.ueberweiseAn(mietStaffel.get(getHausanzahl()-1), besitzer);
+        }
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Strasse{");
+        final StringBuilder sb = new StringBuilder(this.getName() + "{");
         sb.append("index=").append(this.getIndex());
         sb.append(", name=").append(this.getName());
         sb.append(", kaufpreis=").append(this.getKaufpreis());
         sb.append(", mietStaffel=").append(this.mietStaffel);
         sb.append(", hauspreis=").append(this.hauspreis);
+        sb.append(", besitzer={").append(this.getBesitzer()).append("}");
         sb.append('}');
         return sb.toString();
     }

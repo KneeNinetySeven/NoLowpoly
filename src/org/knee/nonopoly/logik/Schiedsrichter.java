@@ -177,7 +177,7 @@ public class Schiedsrichter {
                 aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
                 protokollant.printAs(aktiverSpieler.getName()
                         + " steht auf Feld: "
-                        + aktivesFeld.getName()
+                        + aktivesFeld.toString()
                         + " (" + (aktivesFeld.getIndex()) + ")");
                 aktivesFeld.fuehrePflichtAktionAus(this);
             }
@@ -200,9 +200,10 @@ public class Schiedsrichter {
      * @return Gibt zurück, ob das Spiel weitergeht
      */
     public boolean spieleEineRunde() {
-        for (int zuegeBisEnde = teilnehmer.toArray().length - naechsterSpieler;
-             zuegeBisEnde > 0; zuegeBisEnde--) {
-            spieleEinenSpielzug();
+        for (int zuegeBisEnde = teilnehmer.size() - naechsterSpieler; zuegeBisEnde > 0; zuegeBisEnde--) {
+            if(!spieleEinenSpielzug()){
+                return spielLäuftNoch();
+            }
         }
         return spielLäuftNoch();
     }
@@ -212,8 +213,9 @@ public class Schiedsrichter {
      */
     public void spieleSpielZuEnde() {
         while (this.spieleEineRunde()) {
-            // DO NOTHING
+
         }
+
     }
 
     /**
@@ -234,6 +236,7 @@ public class Schiedsrichter {
      */
     private boolean spielLäuftNoch() {
         int nochImSpiel = countSpielerImSpiel();
+        System.out.println("Spieler im Spiel: " + nochImSpiel);
         return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
     }
 
@@ -277,10 +280,14 @@ public class Schiedsrichter {
      * @return Gibt zurück, wie viele Spieler noch im Spiel sind
      */
     private int countSpielerImSpiel() {
-        return Math.toIntExact(
-                teilnehmer
-                        .stream()
-                        .filter((Spieler s) -> s.isImSpiel()).count());
+        int anzahl = 0;
+        for (Spieler s : teilnehmer){
+            if (s.istImSpiel()){
+//                System.out.println(s.getName() + " " + s.getImSpiel());
+                anzahl++;
+            }
+        }
+        return anzahl;
     }
 
     /**
@@ -298,7 +305,9 @@ public class Schiedsrichter {
      * wieder unter den Stapel.
      */
     public void naechsteGemeinschaftskarte(){
-        this.gemeinschaftsKarten.peek().fuehreKartenAktionAus(this);
+        Karte k = this.gemeinschaftsKarten.peek();
+        k.fuehreKartenAktionAus(this);
+        protokollant.printAs("Gezogene Karte: " + k.getClass().toString());
         this.gemeinschaftsKarten.add(this.gemeinschaftsKarten.poll());
     }
 
@@ -307,7 +316,9 @@ public class Schiedsrichter {
      * wieder unter den Stapel.
      */
     public void naechsteEreigniskarte(){
-        this.ereignisKarten.peek().fuehreKartenAktionAus(this);
+        Karte k = this.ereignisKarten.peek();
+        k.fuehreKartenAktionAus(this);
+        protokollant.printAs( "Gezogene Karte: " + k.getClass().toString());
         this.ereignisKarten.add(this.ereignisKarten.poll());
     }
 

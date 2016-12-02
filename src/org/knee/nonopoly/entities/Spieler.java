@@ -33,7 +33,7 @@ public class Spieler extends Entity {
     /**
      * Konstruktor
      */
-    protected Spieler() {
+    private Spieler() {
         super();
         this.setGuthaben(0);
         this.setPosition(0);
@@ -102,8 +102,8 @@ public class Spieler extends Entity {
         this.strategie = strategie;
     }
 
-    public boolean isImSpiel() {
-        return imSpiel;
+    public boolean istImSpiel() {
+        return this.getImSpiel();
     }
 
     public int getImGefaengnis() {

@@ -12,6 +12,7 @@ public class Bank extends Entity {
      */
     public Bank() {
         super();
+        setName("Bank");
         setGuthaben(200000);
     }
 

@@ -26,11 +26,7 @@ public class Main {
         schiedsrichter.registriereSpieler("Adrian", new AllesKaeufer());
         schiedsrichter.registriereSpieler("Matze", new AllesKaeufer());
         schiedsrichter.zahleStartkapitalAus();
-        schiedsrichter.spieleEinenSpielzug();
-        schiedsrichter.spieleEineRunde();
-        schiedsrichter.spieleEineRunde();
-        schiedsrichter.spieleEineRunde();
-        schiedsrichter.spieleEineRunde();
+        schiedsrichter.spieleSpielZuEnde();
 
     }
 }

@@ -15,6 +15,6 @@ public class GeburtstagKarte implements Karte {
      */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
-        schiedsrichter.getTeilnehmer().stream().filter(Spieler::getImSpiel).forEach(spieler -> spieler.ueberweiseAn(1000, schiedsrichter.getAktiverSpieler()));
+        schiedsrichter.getTeilnehmer().stream().filter(Spieler::istImSpiel).forEach(spieler -> spieler.ueberweiseAn(1000, schiedsrichter.getAktiverSpieler()));
     }
 }

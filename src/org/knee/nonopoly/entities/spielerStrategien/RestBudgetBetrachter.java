@@ -36,7 +36,7 @@ public class RestBudgetBetrachter extends Strategie {
      */
     @Override
     public boolean erlaubtHausbau(Spieler spieler, Strasse feld) {
-        return spieler.getGuthaben() > this.minGuthaben && feld.getHauspreis() < spieler.getGuthaben();
+        return (spieler.getGuthaben() > this.minGuthaben) && (feld.getHauspreis() < spieler.getGuthaben());
     }
 
     @Override

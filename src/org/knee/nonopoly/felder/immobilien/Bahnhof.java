@@ -66,6 +66,7 @@ public class Bahnhof extends ImmobilienFeld {
         sb.append("kaufpreis=").append(this.getKaufpreis());
         sb.append('}');
         sb.append("mietStaffel=").append(mietStaffel);
+        sb.append(", besitzer={").append(this.getBesitzer()).append("}");
         sb.append('}');
         return sb.toString();
     }

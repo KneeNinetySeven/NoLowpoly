@@ -33,7 +33,8 @@ public abstract class Entity {
             this.belasteMit(geldMenge);
             ziel.gutschreibenAn(geldMenge);
         } else {
-            System.err.println(this.getName() + " hat doch garnicht genug Geld dafür!");
+            this.setImSpiel(false);
+            System.out.println("******************* "+this.getName() + " hat doch garnicht genug Geld dafür!");
         }
     }
 
@@ -44,7 +45,7 @@ public abstract class Entity {
      * @return Gibt zurück, ob genug Geld zur Verfügung bereitsteht
      */
     private boolean pruefeBonitaet(int geldMenge) {
-        return this.getGuthaben() > geldMenge;
+        return this.getGuthaben() >= geldMenge;
     }
 
     /**
@@ -87,7 +88,7 @@ public abstract class Entity {
     }
 
     public boolean getImSpiel() {
-        return imSpiel;
+        return this.imSpiel;
     }
 
     public void setImSpiel(boolean imSpiel) {
