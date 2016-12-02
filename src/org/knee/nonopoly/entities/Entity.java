@@ -34,7 +34,7 @@ public abstract class Entity {
             ziel.gutschreibenAn(geldMenge);
         } else {
             this.setImSpiel(false);
-            System.out.println("******************* "+this.getName() + " hat doch garnicht genug Geld dafür!");
+            System.out.println(" [ AUSGESCHIEDEN ] \t "+this.getName() + " hat doch garnicht genug Geld dafür!");
         }
     }
 

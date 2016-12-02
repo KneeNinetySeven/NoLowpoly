@@ -50,7 +50,6 @@ public class Schiedsrichter {
     // Parser
     private JDOMParsing jdomParser;
 
-
     /**
      *
      */
@@ -188,7 +187,7 @@ public class Schiedsrichter {
      */
     private boolean spielLäuftNoch() {
         int nochImSpiel = countSpielerImSpiel();
-        return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
+        return (nochImSpiel > 1) && (bank.getImSpiel());
     }
 
     /**

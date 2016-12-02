@@ -26,8 +26,8 @@ public class Main {
         schiedsrichter.registriereSpieler("Nils", new AllesKaeufer());
         schiedsrichter.registriereSpieler("Adrian", new RestBudgetBetrachter());
         schiedsrichter.registriereSpieler("Matze", new AllesKaeufer());
-        schiedsrichter.registriereSpieler("Matze2", new AllesKaeufer());
-        schiedsrichter.registriereSpieler("Matze3", new AllesKaeufer());
+//        schiedsrichter.registriereSpieler("Matze2", new AllesKaeufer());
+//        schiedsrichter.registriereSpieler("Matze3", new AllesKaeufer());
         schiedsrichter.zahleStartkapitalAus();
         schiedsrichter.spieleSpielZuEnde();
 

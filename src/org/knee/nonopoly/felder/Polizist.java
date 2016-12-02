@@ -19,6 +19,7 @@ public class Polizist extends Feld {
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getAktiverSpieler().geheInsGefaengnis();
+        schiedsrichter.getProtokollant().printAs(schiedsrichter.getAktiverSpieler().getName() + " geht ins Gefaengnis");
     }
 
     @Override
