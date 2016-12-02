@@ -103,6 +103,16 @@ public class Schiedsrichter {
     }
 
     /**
+     * Setzt intial den Besitzer aller Immobilien als Bank
+     */
+    private void besitzerInitialisieren() {
+        spielbrett
+                .stream()
+                .filter((Feld f) -> f.istVomTyp(FeldTypen.IMMOBILIENFELD))
+                .forEach(feld -> feld.initialisiereBesitzer(getBank()));
+    }
+
+    /**
      * Legt die Aktionskarten an und auf die entsprechenden Kartenstapel
      */
     private void legeKartenAn() {
@@ -161,6 +171,144 @@ public class Schiedsrichter {
     }
 
     /**
+     * Zahlt das Startkapital an alle Spieler aus.
+     * Das Kapital wird von der Bank zur Verfügung gestellt
+     */
+    public void zahleStartkapitalAus() {
+        getBank().setGuthaben(200000);
+        getTeilnehmer().forEach((Spieler s) -> {
+            getBank().ueberweiseAn(30000, s);
+        });
+    }
+
+    /**
+     * Ermittelt anhand des Bankguthabens und der Spielereigenschaften, ob das Spiel weiterläuft
+     *
+     * @return Gibt zurück, ob das Spiel beendet ist
+     */
+    private boolean spielLäuftNoch() {
+        int nochImSpiel = countSpielerImSpiel();
+        return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
+    }
+
+    /**
+     * @return Gibt zurück, wie viele Spieler noch im Spiel sind
+     */
+    private int countSpielerImSpiel() {
+        int anzahl = 0;
+        for (Spieler s : teilnehmer) {
+            if (s.istImSpiel()) {
+                anzahl++;
+            }
+        }
+        return anzahl;
+    }
+
+    /**
+     * Bewegt den Spieler auf das nächste Feld.
+     * Verwendet wird der letzte Würfelwurf.
+     */
+    private void bewegeSpieler() {
+        Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
+
+        letzterWurf = wuerfel.wuerfeln();
+        protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
+
+        // Auf Pasche überprüfen
+        if (letzterWurf.istPasch()) {
+            if (aktiverSpieler.registrierePasch()) {
+                // Beim dritten Pasch ins Gefängnis verschieben, statt auf dem Feld
+                aktiverSpieler.geheInsGefaengnis();
+                return;
+            }
+        } else {
+            // Paschserie unterbrechen
+            aktiverSpieler.pascheZuruecksetzen();
+        }
+
+        // Felderzahl betrachten
+        int neuePosition = (aktiverSpieler.getPosition() + letzterWurf.getSum());
+        if ((spielbrett.size() - 1) < neuePosition) {
+            // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen
+            aktiverSpieler.setPosition(neuePosition - spielbrett.size());
+            Los feld = (Los) spielbrett.get(0);
+            bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
+            getProtokollant().printAs(aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
+        } else {
+            // Die Spielerposition wird gesetzt
+            aktiverSpieler.setPosition(neuePosition);
+        }
+    }
+
+    /**
+     * Lässt den Schiedsrichter einen Spielzug ausrichten
+     *
+     * @return Gibt zurück, ob das Spiel noch läuft
+     */
+    private boolean spieleEinenSpielzug() {
+        Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
+        Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
+
+        protokollant.printAs("Aktiver Spieler: "
+                + aktiverSpieler.getName()
+                + " [" + aktiverSpieler.getGuthaben() + " | " + aktiverSpieler.getPosition() + "]");
+        // Verbleibende Teilnehmer sollen spielen können
+        if (!aktiverSpieler.istAusgeschieden()) {
+            if (aktiverSpieler.getImGefaengnis() > 0) {
+                // Gefängnis-Insassen würfeln nicht
+                aktivesFeld.fuehrePflichtAktionAus(this);
+            } else {
+                bewegeSpieler();
+                aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
+                protokollant.printAs(aktiverSpieler.getName()
+                        + " steht auf Feld: "
+                        + aktivesFeld.getName());
+                aktivesFeld.fuehrePflichtAktionAus(this);
+            }
+
+            // Ist der aktive Spieler im Laufe der Runde rausgeflogen,
+            // wird er ausscheiden gelassen
+            if (!aktiverSpieler.getImSpiel()) {
+                this.ausscheidenLassen(aktiverSpieler);
+            }
+        }
+
+        // Nach dem Zug ist der nächste Spieler dran!
+        if (naechsterSpieler < teilnehmer.toArray().length - 1) {
+            naechsterSpieler++;
+        } else {
+            rundenZaehler++;
+            naechsterSpieler = 0;
+            protokollant.printAs("\t ** Rundenübertrag auf: " + rundenZaehler);
+        }
+        return spielLäuftNoch();
+    }
+
+    /**
+     * Spielt so lange Züge, bis die Runde beendet ist
+     *
+     * @return Gibt zurück, ob das Spiel weitergeht
+     */
+    private boolean spieleEineRunde() {
+        for (int zuegeBisEnde = teilnehmer.size() - naechsterSpieler; zuegeBisEnde > 0; zuegeBisEnde--) {
+            if (!spieleEinenSpielzug()) {
+                return spielLäuftNoch();
+            }
+        }
+        return spielLäuftNoch();
+    }
+
+    /**
+     * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
+     */
+    public void spieleSpielZuEnde() {
+        while (this.spieleEineRunde()) {
+
+        }
+        this.spielBeenden();
+    }
+
+    /**
      * Lässt den übergebenen Spieler ausscheiden
      *
      * @param spieler
@@ -206,155 +354,6 @@ public class Schiedsrichter {
 
         protokollant.printAs("Der Gesamtsieger ist : " + gesamtSieger);
 
-    }
-
-    /**
-     * Lässt den Schiedsrichter einen Spielzug ausrichten
-     *
-     * @return Gibt zurück, ob das Spiel noch läuft
-     */
-    private boolean spieleEinenSpielzug() {
-        Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
-        Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
-
-        protokollant.printAs("Aktiver Spieler: "
-                + aktiverSpieler.getName()
-                + " [" + aktiverSpieler.getGuthaben() + " | " + aktiverSpieler.getPosition() + "]");
-        // Verbleibende Teilnehmer sollen spielen können
-        if (!aktiverSpieler.istAusgeschieden()) {
-            if (aktiverSpieler.getImGefaengnis() > 0) {
-                // Gefängnis-Insassen würfeln nicht
-                aktivesFeld.fuehrePflichtAktionAus(this);
-            } else {
-                bewegeSpieler();
-                aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
-                protokollant.printAs(aktiverSpieler.getName()
-                        + " steht auf Feld: "
-                        + aktivesFeld.toString()
-                        + " (" + (aktivesFeld.getIndex()) + ")");
-                aktivesFeld.fuehrePflichtAktionAus(this);
-            }
-
-            // Ist der aktive Spieler im Laufe der Runde rausgeflogen,
-            // wird er ausscheiden gelassen
-            if (!aktiverSpieler.getImSpiel()) {
-                this.ausscheidenLassen(aktiverSpieler);
-            }
-        }
-
-        // Nach dem Zug ist der nächste Spieler dran!
-        if (naechsterSpieler < teilnehmer.toArray().length - 1) {
-            naechsterSpieler++;
-        } else {
-            rundenZaehler++;
-            naechsterSpieler = 0;
-            protokollant.printAs("\t ** Rundenübertrag auf: " + rundenZaehler);
-        }
-        return spielLäuftNoch();
-    }
-
-    /**
-     * Spielt so lange Züge, bis die Runde beendet ist
-     *
-     * @return Gibt zurück, ob das Spiel weitergeht
-     */
-    private boolean spieleEineRunde() {
-        for (int zuegeBisEnde = teilnehmer.size() - naechsterSpieler; zuegeBisEnde > 0; zuegeBisEnde--) {
-            if (!spieleEinenSpielzug()) {
-                return spielLäuftNoch();
-            }
-        }
-        return spielLäuftNoch();
-    }
-
-    /**
-     * Zahlt das Startkapital an alle Spieler aus.
-     * Das Kapital wird von der Bank zur Verfügung gestellt
-     */
-    public void zahleStartkapitalAus() {
-        getBank().setGuthaben(200000);
-        getTeilnehmer().forEach((Spieler s) -> {
-            getBank().ueberweiseAn(30000, s);
-        });
-    }
-
-    /**
-     * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
-     */
-    public void spieleSpielZuEnde() {
-        while (this.spieleEineRunde()) {
-
-        }
-        this.spielBeenden();
-    }
-
-    /**
-     * Ermittelt anhand des Bankguthabens und der Spielereigenschaften, ob das Spiel weiterläuft
-     *
-     * @return Gibt zurück, ob das Spiel beendet ist
-     */
-    private boolean spielLäuftNoch() {
-        int nochImSpiel = countSpielerImSpiel();
-        return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
-    }
-
-    /**
-     * Bewegt den Spieler auf das nächste Feld.
-     * Verwendet wird der letzte Würfelwurf.
-     */
-    private void bewegeSpieler() {
-        Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
-
-        letzterWurf = wuerfel.wuerfeln();
-        protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
-
-        // Auf Pasche überprüfen
-        if (letzterWurf.istPasch()) {
-            if (aktiverSpieler.registrierePasch()) {
-                // Beim dritten Pasch ins Gefängnis verschieben, statt auf dem Feld
-                aktiverSpieler.geheInsGefaengnis();
-                return;
-            }
-        } else {
-            // Paschserie unterbrechen
-            aktiverSpieler.pascheZuruecksetzen();
-        }
-
-        // Felderzahl betrachten
-        int neuePosition = (aktiverSpieler.getPosition() + letzterWurf.getSum());
-        if ((spielbrett.size() - 1) < neuePosition) {
-            // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen
-            aktiverSpieler.setPosition(neuePosition - spielbrett.size());
-            Los feld = (Los) spielbrett.get(0);
-            bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
-            getProtokollant().printAs(aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
-        } else {
-            // Die Spielerposition wird gesetzt
-            aktiverSpieler.setPosition(neuePosition);
-        }
-    }
-
-    /**
-     * @return Gibt zurück, wie viele Spieler noch im Spiel sind
-     */
-    private int countSpielerImSpiel() {
-        int anzahl = 0;
-        for (Spieler s : teilnehmer) {
-            if (s.istImSpiel()) {
-                anzahl++;
-            }
-        }
-        return anzahl;
-    }
-
-    /**
-     * Setzt intial den Besitzer aller Immobilien als Bank
-     */
-    private void besitzerInitialisieren() {
-        spielbrett
-                .stream()
-                .filter((Feld f) -> f.istVomTyp(FeldTypen.IMMOBILIENFELD))
-                .forEach(feld -> feld.initialisiereBesitzer(getBank()));
     }
 
     /**

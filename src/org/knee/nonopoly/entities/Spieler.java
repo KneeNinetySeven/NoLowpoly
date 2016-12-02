@@ -23,7 +23,7 @@ public class Spieler extends Entity {
      * @param strategie
      * @return
      */
-    public static final Spieler spielerErzeugen(String name, Strategie strategie){
+    public static Spieler spielerErzeugen(String name, Strategie strategie){
         Spieler spieler = new Spieler();
         spieler.setName(name);
         spieler.setStrategie(strategie);
@@ -83,8 +83,8 @@ public class Spieler extends Entity {
 
     @Override
     public String toString(){
-        return "Spieler[" + this.getGuthaben() + "," + this.getName() + "," +"imSpiel:" + getImSpiel() + "]" +
-                "\n \t Seine Strategie: " + this.strategie.toString() ;
+        return "Spieler[" + this.getGuthaben() + "," + this.getName() + "," +"imSpiel:" + getImSpiel() +
+                " Strategie: " + this.strategie.getName() + "]";
     }
 
     public int getPosition() {
