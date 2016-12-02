@@ -46,9 +46,10 @@ public class Strasse extends ImmobilienFeld {
                 wirdGekauftDurchSpieler(aktiverSpieler, schiedsrichter.getBank());
             }
         } else if (this.besitzer == aktiverSpieler) {
-            if (aktiverSpieler.getStrategie().erlaubtHausbau(aktiverSpieler, this) && (getHausanzahl() <= 6)) {
+            if (aktiverSpieler.getStrategie().erlaubtHausbau(aktiverSpieler, this) && (getHausanzahl() < mietStaffel.size())) {
                 schiedsrichter.getProtokollant().printAs(aktiverSpieler + " baut ein neues Haus");
                 wirdNeuBebaut(aktiverSpieler, schiedsrichter.getBank());
+                schiedsrichter.getProtokollant().printAs(aktiverSpieler + " baut Haus Nummer: " + getHausanzahl());
             }
         } else {
             zahleMiete(aktiverSpieler);
@@ -93,6 +94,7 @@ public class Strasse extends ImmobilienFeld {
         sb.append(", mietStaffel=").append(this.mietStaffel);
         sb.append(", hauspreis=").append(this.hauspreis);
         sb.append(", besitzer={").append(this.getBesitzer()).append("}");
+        sb.append(", hausanzahl=").append(this.getHausanzahl());
         sb.append('}');
         return sb.toString();
     }

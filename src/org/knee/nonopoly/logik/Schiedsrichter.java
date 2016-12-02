@@ -3,12 +3,14 @@ package org.knee.nonopoly.logik;
 import org.jdom2.DataConversionException;
 import org.jdom2.JDOMException;
 import org.knee.nonopoly.entities.Bank;
+import org.knee.nonopoly.entities.Entity;
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 import org.knee.nonopoly.felder.Los;
+import org.knee.nonopoly.felder.immobilien.ImmobilienFeld;
 import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.karten.ereigniskarten.*;
 import org.knee.nonopoly.karten.gemeinschaftskarten.*;
@@ -23,7 +25,7 @@ import java.util.*;
 
 /**
  * Created by Nils on 11.09.2016.
- *
+ * <p>
  * Die Klasse Schiedsrichter übernimmt die Regisseurs-Rolle beim Spiel
  */
 public class Schiedsrichter {
@@ -49,6 +51,9 @@ public class Schiedsrichter {
     private JDOMParsing jdomParser;
 
 
+    /**
+     *
+     */
     public Schiedsrichter() {
         // Werkzeuge für den Schiedsrichter einrichten
         this.wuerfel = new Wuerfel();
@@ -93,14 +98,14 @@ public class Schiedsrichter {
 
         spielbrett.forEach(feld -> getProtokollant().printAs(
                 "Anlegen auf: " + getSpielbrett().indexOf(feld)
-                + " Index: " + feld.getIndex()
-                + " von: " + feld.getName()));
+                        + " Index: " + feld.getIndex()
+                        + " von: " + feld.getName()));
     }
 
     /**
      * Legt die Aktionskarten an und auf die entsprechenden Kartenstapel
      */
-    private void legeKartenAn(){
+    private void legeKartenAn() {
         ArrayList<Karte> tmp = new ArrayList<>();
 
         //Gemeinschaftskarten
@@ -156,11 +161,55 @@ public class Schiedsrichter {
     }
 
     /**
+     * Lässt den übergebenen Spieler ausscheiden
+     * @param spieler
+     */
+    private void ausscheidenLassen(Spieler spieler) {
+        spieler.setIstAusgeschieden(true);
+        spieler.ueberweiseAn(spieler.getGuthaben(), getBank());
+        getSpielbrett().forEach(feld -> {
+            if (feld.istVomTyp(FeldTypen.IMMOBILIENFELD)) {
+                ImmobilienFeld immobilienFeld = (ImmobilienFeld) feld;
+                immobilienFeld.initialisiereBesitzer(getBank());
+            }
+        });
+    }
+
+    /**
+     *
+     */
+    private void spielBeenden(){
+        protokollant.printAs("Das Spiel ist beendet!");
+        Spieler barSieger = teilnehmer.stream().max(Comparator.comparingInt(Entity::getGuthaben)).get();
+        protokollant.printAs("Der Sieger mit dem höchsten Bargeldbestand ist: " + barSieger.getName());
+
+        Map besitzverhältnisse = new HashMap<Spieler, List<Feld>>();
+        for(Spieler s : teilnehmer){
+            List<Feld> felderImBesitz = new ArrayList<>();
+            for (Feld f : spielbrett){
+                if(f.istVomTyp(FeldTypen.IMMOBILIENFELD)){
+                    ImmobilienFeld i = (ImmobilienFeld) f;
+                    felderImBesitz.add(i);
+                }
+            }
+            besitzverhältnisse.put(s, felderImBesitz);
+        }
+
+        teilnehmer.stream().forEach(spieler -> {
+            spielbrett.stream().filter(f -> f.istVomTyp(FeldTypen.IMMOBILIENFELD)).filter(f -> {
+                ImmobilienFeld i = (ImmobilienFeld) f;
+                return i.getBesitzer() == spieler;
+            });
+        });
+        Spieler gesamtSieger = teilnehmer.stream().max(Comparator.comparing());
+    }
+
+    /**
      * Lässt den Schiedsrichter einen Spielzug ausrichten
      *
      * @return Gibt zurück, ob das Spiel noch läuft
      */
-    public boolean spieleEinenSpielzug() {
+    private boolean spieleEinenSpielzug() {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
 
@@ -168,7 +217,7 @@ public class Schiedsrichter {
                 + aktiverSpieler.getName()
                 + " [" + aktiverSpieler.getGuthaben() + " | " + aktiverSpieler.getPosition() + "]");
         // Verbleibende Teilnehmer sollen spielen können
-        if (aktiverSpieler.getImSpiel()) {
+        if (!aktiverSpieler.istAusgeschieden()) {
             if (aktiverSpieler.getImGefaengnis() > 0) {
                 // Gefängnis-Insassen würfeln nicht
                 aktivesFeld.fuehrePflichtAktionAus(this);
@@ -180,6 +229,12 @@ public class Schiedsrichter {
                         + aktivesFeld.toString()
                         + " (" + (aktivesFeld.getIndex()) + ")");
                 aktivesFeld.fuehrePflichtAktionAus(this);
+            }
+
+            // Ist der aktive Spieler im Laufe der Runde rausgeflogen,
+            // wird er ausscheiden gelassen
+            if (!aktiverSpieler.getImSpiel()) {
+                this.ausscheidenLassen(aktiverSpieler);
             }
         }
 
@@ -199,23 +254,13 @@ public class Schiedsrichter {
      *
      * @return Gibt zurück, ob das Spiel weitergeht
      */
-    public boolean spieleEineRunde() {
+    private boolean spieleEineRunde() {
         for (int zuegeBisEnde = teilnehmer.size() - naechsterSpieler; zuegeBisEnde > 0; zuegeBisEnde--) {
-            if(!spieleEinenSpielzug()){
+            if (!spieleEinenSpielzug()) {
                 return spielLäuftNoch();
             }
         }
         return spielLäuftNoch();
-    }
-
-    /**
-     * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
-     */
-    public void spieleSpielZuEnde() {
-        while (this.spieleEineRunde()) {
-
-        }
-
     }
 
     /**
@@ -230,13 +275,22 @@ public class Schiedsrichter {
     }
 
     /**
+     * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
+     */
+    public void spieleSpielZuEnde() {
+        while(this.spieleEineRunde()) {
+
+        }
+        this.spielBeenden();
+    }
+
+    /**
      * Ermittelt anhand des Bankguthabens und der Spielereigenschaften, ob das Spiel weiterläuft
      *
      * @return Gibt zurück, ob das Spiel beendet ist
      */
     private boolean spielLäuftNoch() {
         int nochImSpiel = countSpielerImSpiel();
-        System.out.println("Spieler im Spiel: " + nochImSpiel);
         return (nochImSpiel > 1) && (bank.getGuthaben() > 0);
     }
 
@@ -251,8 +305,8 @@ public class Schiedsrichter {
         protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
 
         // Auf Pasche überprüfen
-        if(letzterWurf.istPasch()){
-            if(aktiverSpieler.registrierePasch()) {
+        if (letzterWurf.istPasch()) {
+            if (aktiverSpieler.registrierePasch()) {
                 // Beim dritten Pasch ins Gefängnis verschieben, statt auf dem Feld
                 aktiverSpieler.geheInsGefaengnis();
                 return;
@@ -281,9 +335,8 @@ public class Schiedsrichter {
      */
     private int countSpielerImSpiel() {
         int anzahl = 0;
-        for (Spieler s : teilnehmer){
-            if (s.istImSpiel()){
-//                System.out.println(s.getName() + " " + s.getImSpiel());
+        for (Spieler s : teilnehmer) {
+            if (s.istImSpiel()) {
                 anzahl++;
             }
         }
@@ -304,7 +357,7 @@ public class Schiedsrichter {
      * Führt die nächste Gemeinschaftskarte aus und legt die gezogene Karte
      * wieder unter den Stapel.
      */
-    public void naechsteGemeinschaftskarte(){
+    public void naechsteGemeinschaftskarte() {
         Karte k = this.gemeinschaftsKarten.peek();
         k.fuehreKartenAktionAus(this);
         protokollant.printAs("Gezogene Karte: " + k.getClass().toString());
@@ -315,10 +368,10 @@ public class Schiedsrichter {
      * Führt die nächste Ereigniskarte aus und legt die gezogene Karte
      * wieder unter den Stapel.
      */
-    public void naechsteEreigniskarte(){
+    public void naechsteEreigniskarte() {
         Karte k = this.ereignisKarten.peek();
         k.fuehreKartenAktionAus(this);
-        protokollant.printAs( "Gezogene Karte: " + k.getClass().toString());
+        protokollant.printAs("Gezogene Karte: " + k.getClass().toString());
         this.ereignisKarten.add(this.ereignisKarten.poll());
     }
 

@@ -10,7 +10,7 @@ import org.knee.nonopoly.karten.gemeinschaftskarten.GefaengnisKarte;
  */
 public class Spieler extends Entity {
 
-    private boolean imSpiel;
+    private boolean istAusgeschieden;
     private int imGefaengnis;
     private GefaengnisKarte gefaengnisFreiKarte;
     private int pascheInFolge;
@@ -39,6 +39,7 @@ public class Spieler extends Entity {
         this.setPosition(0);
         this.setName("");
         this.setImSpiel(true);
+        this.setIstAusgeschieden(false);
         this.pascheInFolge = 0;
     }
 
@@ -82,7 +83,7 @@ public class Spieler extends Entity {
 
     @Override
     public String toString(){
-        return "Spieler[" + this.getGuthaben() + "," + this.getName() + "," +"imSpiel:" + this.imSpiel + "]" +
+        return "Spieler[" + this.getGuthaben() + "," + this.getName() + "," +"imSpiel:" + getImSpiel() + "]" +
                 "\n \t Seine Strategie: " + this.strategie.toString() ;
     }
 
@@ -120,5 +121,13 @@ public class Spieler extends Entity {
 
     public void setGefaengnisFreiKarte(GefaengnisKarte gefaengnisFreiKarte) {
         this.gefaengnisFreiKarte = gefaengnisFreiKarte;
+    }
+
+    public boolean istAusgeschieden() {
+        return istAusgeschieden;
+    }
+
+    public void setIstAusgeschieden(boolean istAusgeschieden) {
+        this.istAusgeschieden = istAusgeschieden;
     }
 }
