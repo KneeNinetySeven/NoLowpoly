@@ -60,6 +60,16 @@ public class Werk extends ImmobilienFeld {
 
     }
 
+    /**
+     * Gibt den aktuellen Wert der Immobilie zurück.
+     *
+     * @return
+     */
+    @Override
+    public int berechneGrundwert() {
+        return getKaufpreis();
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Werk{");

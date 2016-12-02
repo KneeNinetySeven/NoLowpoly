@@ -85,6 +85,16 @@ public class Strasse extends ImmobilienFeld {
         }
     }
 
+    /**
+     * Gibt den aktuellen Wert der Strasse zurück.
+     *
+     * @return
+     */
+    @Override
+    public int berechneGrundwert() {
+        return getKaufpreis() + (getHausanzahl() * getHauspreis());
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder(this.getName() + "{");

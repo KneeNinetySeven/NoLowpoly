@@ -59,6 +59,12 @@ public abstract class ImmobilienFeld extends Feld {
     public abstract void zahleMiete(Spieler spieler);
 
     /**
+     * Gibt den aktuellen Wert der Immobilie zurück.
+     * @return
+     */
+    public abstract int berechneGrundwert();
+
+    /**
      * @param testImmoTyp
      * @return Gibt zurück, ob das Feld vom selben Immobilientyp ist, wie übergeben
      */

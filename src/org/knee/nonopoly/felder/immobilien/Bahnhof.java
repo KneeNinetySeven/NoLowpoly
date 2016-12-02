@@ -56,6 +56,16 @@ public class Bahnhof extends ImmobilienFeld {
         spieler.ueberweiseAn(mietStaffel.get(1), besitzer);
     }
 
+    /**
+     * Gibt den aktuellen Wert der Immobilie zurück.
+     *
+     * @return
+     */
+    @Override
+    public int berechneGrundwert() {
+        return getKaufpreis();
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Bahnhof{");

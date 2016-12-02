@@ -162,6 +162,7 @@ public class Schiedsrichter {
 
     /**
      * Lässt den übergebenen Spieler ausscheiden
+     *
      * @param spieler
      */
     private void ausscheidenLassen(Spieler spieler) {
@@ -178,30 +179,33 @@ public class Schiedsrichter {
     /**
      *
      */
-    private void spielBeenden(){
+    private void spielBeenden() {
         protokollant.printAs("Das Spiel ist beendet!");
         Spieler barSieger = teilnehmer.stream().max(Comparator.comparingInt(Entity::getGuthaben)).get();
         protokollant.printAs("Der Sieger mit dem höchsten Bargeldbestand ist: " + barSieger.getName());
 
-        Map besitzverhältnisse = new HashMap<Spieler, List<Feld>>();
-        for(Spieler s : teilnehmer){
-            List<Feld> felderImBesitz = new ArrayList<>();
-            for (Feld f : spielbrett){
-                if(f.istVomTyp(FeldTypen.IMMOBILIENFELD)){
-                    ImmobilienFeld i = (ImmobilienFeld) f;
-                    felderImBesitz.add(i);
-                }
+        Map<Spieler, Integer> besitzverhältnisse = new HashMap<>();
+
+        for (Spieler spieler : teilnehmer) {
+            int sum = spielbrett.stream().filter(feld -> feld.istVomTyp(FeldTypen.IMMOBILIENFELD)).filter(feld -> {
+                ImmobilienFeld immobilienFeld = (ImmobilienFeld) feld;
+                return immobilienFeld.getBesitzer() == spieler;
+            }).mapToInt(feld -> {
+                ImmobilienFeld immobilienFeld = (ImmobilienFeld) feld;
+                return immobilienFeld.berechneGrundwert();
+            }).sum() + spieler.getGuthaben();
+            besitzverhältnisse.put(spieler, sum);
+        }
+        Spieler gesamtSieger = teilnehmer.get(1);
+
+        for (Spieler spieler : besitzverhältnisse.keySet()) {
+            if (besitzverhältnisse.get(gesamtSieger) < besitzverhältnisse.get(spieler)) {
+                gesamtSieger = spieler;
             }
-            besitzverhältnisse.put(s, felderImBesitz);
         }
 
-        teilnehmer.stream().forEach(spieler -> {
-            spielbrett.stream().filter(f -> f.istVomTyp(FeldTypen.IMMOBILIENFELD)).filter(f -> {
-                ImmobilienFeld i = (ImmobilienFeld) f;
-                return i.getBesitzer() == spieler;
-            });
-        });
-        Spieler gesamtSieger = teilnehmer.stream().max(Comparator.comparing());
+        protokollant.printAs("Der Gesamtsieger ist : " + gesamtSieger);
+
     }
 
     /**
@@ -278,7 +282,7 @@ public class Schiedsrichter {
      * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
      */
     public void spieleSpielZuEnde() {
-        while(this.spieleEineRunde()) {
+        while (this.spieleEineRunde()) {
 
         }
         this.spielBeenden();
