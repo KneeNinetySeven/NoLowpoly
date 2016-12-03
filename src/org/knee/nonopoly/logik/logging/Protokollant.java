@@ -60,6 +60,33 @@ public class Protokollant {
         Object[] msg = {className, count, s};
         System.out.printf(format, msg);
         logOutput.append(String.format(format, msg));
+        writeLogToFile();
+        count++;
+    }
+
+    /**
+     * @param s String, der als Konsolenlog ausgegeben werden soll
+     */
+    public static void printAs(boolean linebreak, Object o, String s) {
+        String format;
+        if(linebreak){
+            format = "[ %14s ] ::%6s - %s \n";
+        }else {
+            format = "[ %14s ] ::%6s - %s";
+        }
+        String[] splittedObjectPath = o.getClass().getName().split("\\.");
+        String className = splittedObjectPath[splittedObjectPath.length - 1];
+        Object[] msg = {className, count, s};
+        System.out.printf(format, msg);
+        logOutput.append(String.format(format, msg));
+        writeLogToFile();
+        count++;
+    }
+
+    /**
+     * Wenn ein Logfile geschrieben werden soll, wird dieses Aktualisiert
+     */
+    private static void writeLogToFile(){
         if (writeLogToFile) {
             try {
                 PrintStream printStream = new PrintStream(f);
@@ -68,8 +95,6 @@ public class Protokollant {
                 e.printStackTrace();
             }
         }
-        count++;
     }
-
 
 }

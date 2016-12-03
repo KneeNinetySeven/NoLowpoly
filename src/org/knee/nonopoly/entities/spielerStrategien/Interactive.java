@@ -23,7 +23,7 @@ public class Interactive extends Strategie {
     private boolean readUserDecision(){
         boolean dec = false;
         Scanner reader = new Scanner(System.in);  // Reading from System.in
-        Protokollant.printAs(this, "Soll dat jekooft werden? [y/n] ");
+        Protokollant.printAs(false, this, "Soll dat jekooft werden? [y/n] ");
         dec = reader.next().trim() == "y";
         return dec;
     }
@@ -36,7 +36,7 @@ public class Interactive extends Strategie {
     @Override
     public boolean erlaubtHausbau(Spieler spieler, Strasse feld) {
         Protokollant.printAs(spieler, spieler.getName() + " - Soll ein neues Haus auf dem Feld " + feld.getName() + "gebaut werden?");
-        Protokollant.printAs(spieler, "Preis: " + feld.getHauspreis() + " Mücken");
+        Protokollant.printAs(spieler, "Preis: " + feld.getHauspreis() + " Mücken \t Du hast noch " + spieler.getGuthaben() );
         return readUserDecision();
     }
 
@@ -48,7 +48,7 @@ public class Interactive extends Strategie {
     @Override
     public boolean erlaubtFeldKauf(Spieler spieler, ImmobilienFeld feld) {
         Protokollant.printAs(spieler, spieler.getName() + " - Soll ein das Feld " + feld.getName() + "gekauft werden?");
-        Protokollant.printAs(spieler, "Preis: " + feld.getKaufpreis() + " Mücken");
+        Protokollant.printAs(spieler, "Preis: " + feld.getKaufpreis() + " Mücken	\t Du hast noch " + spieler.getGuthaben());
         return readUserDecision();
     }
 
