@@ -1,5 +1,7 @@
 package org.knee.nonopoly.entities;
 
+import org.knee.nonopoly.logik.logging.Protokollant;
+
 /**
  * Created by Nils on 09.09.2016.
  * <p>
@@ -30,11 +32,13 @@ public abstract class Entity {
      */
     public void ueberweiseAn(int geldMenge, Entity ziel) {
         if (pruefeBonitaet(geldMenge)) {
+            Protokollant.printAs(this, "ÜBERWEISUNG: " + this.getName() + " -"+geldMenge+"-> " + ziel.getName());
             this.belasteMit(geldMenge);
             ziel.gutschreibenAn(geldMenge);
         } else {
             this.setImSpiel(false);
-            System.out.println(" [ AUSGESCHIEDEN ] \t "+this.getName() + " hat doch garnicht genug Geld dafür!");
+            Protokollant.printAs(this, "ÜBERWEISUNG: " + this.getName() + " ist pleite! ");
+
         }
     }
 

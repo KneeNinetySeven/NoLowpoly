@@ -1,6 +1,7 @@
 package org.knee.nonopoly.felder;
 
 import org.knee.nonopoly.logik.Schiedsrichter;
+import org.knee.nonopoly.logik.logging.Protokollant;
 
 /**
  * Created by Nils on 24.09.2016.
@@ -32,6 +33,7 @@ public class Los extends Feld {
      */
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
+        Protokollant.printAs(this, schiedsrichter.getAktiverSpieler().getName() + " trifft das Los-Feld!");
         schiedsrichter.getBank().ueberweiseAn(getTreffer(), schiedsrichter.getAktiverSpieler());
     }
 

@@ -22,7 +22,7 @@ public class LosTest extends TestCase {
         Feld losFeld = testSchiri.getSpielbrett().get(0);
         losFeld.fuehrePflichtAktionAus(testSchiri);
         System.out.println(testSchiri.getBank().toString());
-        assertTrue(testSchiri.getBank().getGuthaben() == 194000);
+        assertTrue(testSchiri.getBank().getGuthaben() == 1994000);
     }
 
     public static void main(String[] args){

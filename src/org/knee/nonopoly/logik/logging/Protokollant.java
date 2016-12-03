@@ -2,6 +2,9 @@ package org.knee.nonopoly.logik.logging;
 
 import org.knee.nonopoly.entities.Spieler;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 /**
@@ -12,11 +15,13 @@ import java.util.ArrayList;
 
 public class Protokollant {
 
-    private StringBuilder logOutput;
-    private static int count = 0;
+    private static boolean writeLogToFile = false;
+    private static StringBuilder logOutput = new StringBuilder();
+    private static int count = 1;
+    private static File f = new File(System.currentTimeMillis() + ".log");
 
     public Protokollant() {
-        this.logOutput = new StringBuilder();
+        logOutput = new StringBuilder();
         count = 0;
     }
 
@@ -26,15 +31,15 @@ public class Protokollant {
      * @param s String, der ins Log angefügt werden soll
      */
     public void addToLog(String s) {
-        this.logOutput.append("\n");
-        this.logOutput.append(s);
+        logOutput.append("\n");
+        logOutput.append(s);
     }
 
     /**
      * @return Gibt das derzeitige Log zurück
      */
     public String getLogOutput() {
-        return this.logOutput.toString();
+        return logOutput.toString();
     }
 
     /**
@@ -54,7 +59,15 @@ public class Protokollant {
         String className = splittedObjectPath[splittedObjectPath.length - 1];
         Object[] msg = {className, count, s};
         System.out.printf(format, msg);
-//        System.out.println("[ " + splittedObjectPath[splittedObjectPath.length - 1] + " ]::" + count + "\t" + s);
+        logOutput.append(String.format(format, msg));
+        if (writeLogToFile) {
+            try {
+                PrintStream printStream = new PrintStream(f);
+                printStream.append(logOutput.toString());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         count++;
     }
 

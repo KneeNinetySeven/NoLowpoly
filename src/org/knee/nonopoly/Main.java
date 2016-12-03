@@ -1,7 +1,6 @@
 package org.knee.nonopoly;
 
 import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
-import org.knee.nonopoly.entities.spielerStrategien.RestBudgetBetrachter;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 /**
@@ -23,13 +22,13 @@ public class Main {
      * Lässt den Schiedsrichter (noch) nur die richtigen Dinge tun
      */
     public void runGame(){
-        schiedsrichter.registriereSpieler("Nils", new AllesKaeufer());
-        schiedsrichter.registriereSpieler("Adrian", new RestBudgetBetrachter());
-        schiedsrichter.registriereSpieler("Matze", new AllesKaeufer());
-        schiedsrichter.registriereSpieler("Matze2", new AllesKaeufer());
-        schiedsrichter.registriereSpieler("Matze3", new AllesKaeufer());
-        schiedsrichter.registriereSpieler("Matze4", new AllesKaeufer());
-        schiedsrichter.zahleStartkapitalAus();
+        schiedsrichter.registriereSpieler("Spieler1", new AllesKaeufer());
+//        schiedsrichter.registriereSpieler("Spieler2", new RestBudgetBetrachter());
+//        schiedsrichter.registriereSpieler("Spieler3", new AllesKaeufer());
+//        schiedsrichter.registriereSpieler("Spieler4", new AllesKaeufer());
+//        schiedsrichter.registriereSpieler("Spieler5", new AllesKaeufer());
+//        schiedsrichter.registriereSpieler("Spieler6", new AllesKaeufer());
+        schiedsrichter.spielStarten();
         schiedsrichter.spieleSpielZuEnde();
 
     }

@@ -7,6 +7,8 @@ import org.knee.nonopoly.entities.Entity;
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
+import org.knee.nonopoly.exceptions.SpielNichtGestartetException;
+import org.knee.nonopoly.exceptions.ZuWenigTeilnehmerException;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 import org.knee.nonopoly.felder.Los;
@@ -41,6 +43,7 @@ public class Schiedsrichter {
     private Steuertopf steuertopf;
     private List<Feld> spielbrett;
     private int rundenZaehler;
+    private boolean spielGestartet = false;
 
     // Aktionskarten
     private Queue<Karte> gemeinschaftsKarten;
@@ -168,6 +171,18 @@ public class Schiedsrichter {
     }
 
     /**
+     *
+     */
+    public void spielStarten() {
+        if(teilnehmer.size() > 2){
+            zahleStartkapitalAus();
+            this.spielGestartet = true;
+        } else {
+            new ZuWenigTeilnehmerException();
+        }
+    }
+
+    /**
      * Zahlt das Startkapital an alle Spieler aus.
      * Das Kapital wird von der Bank zur Verfügung gestellt
      */
@@ -229,12 +244,15 @@ public class Schiedsrichter {
             // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen
             aktiverSpieler.setPosition(neuePosition - spielbrett.size());
             Los feld = (Los) spielbrett.get(0);
-            bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
-            Protokollant.printAs(this,aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
+            if(aktiverSpieler.getPosition() > 0){
+                bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
+                Protokollant.printAs(this,aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
+            }
         } else {
             // Die Spielerposition wird gesetzt
             aktiverSpieler.setPosition(neuePosition);
         }
+        Protokollant.printAs(this, aktiverSpieler.getName() + " steht jetzt auf dem Feld " + aktiverSpieler.getPosition());
     }
 
     /**
@@ -278,6 +296,7 @@ public class Schiedsrichter {
             naechsterSpieler = 0;
             Protokollant.printAs(this,"\t ** Rundenübertrag auf: " + rundenZaehler);
         }
+        Protokollant.printAs(this,"-----------------");
         return spielLäuftNoch();
     }
 
@@ -292,6 +311,9 @@ public class Schiedsrichter {
                 return spielLäuftNoch();
             }
         }
+        Protokollant.printAs(this, "###############################################################");
+        Protokollant.printAs(this,"---------------------------------------------------------------");
+
         return spielLäuftNoch();
     }
 
@@ -299,10 +321,14 @@ public class Schiedsrichter {
      * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
      */
     public void spieleSpielZuEnde() {
-        while (this.spieleEineRunde()) {
+        if(this.spielGestartet){
+            while (this.spieleEineRunde()) {
 
+            }
+            this.spielBeenden();
+        } else {
+            new SpielNichtGestartetException();
         }
-        this.spielBeenden();
     }
 
     /**
@@ -349,7 +375,7 @@ public class Schiedsrichter {
             }
         }
 
-        Protokollant.printAs(this,"Der Gesamtsieger ist : " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken)");
+        Protokollant.printAs(this,"Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler);
 
     }
 
@@ -359,8 +385,8 @@ public class Schiedsrichter {
      */
     public void naechsteGemeinschaftskarte() {
         Karte k = this.gemeinschaftsKarten.peek();
-        k.fuehreKartenAktionAus(this);
         Protokollant.printAs(this,"Gezogene Karte: " + k.getClass().toString());
+        k.fuehreKartenAktionAus(this);
         this.gemeinschaftsKarten.add(this.gemeinschaftsKarten.poll());
     }
 
@@ -370,8 +396,8 @@ public class Schiedsrichter {
      */
     public void naechsteEreigniskarte() {
         Karte k = this.ereignisKarten.peek();
-        k.fuehreKartenAktionAus(this);
         Protokollant.printAs(this,"Gezogene Karte: " + k.getClass().toString());
+        k.fuehreKartenAktionAus(this);
         this.ereignisKarten.add(this.ereignisKarten.poll());
     }
 
