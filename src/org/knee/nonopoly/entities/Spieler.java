@@ -48,7 +48,7 @@ public class Spieler extends Entity {
      * @return Gibt zurück, ob es sich schon um das dritte Pasch handelt
      */
     public boolean registrierePasch(){
-        this.pascheInFolge = this.pascheInFolge++;
+        this.pascheInFolge++;
         return pascheInFolge == 3;
     }
 

@@ -12,8 +12,8 @@ public class GefaengnisKarte implements Karte {
     private boolean istVergeben = false;
 
     /**
-     *
-     * @param schiedsrichter
+     * Führt die Pflichtaktion beim ziehen einer Gefängniskarte aus.
+     * @param schiedsrichter Der Schiedsrichter
      */
     @Override
     public void fuehreKartenAktionAus(Schiedsrichter schiedsrichter) {
