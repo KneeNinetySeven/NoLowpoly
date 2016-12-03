@@ -3,6 +3,7 @@ package org.knee.nonopoly.felder.immobilien;
 import org.knee.nonopoly.entities.Bank;
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.logik.Schiedsrichter;
+import org.knee.nonopoly.logik.logging.Protokollant;
 
 import java.util.List;
 
@@ -42,14 +43,14 @@ public class Strasse extends ImmobilienFeld {
         Spieler aktiverSpieler = schiedsrichter.getAktiverSpieler();
         if (this.besitzer == schiedsrichter.getBank()) {
             if (aktiverSpieler.getStrategie().erlaubtFeldKauf(aktiverSpieler, this)) {
-                schiedsrichter.getProtokollant().printAs(aktiverSpieler.getName() + " kauft " + getName());
+                Protokollant.printAs(this,aktiverSpieler.getName() + " kauft " + getName());
                 wirdGekauftDurchSpieler(aktiverSpieler, schiedsrichter.getBank());
             }
         } else if (this.besitzer == aktiverSpieler) {
             if (aktiverSpieler.getStrategie().erlaubtHausbau(aktiverSpieler, this) && (getHausanzahl() < mietStaffel.size())) {
-                schiedsrichter.getProtokollant().printAs(aktiverSpieler + " baut ein neues Haus");
+                Protokollant.printAs(this,aktiverSpieler + " baut ein neues Haus");
                 wirdNeuBebaut(aktiverSpieler, schiedsrichter.getBank());
-                schiedsrichter.getProtokollant().printAs(aktiverSpieler + " baut Haus Nummer: " + getHausanzahl());
+                Protokollant.printAs(this,aktiverSpieler + " baut Haus Nummer: " + getHausanzahl());
             }
         } else {
             zahleMiete(aktiverSpieler);

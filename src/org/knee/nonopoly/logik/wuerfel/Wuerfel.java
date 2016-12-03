@@ -16,7 +16,7 @@ public class Wuerfel {
         this.wurf1 = 0;
         this.wurf2 = 0;
         this.generator = new Random();
-        this.generator.setSeed((long) 1 );
+//        this.generator.setSeed((long) 1 );
     }
 
 

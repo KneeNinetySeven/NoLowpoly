@@ -2,6 +2,7 @@ package org.knee.nonopoly.karten.gemeinschaftskarten;
 
 import org.knee.nonopoly.karten.Karte;
 import org.knee.nonopoly.logik.Schiedsrichter;
+import org.knee.nonopoly.logik.logging.Protokollant;
 
 /**
  * @author Nils
@@ -21,7 +22,7 @@ public class GefaengnisKarte implements Karte {
             this.istVergeben = true;
         } else {
             //schiedsrichter.naechsteGemeinschaftskarte();
-            schiedsrichter.getProtokollant().printAs("Die Gefängniskarte wurde schon vergeben. Gebe nächste Karte aus...");
+            Protokollant.printAs(this,"Die Gefängniskarte wurde schon vergeben. Gebe nächste Karte aus...");
         }
     }
 

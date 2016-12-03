@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Protokollant {
 
     private StringBuilder logOutput;
-    private int count;
+    private static int count = 0;
 
     public Protokollant() {
         this.logOutput = new StringBuilder();
@@ -48,8 +48,13 @@ public class Protokollant {
     /**
      * @param s String, der als Konsolenlog ausgegeben werden soll
      */
-    public void printAs(String s) {
-        System.out.println("[ SCHIEDSRICHTER ]::" + count + "\t" + s);
+    public static void printAs(Object o, String s) {
+        String format = "[ %14s ] ::%6s - %s \n";
+        String[] splittedObjectPath = o.getClass().getName().split("\\.");
+        String className = splittedObjectPath[splittedObjectPath.length - 1];
+        Object[] msg = {className, count, s};
+        System.out.printf(format, msg);
+//        System.out.println("[ " + splittedObjectPath[splittedObjectPath.length - 1] + " ]::" + count + "\t" + s);
         count++;
     }
 

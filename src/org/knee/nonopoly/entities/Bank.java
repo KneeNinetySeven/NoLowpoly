@@ -13,7 +13,7 @@ public class Bank extends Entity {
     public Bank() {
         super();
         setName("Bank");
-        setGuthaben(200000);
+        setGuthaben(2000000);
     }
 
     @Override

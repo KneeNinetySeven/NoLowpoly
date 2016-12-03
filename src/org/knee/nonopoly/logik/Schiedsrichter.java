@@ -39,7 +39,6 @@ public class Schiedsrichter {
     private Wurf letzterWurf;
     private Bank bank;
     private Steuertopf steuertopf;
-    private Protokollant protokollant;
     private List<Feld> spielbrett;
     private int rundenZaehler;
 
@@ -56,7 +55,6 @@ public class Schiedsrichter {
     public Schiedsrichter() {
         // Werkzeuge für den Schiedsrichter einrichten
         this.wuerfel = new Wuerfel();
-        this.setProtokollant(new Protokollant());
         this.bank = new Bank();
         this.steuertopf = new Steuertopf();
         this.rundenZaehler = 0;
@@ -95,7 +93,7 @@ public class Schiedsrichter {
             e.printStackTrace();
         }
 
-        spielbrett.forEach(feld -> getProtokollant().printAs(
+        spielbrett.forEach(feld -> Protokollant.printAs(this,
                 "Anlegen auf: " + getSpielbrett().indexOf(feld)
                         + " Index: " + feld.getIndex()
                         + " von: " + feld.getName()));
@@ -211,7 +209,7 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
 
         letzterWurf = wuerfel.wuerfeln();
-        protokollant.printAs(aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
+        Protokollant.printAs(this,aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
 
         // Auf Pasche überprüfen
         if (letzterWurf.istPasch()) {
@@ -232,7 +230,7 @@ public class Schiedsrichter {
             aktiverSpieler.setPosition(neuePosition - spielbrett.size());
             Los feld = (Los) spielbrett.get(0);
             bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
-            getProtokollant().printAs(aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
+            Protokollant.printAs(this,aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
         } else {
             // Die Spielerposition wird gesetzt
             aktiverSpieler.setPosition(neuePosition);
@@ -248,7 +246,7 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
 
-        protokollant.printAs("Aktiver Spieler: "
+        Protokollant.printAs(this,"Aktiver Spieler: "
                 + aktiverSpieler.getName()
                 + " [" + aktiverSpieler.getGuthaben() + " | " + aktiverSpieler.getPosition() + "]");
         // Verbleibende Teilnehmer sollen spielen können
@@ -259,7 +257,7 @@ public class Schiedsrichter {
             } else {
                 bewegeSpieler();
                 aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
-                protokollant.printAs(aktiverSpieler.getName()
+                Protokollant.printAs(this,aktiverSpieler.getName()
                         + " steht auf Feld: "
                         + aktivesFeld.getName());
                 aktivesFeld.fuehrePflichtAktionAus(this);
@@ -278,7 +276,7 @@ public class Schiedsrichter {
         } else {
             rundenZaehler++;
             naechsterSpieler = 0;
-            protokollant.printAs("\t ** Rundenübertrag auf: " + rundenZaehler);
+            Protokollant.printAs(this,"\t ** Rundenübertrag auf: " + rundenZaehler);
         }
         return spielLäuftNoch();
     }
@@ -327,9 +325,9 @@ public class Schiedsrichter {
      *
      */
     private void spielBeenden() {
-        protokollant.printAs("Das Spiel ist beendet!");
+        Protokollant.printAs(this,"Das Spiel ist beendet!");
         Spieler barSieger = teilnehmer.stream().max(Comparator.comparingInt(Entity::getGuthaben)).get();
-        protokollant.printAs("Der Sieger mit dem höchsten Bargeldbestand ist: " + barSieger.getName());
+        Protokollant.printAs(this,"Der Sieger mit dem höchsten Bargeldbestand ist: " + barSieger.getName() + " (" + barSieger.getGuthaben() + "Mücken)");
 
         Map<Spieler, Integer> besitzverhältnisse = new HashMap<>();
 
@@ -351,7 +349,7 @@ public class Schiedsrichter {
             }
         }
 
-        protokollant.printAs("Der Gesamtsieger ist : " + gesamtSieger);
+        Protokollant.printAs(this,"Der Gesamtsieger ist : " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken)");
 
     }
 
@@ -362,7 +360,7 @@ public class Schiedsrichter {
     public void naechsteGemeinschaftskarte() {
         Karte k = this.gemeinschaftsKarten.peek();
         k.fuehreKartenAktionAus(this);
-        protokollant.printAs("Gezogene Karte: " + k.getClass().toString());
+        Protokollant.printAs(this,"Gezogene Karte: " + k.getClass().toString());
         this.gemeinschaftsKarten.add(this.gemeinschaftsKarten.poll());
     }
 
@@ -373,7 +371,7 @@ public class Schiedsrichter {
     public void naechsteEreigniskarte() {
         Karte k = this.ereignisKarten.peek();
         k.fuehreKartenAktionAus(this);
-        protokollant.printAs("Gezogene Karte: " + k.getClass().toString());
+        Protokollant.printAs(this,"Gezogene Karte: " + k.getClass().toString());
         this.ereignisKarten.add(this.ereignisKarten.poll());
     }
 
@@ -383,14 +381,6 @@ public class Schiedsrichter {
 
     public Bank getBank() {
         return bank;
-    }
-
-    public Protokollant getProtokollant() {
-        return protokollant;
-    }
-
-    private void setProtokollant(Protokollant protokollant) {
-        this.protokollant = protokollant;
     }
 
     public ArrayList<Spieler> getTeilnehmer() {

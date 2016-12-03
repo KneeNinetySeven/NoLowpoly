@@ -3,6 +3,7 @@ package org.knee.nonopoly.felder.kartenFelder;
 import org.knee.nonopoly.felder.Feld;
 import org.knee.nonopoly.felder.FeldTypen;
 import org.knee.nonopoly.logik.Schiedsrichter;
+import org.knee.nonopoly.logik.logging.Protokollant;
 
 /**
  * Created by Nils on 24.09.2016.
@@ -32,9 +33,8 @@ public abstract class KartenFeld extends Feld {
      */
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
-        schiedsrichter
-                .getProtokollant()
-                .printAs(schiedsrichter
+        Protokollant
+                .printAs(this,schiedsrichter
                         .getAktiverSpieler()
                         .getName() + " zieht eine Karte auf dem " + this.getName());
     }

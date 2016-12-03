@@ -1,6 +1,7 @@
 package org.knee.nonopoly.felder;
 
 import org.knee.nonopoly.logik.Schiedsrichter;
+import org.knee.nonopoly.logik.logging.Protokollant;
 
 /**
  * Created by Nils on 24.09.2016.
@@ -19,7 +20,7 @@ public class Polizist extends Feld {
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         schiedsrichter.getAktiverSpieler().geheInsGefaengnis();
-        schiedsrichter.getProtokollant().printAs(schiedsrichter.getAktiverSpieler().getName() + " geht ins Gefaengnis");
+        Protokollant.printAs(this,schiedsrichter.getAktiverSpieler().getName() + " geht ins Gefaengnis");
     }
 
     @Override

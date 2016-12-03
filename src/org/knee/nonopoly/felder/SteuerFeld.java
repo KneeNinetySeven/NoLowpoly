@@ -3,6 +3,7 @@ package org.knee.nonopoly.felder;
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.logik.Schiedsrichter;
+import org.knee.nonopoly.logik.logging.Protokollant;
 
 /**
  * Created by Nils on 24.09.2016.
@@ -36,8 +37,8 @@ public class SteuerFeld extends Feld {
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         Spieler aktiverSpieler = schiedsrichter.getAktiverSpieler();
-        
-        schiedsrichter.getProtokollant().printAs(aktiverSpieler.getName() + " zahlt " + steuer + " Mücken an Steuern ");
+
+        Protokollant.printAs(this,aktiverSpieler.getName() + " zahlt " + steuer + " Mücken an Steuern ");
         aktiverSpieler.ueberweiseAn(steuer, schiedsrichter.getSteuertopf());
     }
 
