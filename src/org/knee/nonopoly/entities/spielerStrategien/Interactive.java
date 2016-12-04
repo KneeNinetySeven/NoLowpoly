@@ -44,7 +44,7 @@ public class Interactive extends Strategie {
     public boolean erlaubtHausbau(Spieler spieler, Strasse feld) {
         Protokollant.printAs(spieler, spieler.getName() + " - Soll ein neues Haus auf dem Feld " + feld.getName() + "gebaut werden?");
         Protokollant.printAs(spieler, "Preis: " + feld.getHauspreis() + " Mücken \t Du hast noch " + spieler.getGuthaben());
-        return JOptionPane.showConfirmDialog(null, "Soll das Feld " + feld.getName() + " mit einem weiteren Haus" +
+        return JOptionPane.showConfirmDialog(null, spieler.getName().toUpperCase() + " ist dran! \n \n Soll das Feld " + feld.getName() + " mit einem weiteren Haus" +
                 " bebaut werden? \n Kosten: " + feld.getHauspreis(), "Bauoptionen", 0, 3) == 0;
     }
 
@@ -57,7 +57,7 @@ public class Interactive extends Strategie {
     public boolean erlaubtFeldKauf(Spieler spieler, ImmobilienFeld feld) {
         Protokollant.printAs(spieler, spieler.getName() + " - Soll ein das Feld " + feld.getName() + "gekauft werden?");
         Protokollant.printAs(spieler, "Preis: " + feld.getKaufpreis() + " Mücken	\t Du hast noch " + spieler.getGuthaben());
-        return JOptionPane.showConfirmDialog(null, "Soll das Feld " + feld.getName() +
+        return JOptionPane.showConfirmDialog(null, spieler.getName().toUpperCase() + " ist dran! \n \n Soll das Feld " + feld.getName() +
                 " gekauft werden? \n Kosten: " + feld.getKaufpreis(), "Kaufoptionen", 0, 3) == 0;
     }
 

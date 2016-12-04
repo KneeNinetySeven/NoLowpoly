@@ -390,6 +390,8 @@ public class Schiedsrichter {
             }
         }
 
+        JOptionPane.showMessageDialog(null, "Das Spiel ist beendet! ", "Ein Spiel geht zu Ende! \n \n"
+                + "Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler,2);
         Protokollant.printAs(this, "Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler);
 
     }
@@ -400,7 +402,10 @@ public class Schiedsrichter {
      */
     public void naechsteGemeinschaftskarte() {
         Karte k = this.gemeinschaftsKarten.peek();
-        Protokollant.printAs(this, "Gezogene Karte: " + k.getClass().toString());
+        JOptionPane.showMessageDialog(null, getAktiverSpieler().getName().toUpperCase()
+                + " zieht eine Gemeinschaftskarte. "
+                + "\n \n " + k.getClass().getSimpleName());
+        Protokollant.printAs(this, "Gezogene Karte: " + k.getClass().getSimpleName());
         k.fuehreKartenAktionAus(this);
         this.gemeinschaftsKarten.add(this.gemeinschaftsKarten.poll());
     }
@@ -411,7 +416,10 @@ public class Schiedsrichter {
      */
     public void naechsteEreigniskarte() {
         Karte k = this.ereignisKarten.peek();
-        Protokollant.printAs(this, "Gezogene Karte: " + k.getClass().toString());
+        JOptionPane.showMessageDialog(null, getAktiverSpieler().getName().toUpperCase()
+                + " zieht eine Ereigniskarte. "
+                + "\n \n " + k.getClass().getSimpleName());
+        Protokollant.printAs(this, "Gezogene Karte: " + k.getClass().getSimpleName());
         k.fuehreKartenAktionAus(this);
         this.ereignisKarten.add(this.ereignisKarten.poll());
     }

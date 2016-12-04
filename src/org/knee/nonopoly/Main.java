@@ -1,9 +1,9 @@
 package org.knee.nonopoly;
 
-import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
-import org.knee.nonopoly.entities.spielerStrategien.Interactive;
 import org.knee.nonopoly.logik.Schiedsrichter;
 import org.knee.nonopoly.ui.MainWindow;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Nils on 09.09.2016.
@@ -28,15 +28,39 @@ public class Main {
      * Lässt den Schiedsrichter (noch) nur die richtigen Dinge tun
      */
     public void runGame() throws InstantiationException, IllegalAccessException {
-        new MainWindow(schiedsrichter);
-        schiedsrichter.registriereSpieler("Spieler1", Interactive.class);
-        schiedsrichter.registriereSpieler("Spieler2", AllesKaeufer.class);
-        schiedsrichter.registriereSpieler("Spieler3", AllesKaeufer.class);
-        schiedsrichter.registriereSpieler("Spieler4", AllesKaeufer.class);
-        schiedsrichter.registriereSpieler("Spieler5", AllesKaeufer.class);
-//        schiedsrichter.registriereSpieler("Spieler6", AllesKaeufer.class);
+        MainWindow mainWindow = new MainWindow(schiedsrichter);
+//        schiedsrichter.registriereSpieler("Spieler1", Interactive.class);
+//        schiedsrichter.registriereSpieler("Spieler2", AllesKaeufer.class);
+//        schiedsrichter.registriereSpieler("Spieler3", AllesKaeufer.class);
+//        schiedsrichter.registriereSpieler("Spieler4", AllesKaeufer.class);
+//        schiedsrichter.registriereSpieler("Spieler5", AllesKaeufer.class);
+        mainWindow.refresh();
+        Thread refresher = new Thread(new Refresher(mainWindow));
+        refresher.start();
 //        schiedsrichter.spielStarten();
 //        schiedsrichter.spieleSpielZuEnde();
 
+    }
+
+    private class Refresher implements Runnable {
+        private MainWindow mainWindow;
+
+        Refresher(MainWindow m){
+            this.mainWindow = m;
+        }
+
+        @Override
+        public void run() {
+            while(true){
+                try{
+                    Thread.sleep(TimeUnit.SECONDS.toMillis(1L));
+                } catch (InterruptedException e){
+                    System.err.println("Refresh timer interrupted!");
+                }
+                if(schiedsrichter.updateAvailable) {
+                    this.mainWindow.refresh();
+                }
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@ package org.knee.nonopoly.felder;
 import org.knee.nonopoly.entities.Steuertopf;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
+import javax.swing.*;
+
 /**
  * Created by Nils on 24.09.2016.
  */
@@ -23,7 +25,10 @@ public class FreiParken extends Feld {
     @Override
     public void fuehrePflichtAktionAus(Schiedsrichter schiedsrichter) {
         Steuertopf steuertopf = schiedsrichter.getSteuertopf();
+        JOptionPane.showMessageDialog(null, "Bei " + schiedsrichter.getAktiverSpieler().getName().toUpperCase() + " klingelt die Kasse, " +
+                "denn er hat das Frei-Parken-Feld erwischt! \n Er bekommt " + steuertopf.getGuthaben() );
         steuertopf.ueberweiseAn(steuertopf.getGuthaben(), schiedsrichter.getAktiverSpieler());
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.knee.nonopoly.ui;
 
+import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.spielerStrategien.Interactive;
 import org.knee.nonopoly.exceptions.NameSchonVergebenException;
 import org.knee.nonopoly.logik.Schiedsrichter;
@@ -52,6 +53,7 @@ public class MainWindow extends JFrame {
         initMenu();
         initLayouts();
         initListeners();
+        plotPlayers();
         pack();
         setVisible(true);
     }
@@ -130,6 +132,7 @@ public class MainWindow extends JFrame {
                         if (spielername != null) {
                             try {
                                 schiedsrichter.registriereSpieler(spielername, Interactive.class);
+                                refresh();
                             } catch (IllegalAccessException e1) {
                                 e1.printStackTrace();
                             } catch (InstantiationException e1) {
@@ -188,7 +191,8 @@ public class MainWindow extends JFrame {
         this.spielerAnzeige = new JPanel();
         this.spielerAnzeige.setPreferredSize(new Dimension(this.spielerAnzeigeWidth, this.winHeight));
         this.spielerAnzeige.setBackground(Color.lightGray);
-
+        this.spielerAnzeige.setLayout(new BoxLayout(this.spielerAnzeige, BoxLayout.Y_AXIS));
+//        this.spielerAnzeige.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
         this.spielfeld = new JPanel();
         this.spielfeld.setLayout(new BorderLayout());
@@ -199,6 +203,34 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(this.spielerAnzeige, BorderLayout.EAST);
     }
     // </editor-fold>
+
+    /**
+     *
+     */
+    private void plotPlayers() {
+        Color[] colors = {Color.BLUE, Color.YELLOW, Color.GREEN, Color.RED, Color.DARK_GRAY, Color.ORANGE};
+        int index = 0;
+        this.spielerAnzeige.removeAll();
+        for (Spieler s : schiedsrichter.getTeilnehmer()) {
+            JTextArea textArea = new JTextArea("Name: " + s.getName()
+                    + "\nGuthaben: " + s.getGuthaben()
+                    + "\nPosition: " + s.getPosition());
+            if (s.getGefaengnisFreiKarte() != null) {
+                textArea.append("\n Gefängniskarte: " + s.getGefaengnisFreiKarte().getClass().getName());
+            }
+            textArea.setEditable(false);
+            textArea.setSize(new Dimension(spielerAnzeigeWidth - 10, 100));
+            textArea.setBackground(colors[index]);
+            this.spielerAnzeige.add(textArea, -1);
+            index++;
+        }
+    }
+
+    public void refresh() {
+        plotPlayers();
+        repaint();
+        revalidate();
+    }
 
 }
 
