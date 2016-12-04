@@ -166,21 +166,17 @@ public class Schiedsrichter {
      * @param name      Name des Spielers
      * @param strategie Strategie des anzulegenden Spielers
      */
-    public void registriereSpieler(String name, Class<? extends Strategie> strategie) {
-        try {
-            this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie.newInstance()));
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    public void registriereSpieler(String name, Class<? extends Strategie> strategie) throws IllegalAccessException, InstantiationException {
+        Spieler neuerSpieler = Spieler.spielerErzeugen(name, strategie.newInstance());
+        Protokollant.printAs(this, "Spieler hinzugefügt: " + neuerSpieler);
+        this.teilnehmer.add(neuerSpieler);
     }
 
     /**
      *
      */
     public void spielStarten() {
-        if(teilnehmer.size() > 2){
+        if (teilnehmer.size() > 2) {
             zahleStartkapitalAus();
             this.spielGestartet = true;
         } else {
@@ -230,7 +226,7 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
 
         letzterWurf = wuerfel.wuerfeln();
-        Protokollant.printAs(this,aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
+        Protokollant.printAs(this, aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
 
         // Auf Pasche überprüfen
         if (letzterWurf.istPasch()) {
@@ -250,9 +246,9 @@ public class Schiedsrichter {
             // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen
             aktiverSpieler.setPosition(neuePosition - spielbrett.size());
             Los feld = (Los) spielbrett.get(0);
-            if(aktiverSpieler.getPosition() > 0){
+            if (aktiverSpieler.getPosition() > 0) {
                 bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
-                Protokollant.printAs(this,aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
+                Protokollant.printAs(this, aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
             }
         } else {
             // Die Spielerposition wird gesetzt
@@ -270,7 +266,7 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
 
-        Protokollant.printAs(this,"Aktiver Spieler: "
+        Protokollant.printAs(this, "Aktiver Spieler: "
                 + aktiverSpieler.getName()
                 + " [" + aktiverSpieler.getGuthaben() + " | " + aktiverSpieler.getPosition() + "]");
         // Verbleibende Teilnehmer sollen spielen können
@@ -281,7 +277,7 @@ public class Schiedsrichter {
             } else {
                 bewegeSpieler();
                 aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
-                Protokollant.printAs(this,aktiverSpieler.getName()
+                Protokollant.printAs(this, aktiverSpieler.getName()
                         + " steht auf Feld: "
                         + aktivesFeld.getName());
                 aktivesFeld.fuehrePflichtAktionAus(this);
@@ -300,9 +296,9 @@ public class Schiedsrichter {
         } else {
             rundenZaehler++;
             naechsterSpieler = 0;
-            Protokollant.printAs(this,"\t ** Rundenübertrag auf: " + rundenZaehler);
+            Protokollant.printAs(this, "\t ** Rundenübertrag auf: " + rundenZaehler);
         }
-        Protokollant.printAs(this,"-----------------");
+        Protokollant.printAs(this, "-----------------");
         return spielLäuftNoch();
     }
 
@@ -318,7 +314,7 @@ public class Schiedsrichter {
             }
         }
         Protokollant.printAs(this, "###############################################################");
-        Protokollant.printAs(this,"---------------------------------------------------------------");
+        Protokollant.printAs(this, "---------------------------------------------------------------");
 
         return spielLäuftNoch();
     }
@@ -327,7 +323,7 @@ public class Schiedsrichter {
      * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
      */
     public void spieleSpielZuEnde() {
-        if(this.spielGestartet){
+        if (this.spielGestartet) {
             while (this.spieleEineRunde()) {
 
             }
@@ -357,9 +353,9 @@ public class Schiedsrichter {
      *
      */
     private void spielBeenden() {
-        Protokollant.printAs(this,"Das Spiel ist beendet!");
+        Protokollant.printAs(this, "Das Spiel ist beendet!");
         Spieler barSieger = teilnehmer.stream().max(Comparator.comparingInt(Entity::getGuthaben)).get();
-        Protokollant.printAs(this,"Der Sieger mit dem höchsten Bargeldbestand ist: " + barSieger.getName() + " (" + barSieger.getGuthaben() + "Mücken)");
+        Protokollant.printAs(this, "Der Sieger mit dem höchsten Bargeldbestand ist: " + barSieger.getName() + " (" + barSieger.getGuthaben() + "Mücken)");
 
         Map<Spieler, Integer> besitzverhältnisse = new HashMap<>();
 
@@ -381,7 +377,7 @@ public class Schiedsrichter {
             }
         }
 
-        Protokollant.printAs(this,"Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler);
+        Protokollant.printAs(this, "Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler);
 
     }
 
@@ -391,7 +387,7 @@ public class Schiedsrichter {
      */
     public void naechsteGemeinschaftskarte() {
         Karte k = this.gemeinschaftsKarten.peek();
-        Protokollant.printAs(this,"Gezogene Karte: " + k.getClass().toString());
+        Protokollant.printAs(this, "Gezogene Karte: " + k.getClass().toString());
         k.fuehreKartenAktionAus(this);
         this.gemeinschaftsKarten.add(this.gemeinschaftsKarten.poll());
     }
@@ -402,7 +398,7 @@ public class Schiedsrichter {
      */
     public void naechsteEreigniskarte() {
         Karte k = this.ereignisKarten.peek();
-        Protokollant.printAs(this,"Gezogene Karte: " + k.getClass().toString());
+        Protokollant.printAs(this, "Gezogene Karte: " + k.getClass().toString());
         k.fuehreKartenAktionAus(this);
         this.ereignisKarten.add(this.ereignisKarten.poll());
     }

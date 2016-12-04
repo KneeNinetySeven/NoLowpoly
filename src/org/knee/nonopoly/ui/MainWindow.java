@@ -1,5 +1,6 @@
 package org.knee.nonopoly.ui;
 
+import org.knee.nonopoly.entities.spielerStrategien.Interactive;
 import org.knee.nonopoly.logik.Schiedsrichter;
 
 import javax.swing.*;
@@ -116,7 +117,8 @@ public class MainWindow extends JFrame {
         this.spielerMenu_spielerHinzu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Hallo Welt!");
+                String spielername = JOptionPane.showInputDialog(null, "Bitte den Spielernamen eingeben");
+                schiedsrichter.registriereSpieler(spielername, Interactive.class);
             }
         });
     }
