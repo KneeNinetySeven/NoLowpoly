@@ -166,8 +166,14 @@ public class Schiedsrichter {
      * @param name      Name des Spielers
      * @param strategie Strategie des anzulegenden Spielers
      */
-    public void registriereSpieler(String name, Strategie strategie) {
-        this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
+    public void registriereSpieler(String name, Class<? extends Strategie> strategie) {
+        try {
+            this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie.newInstance()));
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
