@@ -22,6 +22,7 @@ import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.wuerfel.Wuerfel;
 import org.knee.nonopoly.logik.wuerfel.Wurf;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -51,6 +52,9 @@ public class Schiedsrichter {
 
     // Parser
     private JDOMParsing jdomParser;
+
+    // User Interface
+    public boolean updateAvailable = false;
 
     /**
      *
@@ -167,9 +171,11 @@ public class Schiedsrichter {
      * @param strategie Strategie des anzulegenden Spielers
      */
     public void registriereSpieler(String name, Class<? extends Strategie> strategie) throws IllegalAccessException, InstantiationException {
+
         Spieler neuerSpieler = Spieler.spielerErzeugen(name, strategie.newInstance());
         Protokollant.printAs(this, "Spieler hinzugefügt: " + neuerSpieler);
         this.teilnehmer.add(neuerSpieler);
+        this.updateAvailable = true;
     }
 
     /**
@@ -182,6 +188,7 @@ public class Schiedsrichter {
         } else {
             new ZuWenigTeilnehmerException();
         }
+        this.updateAvailable = true;
     }
 
     /**
@@ -193,6 +200,7 @@ public class Schiedsrichter {
         getTeilnehmer().forEach((Spieler s) -> {
             getBank().ueberweiseAn(30000, s);
         });
+        this.updateAvailable = true;
     }
 
     /**
@@ -285,7 +293,8 @@ public class Schiedsrichter {
 
             // Ist der aktive Spieler im Laufe der Runde rausgeflogen,
             // wird er ausscheiden gelassen
-            if (!aktiverSpieler.getImSpiel()) {
+            if (!aktiverSpieler.getImSpiel() && !aktiverSpieler.istAusgeschieden()) {
+                Protokollant.printAs(this, aktiverSpieler.getName() + " ist ausgeschieden!");
                 this.ausscheidenLassen(aktiverSpieler);
             }
         }
@@ -299,6 +308,7 @@ public class Schiedsrichter {
             Protokollant.printAs(this, "\t ** Rundenübertrag auf: " + rundenZaehler);
         }
         Protokollant.printAs(this, "-----------------");
+        this.updateAvailable = true;
         return spielLäuftNoch();
     }
 
@@ -340,6 +350,7 @@ public class Schiedsrichter {
      */
     private void ausscheidenLassen(Spieler spieler) {
         spieler.setIstAusgeschieden(true);
+
         spieler.ueberweiseAn(spieler.getGuthaben(), getBank());
         getSpielbrett().forEach(feld -> {
             if (feld.istVomTyp(FeldTypen.IMMOBILIENFELD)) {
@@ -347,6 +358,8 @@ public class Schiedsrichter {
                 immobilienFeld.initialisiereBesitzer(getBank());
             }
         });
+        JOptionPane.showMessageDialog(null, "Der Spieler " + spieler.getName() + " ist ausgeschieden!\n" +
+                "Sein Restkapital wurde überwiesen und die Felder wieder an die Bank überführt!");
     }
 
     /**
@@ -425,5 +438,9 @@ public class Schiedsrichter {
 
     public Steuertopf getSteuertopf() {
         return steuertopf;
+    }
+
+    public boolean spielGestartet() {
+        return spielGestartet;
     }
 }

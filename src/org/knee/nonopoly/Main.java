@@ -1,5 +1,7 @@
 package org.knee.nonopoly;
 
+import org.knee.nonopoly.entities.spielerStrategien.AllesKaeufer;
+import org.knee.nonopoly.entities.spielerStrategien.Interactive;
 import org.knee.nonopoly.logik.Schiedsrichter;
 import org.knee.nonopoly.ui.MainWindow;
 
@@ -15,20 +17,24 @@ public class Main {
     }
 
     public static void  main(String[] args){
-        new Main().runGame();
+        try {
+            new Main().runGame();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Lässt den Schiedsrichter (noch) nur die richtigen Dinge tun
      */
-    public void runGame(){
+    public void runGame() throws InstantiationException, IllegalAccessException {
         new MainWindow(schiedsrichter);
-//        schiedsrichter.registriereSpieler("Spieler1", AllesKaeufer.class);
-//        schiedsrichter.registriereSpieler("Spieler2", Interactive.class);
-//        schiedsrichter.registriereSpieler("Spieler3", AllesKaeufer.class);
-//        schiedsrichter.registriereSpieler("Spieler4", new AllesKaeufer());
-//        schiedsrichter.registriereSpieler("Spieler5", new AllesKaeufer());
-//        schiedsrichter.registriereSpieler("Spieler6", new AllesKaeufer());
+        schiedsrichter.registriereSpieler("Spieler1", Interactive.class);
+        schiedsrichter.registriereSpieler("Spieler2", AllesKaeufer.class);
+        schiedsrichter.registriereSpieler("Spieler3", AllesKaeufer.class);
+        schiedsrichter.registriereSpieler("Spieler4", AllesKaeufer.class);
+        schiedsrichter.registriereSpieler("Spieler5", AllesKaeufer.class);
+//        schiedsrichter.registriereSpieler("Spieler6", AllesKaeufer.class);
 //        schiedsrichter.spielStarten();
 //        schiedsrichter.spieleSpielZuEnde();
 

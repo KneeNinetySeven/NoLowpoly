@@ -1,7 +1,9 @@
 package org.knee.nonopoly.ui;
 
 import org.knee.nonopoly.entities.spielerStrategien.Interactive;
+import org.knee.nonopoly.exceptions.NameSchonVergebenException;
 import org.knee.nonopoly.logik.Schiedsrichter;
+import org.knee.nonopoly.logik.logging.Protokollant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,8 +45,8 @@ public class MainWindow extends JFrame {
         super("Nonopoly");
         this.schiedsrichter = s;
         this.toolkit = Toolkit.getDefaultToolkit();
-        this.winWidth = 900;
-        this.winHeight = 600;
+        this.winWidth = 1200;
+        this.winHeight = 900;
 
         initWindow();
         initMenu();
@@ -117,8 +119,60 @@ public class MainWindow extends JFrame {
         this.spielerMenu_spielerHinzu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String spielername = JOptionPane.showInputDialog(null, "Bitte den Spielernamen eingeben");
-                schiedsrichter.registriereSpieler(spielername, Interactive.class);
+                final String spielername;
+
+                // Prüfung auf Spieleranzahl
+                if (schiedsrichter.getTeilnehmer().size() < 6) {
+                    spielername = JOptionPane.showInputDialog(null, "Bitte den Spielernamen eingeben");
+                    Protokollant.printAs(this, "Eingegebener Name: " + spielername);
+                    // Prüfung auf Dopplungen
+                    if (schiedsrichter.getTeilnehmer().stream().noneMatch(spieler -> spieler.getName().equalsIgnoreCase(spielername))) {
+                        if (spielername != null) {
+                            try {
+                                schiedsrichter.registriereSpieler(spielername, Interactive.class);
+                            } catch (IllegalAccessException e1) {
+                                e1.printStackTrace();
+                            } catch (InstantiationException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            System.err.println("Bitte einen gültigen Spielernamen eingeben!");
+                            JOptionPane.showMessageDialog(null, "Bitte einen gültigen Spielernamen eingeben!");
+                        }
+                    } else {
+                        new NameSchonVergebenException();
+                        JOptionPane.showMessageDialog(null, "Der Name ist schon vergeben!");
+                    }
+
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Es sind schon sechs Spieler eingetragen!");
+                }
+            }
+        });
+        this.spielMenu_spielStarten.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                schiedsrichter.spielStarten();
+                if (schiedsrichter.spielGestartet()) {
+                    spielfeld.add(new Label("Spielfeld"));
+                    spielerMenu_spielerHinzu.setEnabled(false);
+                    spielerMenu_spielerLoeschen.setEnabled(false);
+                    schiedsrichter.spieleSpielZuEnde();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Es sind noch nicht genügend Spieler vorhanden!", "Spiel wurde nicht gestartet", 2);
+                }
+            }
+        });
+        this.spielMenu_spielNeuStarten.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (JOptionPane.showConfirmDialog(null, "Soll das Spiel wirklich neu gestartet werden?", "Neu starten?", 0, 1) == 0) {
+                    schiedsrichter = new Schiedsrichter();
+                    spielerMenu_spielerHinzu.setEnabled(true);
+                    spielerMenu_spielerLoeschen.setEnabled(true);
+                    initLayouts();
+                }
             }
         });
     }
@@ -126,20 +180,19 @@ public class MainWindow extends JFrame {
     /**
      * Initialisiert die Layouts
      */
-    private void initLayouts(){
+    private void initLayouts() {
 //        Protokollant.printAs(this, "Layouts");
         this.getContentPane().setLayout(new BorderLayout());
 
         this.spielerAnzeigeWidth = 300;
         this.spielerAnzeige = new JPanel();
         this.spielerAnzeige.setPreferredSize(new Dimension(this.spielerAnzeigeWidth, this.winHeight));
-        this.spielerAnzeige.setBackground(Color.black);
-
+        this.spielerAnzeige.setBackground(Color.lightGray);
 
 
         this.spielfeld = new JPanel();
         this.spielfeld.setLayout(new BorderLayout());
-        this.spielfeld.setBackground(Color.cyan);
+        this.spielfeld.setBackground(Color.darkGray);
         this.spielfeld.setPreferredSize(new Dimension((this.winWidth - this.spielerAnzeigeWidth), this.winHeight));
 
         this.getContentPane().add(this.spielfeld, BorderLayout.CENTER);
