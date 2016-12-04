@@ -14,7 +14,7 @@ public abstract class FeldPanel extends JPanel {
 
     private Feld feld;
     private int height, width;
-    private JLabel title;
+    public JLabel title;
 
     FeldPanel(Feld feld, int height, int width){
         super();
