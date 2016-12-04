@@ -5,11 +5,16 @@ import org.knee.nonopoly.entities.spielerStrategien.Interactive;
 import org.knee.nonopoly.exceptions.NameSchonVergebenException;
 import org.knee.nonopoly.logik.Schiedsrichter;
 import org.knee.nonopoly.logik.logging.Protokollant;
+import org.knee.nonopoly.ui.felder.Eckfeld;
+import org.knee.nonopoly.ui.felder.FeldPanel;
+import org.knee.nonopoly.ui.felder.HorizontalFeld;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Nils on 04.12.2016.
@@ -198,6 +203,7 @@ public class MainWindow extends JFrame {
         this.spielfeld.setLayout(new BorderLayout());
         this.spielfeld.setBackground(Color.darkGray);
         this.spielfeld.setPreferredSize(new Dimension((this.winWidth - this.spielerAnzeigeWidth), this.winHeight));
+        this.spielfeld.setLayout(new BoxLayout(this.spielfeld, BoxLayout.X_AXIS));
 
         this.getContentPane().add(this.spielfeld, BorderLayout.CENTER);
         this.getContentPane().add(this.spielerAnzeige, BorderLayout.EAST);
@@ -226,8 +232,75 @@ public class MainWindow extends JFrame {
         }
     }
 
+    private void plotSpielfeld() {
+        this.spielfeld.removeAll();
+
+        JPanel top = new JPanel();
+        top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
+        JPanel right = new JPanel();
+        right.setLayout(new BoxLayout(right, BoxLayout.X_AXIS));
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+        JPanel left = new JPanel();
+        left.setLayout(new BoxLayout(left, BoxLayout.X_AXIS));
+        JPanel platzhalter = new JPanel();
+        platzhalter.setMaximumSize(new Dimension(this.spielfeld.getWidth()/3, this.spielfeld.getHeight()/3));
+
+        int totalSize = schiedsrichter.getSpielbrett().size();
+        ArrayList<FeldPanel> topFelder = new ArrayList<>();
+        ArrayList<FeldPanel> rightFelder = new ArrayList<>();
+        ArrayList<FeldPanel> bottomFelder = new ArrayList<>();
+        ArrayList<FeldPanel> leftFelder = new ArrayList<>();
+        int spielfeldIndex = 0;
+        int tmpIndex;
+
+        topFelder.add(new Eckfeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), (this.spielfeld.getWidth() / 4), (this.spielfeld.getHeight() / 4)));
+        spielfeldIndex++;
+        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++){
+            topFelder.add(new HorizontalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),this.spielfeld.getHeight()/4 , this.spielfeld.getWidth() / (totalSize / 4 - 1)));
+            spielfeldIndex++;
+        }
+        topFelder.add(new Eckfeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), (this.spielfeld.getWidth() / 4), (this.spielfeld.getHeight() / 4)));
+        spielfeldIndex++;
+
+        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++){
+            rightFelder.add(new HorizontalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),this.spielfeld.getHeight()/(totalSize / 4 - 1) , this.spielfeld.getWidth() / 4));
+            spielfeldIndex++;
+        }
+
+        bottomFelder.add(new Eckfeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), (this.spielfeld.getWidth() / 4), (this.spielfeld.getHeight() / 4)));
+        spielfeldIndex++;
+        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++){
+            bottomFelder.add(new HorizontalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),this.spielfeld.getHeight()/4 , this.spielfeld.getWidth() / (totalSize / 4 - 1)));
+            spielfeldIndex++;
+        }
+        bottomFelder.add(new Eckfeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), (this.spielfeld.getWidth() / 4), (this.spielfeld.getHeight() / 4)));
+        spielfeldIndex++;
+
+        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++){
+            leftFelder.add(new HorizontalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),this.spielfeld.getHeight()/(totalSize / 4 - 1) , this.spielfeld.getWidth() / 4));
+            spielfeldIndex++;
+        }
+
+        topFelder.stream().forEach(feldPanel -> top.add(feldPanel));
+        rightFelder.stream().forEach(feldPanel -> right.add(feldPanel));
+        Collections.reverse(bottomFelder);
+        bottomFelder.stream().forEach(feldPanel -> bottom.add(feldPanel));
+        Collections.reverse(rightFelder);
+        rightFelder.stream().forEach(feldPanel -> left.add(feldPanel));
+
+        this.spielfeld.add(platzhalter, BorderLayout.CENTER);
+        this.spielfeld.add(top, BorderLayout.NORTH);
+        this.spielfeld.add(right, BorderLayout.EAST);
+        this.spielfeld.add(bottom, BorderLayout.SOUTH);
+        this.spielfeld.add(left, BorderLayout.WEST);
+
+        pack();
+    }
+
     public void refresh() {
         plotPlayers();
+        plotSpielfeld();
         repaint();
         revalidate();
     }

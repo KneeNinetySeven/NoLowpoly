@@ -9,7 +9,7 @@ import org.knee.nonopoly.logik.Schiedsrichter;
  */
 public class DreiFelderZurueckKarte implements Karte {
     /**
-     * Der Spieler wird drei Felder zurück gesetzt.
+     * Der Spieler wird drei felder zurück gesetzt.
      * @param schiedsrichter
      */
     @Override
