@@ -5,6 +5,7 @@ import org.knee.nonopoly.felder.immobilien.ImmobilienFeld;
 import org.knee.nonopoly.felder.immobilien.Strasse;
 import org.knee.nonopoly.logik.logging.Protokollant;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 /**
@@ -20,7 +21,13 @@ public class Interactive extends Strategie {
         this.setName("Interaktiver Spieler");
     }
 
-    private boolean readUserDecision(){
+    /**
+     * Liest eine Frage aus der Konsole ab
+     * @deprecated
+     * @return Returns if the answer was y or not.
+     */
+    @Deprecated
+    private boolean readUserDecision() {
         boolean dec = false;
         Scanner reader = new Scanner(System.in);  // Reading from System.in
         Protokollant.printAs(false, this, "Soll dat jekooft werden? [y/n] ");
@@ -29,15 +36,16 @@ public class Interactive extends Strategie {
     }
 
     /**
-     * @param spieler
-     * @param feld
+     * @param spieler Der abgefrage Spieler
+     * @param feld Das Feld auf dem der Spieler grade steht
      * @return Gibt zurück, ob ein Haus, nach der Strategie, gebaut werden darf
      */
     @Override
     public boolean erlaubtHausbau(Spieler spieler, Strasse feld) {
         Protokollant.printAs(spieler, spieler.getName() + " - Soll ein neues Haus auf dem Feld " + feld.getName() + "gebaut werden?");
-        Protokollant.printAs(spieler, "Preis: " + feld.getHauspreis() + " Mücken \t Du hast noch " + spieler.getGuthaben() );
-        return readUserDecision();
+        Protokollant.printAs(spieler, "Preis: " + feld.getHauspreis() + " Mücken \t Du hast noch " + spieler.getGuthaben());
+        return JOptionPane.showConfirmDialog(null, spieler.getName().toUpperCase() + " ist dran! \n \n Soll das Feld " + feld.getName() + " mit einem weiteren Haus" +
+                " bebaut werden? \n Kosten: " + feld.getHauspreis(), "Bauoptionen", 0, 3) == 0;
     }
 
     /**
@@ -49,7 +57,8 @@ public class Interactive extends Strategie {
     public boolean erlaubtFeldKauf(Spieler spieler, ImmobilienFeld feld) {
         Protokollant.printAs(spieler, spieler.getName() + " - Soll ein das Feld " + feld.getName() + "gekauft werden?");
         Protokollant.printAs(spieler, "Preis: " + feld.getKaufpreis() + " Mücken	\t Du hast noch " + spieler.getGuthaben());
-        return readUserDecision();
+        return JOptionPane.showConfirmDialog(null, spieler.getName().toUpperCase() + " ist dran! \n \n Soll das Feld " + feld.getName() +
+                " gekauft werden? \n Kosten: " + feld.getKaufpreis(), "Kaufoptionen", 0, 3) == 0;
     }
 
     @Override

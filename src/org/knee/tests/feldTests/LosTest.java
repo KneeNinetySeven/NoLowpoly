@@ -18,7 +18,7 @@ public class LosTest extends TestCase {
 
     public void testPayment() throws Exception {
         Schiedsrichter testSchiri = new Schiedsrichter();
-        testSchiri.registriereSpieler("Test", new AllesKaeufer());
+        testSchiri.registriereSpieler("Test", AllesKaeufer.class);
         Feld losFeld = testSchiri.getSpielbrett().get(0);
         losFeld.fuehrePflichtAktionAus(testSchiri);
         System.out.println(testSchiri.getBank().toString());

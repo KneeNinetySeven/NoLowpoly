@@ -3,6 +3,8 @@ package org.knee.nonopoly.entities;
 import org.knee.nonopoly.entities.spielerStrategien.Strategie;
 import org.knee.nonopoly.karten.gemeinschaftskarten.GefaengnisKarte;
 
+import javax.swing.*;
+
 /**
  * Created by Nils on 09.09.2016.
  *
@@ -72,6 +74,8 @@ public class Spieler extends Entity {
      */
     public void gefaengniskarteSpielen(){
         this.getGefaengnisFreiKarte().abgeben();
+        JOptionPane.showMessageDialog(null, this.getName().toUpperCase() + "spielt die Gefängniskarte und kommt frei.");
+
     }
 
     /**

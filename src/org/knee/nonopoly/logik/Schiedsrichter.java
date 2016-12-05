@@ -22,6 +22,7 @@ import org.knee.nonopoly.logik.logging.Protokollant;
 import org.knee.nonopoly.logik.wuerfel.Wuerfel;
 import org.knee.nonopoly.logik.wuerfel.Wurf;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -51,6 +52,9 @@ public class Schiedsrichter {
 
     // Parser
     private JDOMParsing jdomParser;
+
+    // User Interface
+    public boolean updateAvailable = false;
 
     /**
      *
@@ -166,20 +170,25 @@ public class Schiedsrichter {
      * @param name      Name des Spielers
      * @param strategie Strategie des anzulegenden Spielers
      */
-    public void registriereSpieler(String name, Strategie strategie) {
-        this.teilnehmer.add(Spieler.spielerErzeugen(name, strategie));
+    public void registriereSpieler(String name, Class<? extends Strategie> strategie) throws IllegalAccessException, InstantiationException {
+
+        Spieler neuerSpieler = Spieler.spielerErzeugen(name, strategie.newInstance());
+        Protokollant.printAs(this, "Spieler hinzugefügt: " + neuerSpieler);
+        this.teilnehmer.add(neuerSpieler);
+        this.updateAvailable = true;
     }
 
     /**
      *
      */
     public void spielStarten() {
-        if(teilnehmer.size() > 2){
+        if (teilnehmer.size() > 2) {
             zahleStartkapitalAus();
             this.spielGestartet = true;
         } else {
             new ZuWenigTeilnehmerException();
         }
+        this.updateAvailable = true;
     }
 
     /**
@@ -191,6 +200,7 @@ public class Schiedsrichter {
         getTeilnehmer().forEach((Spieler s) -> {
             getBank().ueberweiseAn(30000, s);
         });
+        this.updateAvailable = true;
     }
 
     /**
@@ -224,7 +234,7 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
 
         letzterWurf = wuerfel.wuerfeln();
-        Protokollant.printAs(this,aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
+        Protokollant.printAs(this, aktiverSpieler.getName() + " würfelt: " + letzterWurf.getWurf1() + " " + letzterWurf.getWurf2());
 
         // Auf Pasche überprüfen
         if (letzterWurf.istPasch()) {
@@ -244,9 +254,9 @@ public class Schiedsrichter {
             // Sollte der Spieler über das letze Feld hinausgehen, wird wieder vorn angefangen
             aktiverSpieler.setPosition(neuePosition - spielbrett.size());
             Los feld = (Los) spielbrett.get(0);
-            if(aktiverSpieler.getPosition() > 0){
+            if (aktiverSpieler.getPosition() > 0) {
                 bank.ueberweiseAn(feld.getUeberschreitung(), aktiverSpieler);
-                Protokollant.printAs(this,aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
+                Protokollant.printAs(this, aktiverSpieler.getName() + " geht über Los und bekommt: " + feld.getUeberschreitung());
             }
         } else {
             // Die Spielerposition wird gesetzt
@@ -264,7 +274,7 @@ public class Schiedsrichter {
         Spieler aktiverSpieler = teilnehmer.get(naechsterSpieler);
         Feld aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
 
-        Protokollant.printAs(this,"Aktiver Spieler: "
+        Protokollant.printAs(this, "Aktiver Spieler: "
                 + aktiverSpieler.getName()
                 + " [" + aktiverSpieler.getGuthaben() + " | " + aktiverSpieler.getPosition() + "]");
         // Verbleibende Teilnehmer sollen spielen können
@@ -275,7 +285,7 @@ public class Schiedsrichter {
             } else {
                 bewegeSpieler();
                 aktivesFeld = spielbrett.get(aktiverSpieler.getPosition());
-                Protokollant.printAs(this,aktiverSpieler.getName()
+                Protokollant.printAs(this, aktiverSpieler.getName()
                         + " steht auf Feld: "
                         + aktivesFeld.getName());
                 aktivesFeld.fuehrePflichtAktionAus(this);
@@ -283,7 +293,8 @@ public class Schiedsrichter {
 
             // Ist der aktive Spieler im Laufe der Runde rausgeflogen,
             // wird er ausscheiden gelassen
-            if (!aktiverSpieler.getImSpiel()) {
+            if (!aktiverSpieler.getImSpiel() && !aktiverSpieler.istAusgeschieden()) {
+                Protokollant.printAs(this, aktiverSpieler.getName() + " ist ausgeschieden!");
                 this.ausscheidenLassen(aktiverSpieler);
             }
         }
@@ -294,9 +305,10 @@ public class Schiedsrichter {
         } else {
             rundenZaehler++;
             naechsterSpieler = 0;
-            Protokollant.printAs(this,"\t ** Rundenübertrag auf: " + rundenZaehler);
+            Protokollant.printAs(this, "\t ** Rundenübertrag auf: " + rundenZaehler);
         }
-        Protokollant.printAs(this,"-----------------");
+        Protokollant.printAs(this, "-----------------");
+        this.updateAvailable = true;
         return spielLäuftNoch();
     }
 
@@ -312,7 +324,7 @@ public class Schiedsrichter {
             }
         }
         Protokollant.printAs(this, "###############################################################");
-        Protokollant.printAs(this,"---------------------------------------------------------------");
+        Protokollant.printAs(this, "---------------------------------------------------------------");
 
         return spielLäuftNoch();
     }
@@ -321,7 +333,7 @@ public class Schiedsrichter {
      * Spielt so lange Runden, wie das Spiel noch nicht beendet ist
      */
     public void spieleSpielZuEnde() {
-        if(this.spielGestartet){
+        if (this.spielGestartet) {
             while (this.spieleEineRunde()) {
 
             }
@@ -338,6 +350,7 @@ public class Schiedsrichter {
      */
     private void ausscheidenLassen(Spieler spieler) {
         spieler.setIstAusgeschieden(true);
+
         spieler.ueberweiseAn(spieler.getGuthaben(), getBank());
         getSpielbrett().forEach(feld -> {
             if (feld.istVomTyp(FeldTypen.IMMOBILIENFELD)) {
@@ -345,15 +358,17 @@ public class Schiedsrichter {
                 immobilienFeld.initialisiereBesitzer(getBank());
             }
         });
+        JOptionPane.showMessageDialog(null, "Der Spieler " + spieler.getName() + " ist ausgeschieden!\n" +
+                "Sein Restkapital wurde überwiesen und die Felder wieder an die Bank überführt!");
     }
 
     /**
      *
      */
     private void spielBeenden() {
-        Protokollant.printAs(this,"Das Spiel ist beendet!");
+        Protokollant.printAs(this, "Das Spiel ist beendet!");
         Spieler barSieger = teilnehmer.stream().max(Comparator.comparingInt(Entity::getGuthaben)).get();
-        Protokollant.printAs(this,"Der Sieger mit dem höchsten Bargeldbestand ist: " + barSieger.getName() + " (" + barSieger.getGuthaben() + "Mücken)");
+        Protokollant.printAs(this, "Der Sieger mit dem höchsten Bargeldbestand ist: " + barSieger.getName() + " (" + barSieger.getGuthaben() + "Mücken)");
 
         Map<Spieler, Integer> besitzverhältnisse = new HashMap<>();
 
@@ -375,7 +390,9 @@ public class Schiedsrichter {
             }
         }
 
-        Protokollant.printAs(this,"Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler);
+        JOptionPane.showMessageDialog(null, "Das Spiel ist beendet! ", "Ein Spiel geht zu Ende! \n \n"
+                + "Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler,2);
+        Protokollant.printAs(this, "Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler);
 
     }
 
@@ -385,7 +402,10 @@ public class Schiedsrichter {
      */
     public void naechsteGemeinschaftskarte() {
         Karte k = this.gemeinschaftsKarten.peek();
-        Protokollant.printAs(this,"Gezogene Karte: " + k.getClass().toString());
+        JOptionPane.showMessageDialog(null, getAktiverSpieler().getName().toUpperCase()
+                + " zieht eine Gemeinschaftskarte. "
+                + "\n \n " + k.getClass().getSimpleName());
+        Protokollant.printAs(this, "Gezogene Karte: " + k.getClass().getSimpleName());
         k.fuehreKartenAktionAus(this);
         this.gemeinschaftsKarten.add(this.gemeinschaftsKarten.poll());
     }
@@ -396,7 +416,10 @@ public class Schiedsrichter {
      */
     public void naechsteEreigniskarte() {
         Karte k = this.ereignisKarten.peek();
-        Protokollant.printAs(this,"Gezogene Karte: " + k.getClass().toString());
+        JOptionPane.showMessageDialog(null, getAktiverSpieler().getName().toUpperCase()
+                + " zieht eine Ereigniskarte. "
+                + "\n \n " + k.getClass().getSimpleName());
+        Protokollant.printAs(this, "Gezogene Karte: " + k.getClass().getSimpleName());
         k.fuehreKartenAktionAus(this);
         this.ereignisKarten.add(this.ereignisKarten.poll());
     }
@@ -423,5 +446,9 @@ public class Schiedsrichter {
 
     public Steuertopf getSteuertopf() {
         return steuertopf;
+    }
+
+    public boolean spielGestartet() {
+        return spielGestartet;
     }
 }
