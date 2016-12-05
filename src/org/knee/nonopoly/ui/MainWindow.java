@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
     private Schiedsrichter schiedsrichter;
     private Toolkit toolkit;
     private int winPosX, winPosY, winHeight, winWidth;
+    private int indicator;
 
     // <editor-fold desc="Menu-Komponenten">
     // Komponenten
@@ -247,7 +248,8 @@ public class MainWindow extends JFrame {
         JPanel left = new JPanel();
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
         JPanel platzhalter = new JPanel();
-        platzhalter.setMaximumSize(new Dimension(this.spielfeld.getWidth()/3, this.spielfeld.getHeight()/3));
+        platzhalter.add(new JLabel(String.valueOf( "Spielzeit in Sekunden: " + indicator)));
+        platzhalter.setMinimumSize(new Dimension(this.spielfeld.getWidth() / 2, this.spielfeld.getHeight() / 2));
 
         int totalSize = schiedsrichter.getSpielbrett().size();
         ArrayList<FeldPanel> topFelder = new ArrayList<>();
@@ -257,48 +259,55 @@ public class MainWindow extends JFrame {
         int spielfeldIndex = 0;
         int tmpIndex;
 
+        // FELDER GENERIEREN UND EINSORTIEREN
         topFelder.add(new Eckfeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), (this.spielfeld.getWidth() / 4), (this.spielfeld.getHeight() / 4)));
         spielfeldIndex++;
-        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++){
-            topFelder.add(new VerticalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),this.spielfeld.getHeight()/4 , this.spielfeld.getWidth() / 2 / (totalSize / 4 - 1)));
+        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++) {
             spielfeldIndex++;
+            topFelder.add(new VerticalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),
+                    this.spielfeld.getHeight() / 4,
+                    this.spielfeld.getWidth() / 2 / ((totalSize - 4) / 4)));
         }
         topFelder.add(new Eckfeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), (this.spielfeld.getWidth() / 4), (this.spielfeld.getHeight() / 4)));
         spielfeldIndex++;
 
-        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++){
-            rightFelder.add(new HorizontalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),this.spielfeld.getHeight()/(totalSize / 4 - 1) , this.spielfeld.getWidth() / 4));
+        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++) {
+            rightFelder.add(new HorizontalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), this.spielfeld.getHeight() / (totalSize / 4 - 1), this.spielfeld.getWidth() / 4));
             spielfeldIndex++;
         }
 
         bottomFelder.add(new Eckfeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), (this.spielfeld.getWidth() / 4), (this.spielfeld.getHeight() / 4)));
         spielfeldIndex++;
-        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++){
-            bottomFelder.add(new VerticalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),this.spielfeld.getHeight()/4 , this.spielfeld.getWidth() / 2 / (totalSize / 4 - 1)));
+        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++) {
+            bottomFelder.add(new VerticalFeld(
+                    schiedsrichter.getSpielbrett().get(spielfeldIndex),
+                    this.spielfeld.getHeight() / 4,
+                    this.spielfeld.getWidth() / 2 / ((totalSize - 4) / 4)));
             spielfeldIndex++;
         }
         bottomFelder.add(new Eckfeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), (this.spielfeld.getWidth() / 4), (this.spielfeld.getHeight() / 4)));
         spielfeldIndex++;
 
-        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++){
-            leftFelder.add(new HorizontalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex),this.spielfeld.getHeight()/(totalSize / 4 - 1) , this.spielfeld.getWidth() / 4));
+        for (tmpIndex = 0; tmpIndex < ((totalSize / 4) - 1); tmpIndex++) {
+            leftFelder.add(new HorizontalFeld(schiedsrichter.getSpielbrett().get(spielfeldIndex), this.spielfeld.getHeight() / (totalSize / 4 - 1), this.spielfeld.getWidth() / 4));
             spielfeldIndex++;
         }
 
-        topFelder.stream().forEach(feldPanel -> top.add(feldPanel));// top.add(feldPanel));
-        rightFelder.stream().forEach(feldPanel ->right.add(feldPanel));// right.add(feldPanel));
+        // FELDER DEM PANEL ZUORDNEN
+        topFelder.stream().forEach(feldPanel -> top.add(feldPanel));
+        rightFelder.stream().forEach(feldPanel -> right.add(feldPanel));
         Collections.reverse(bottomFelder);
-        bottomFelder.stream().forEach(feldPanel ->bottom.add(feldPanel));// bottom.add(feldPanel));
+        bottomFelder.stream().forEach(feldPanel -> bottom.add(feldPanel));
         Collections.reverse(rightFelder);
-        leftFelder.stream().forEach(feldPanel ->left.add(feldPanel));// left.add(feldPanel));
+        leftFelder.stream().forEach(feldPanel -> left.add(feldPanel));
 
+        // PANELE EINSETZEN
         this.spielfeld.add(platzhalter, BorderLayout.CENTER);
         this.spielfeld.add(top, BorderLayout.NORTH);
         this.spielfeld.add(right, BorderLayout.EAST);
         this.spielfeld.add(bottom, BorderLayout.SOUTH);
         this.spielfeld.add(left, BorderLayout.WEST);
 
-        pack();
     }
 
     public void refresh() {
@@ -306,6 +315,7 @@ public class MainWindow extends JFrame {
         plotSpielfeld();
         repaint();
         revalidate();
+        indicator++;
     }
 
 }
