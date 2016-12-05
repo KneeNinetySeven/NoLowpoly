@@ -29,17 +29,9 @@ public class Main {
      */
     public void runGame() throws InstantiationException, IllegalAccessException {
         MainWindow mainWindow = new MainWindow(schiedsrichter);
-//        schiedsrichter.registriereSpieler("Spieler1", Interactive.class);
-//        schiedsrichter.registriereSpieler("Spieler2", AllesKaeufer.class);
-//        schiedsrichter.registriereSpieler("Spieler3", AllesKaeufer.class);
-//        schiedsrichter.registriereSpieler("Spieler4", AllesKaeufer.class);
-//        schiedsrichter.registriereSpieler("Spieler5", AllesKaeufer.class);
-        mainWindow.refresh();
         Thread refresher = new Thread(new Refresher(mainWindow));
+        mainWindow.refresh();
         refresher.start();
-//        schiedsrichter.spielStarten();
-//        schiedsrichter.spieleSpielZuEnde();
-
     }
 
     private class Refresher implements Runnable {
