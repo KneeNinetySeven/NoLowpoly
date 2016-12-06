@@ -1,5 +1,7 @@
 package org.knee.nonopoly.exceptions;
 
+import org.knee.nonopoly.logik.logging.Protokollant;
+
 import java.security.PrivilegedActionException;
 
 /**
@@ -16,6 +18,7 @@ public class ZuWenigTeilnehmerException extends Exception {
     public ZuWenigTeilnehmerException() {
         super();
         System.err.println("Es gibt nicht genug Teilnehmer!");
+        Protokollant.printAs(this, "Es gibt nicht genug Teilnehmer!");
     }
 
     /**

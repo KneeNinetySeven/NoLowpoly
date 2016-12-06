@@ -1,6 +1,7 @@
 package org.knee.nonopoly.logik.logging;
 
 import org.knee.nonopoly.entities.Spieler;
+import org.knee.nonopoly.ui.ProtokollUi;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +20,7 @@ public class Protokollant {
     private static StringBuilder logOutput = new StringBuilder();
     private static int count = 1;
     private static File f = new File(System.currentTimeMillis() + ".log");
+    private static ProtokollUi protokollUi = new ProtokollUi();
 
     public Protokollant() {
         logOutput = new StringBuilder();
@@ -58,7 +60,8 @@ public class Protokollant {
         String[] splittedObjectPath = o.getClass().getName().split("\\.");
         String className = splittedObjectPath[splittedObjectPath.length - 1];
         Object[] msg = {className, count, s};
-        System.out.printf(format, msg);
+//        System.out.printf(format, msg);
+        protokollUi.schreibeInsProtokoll(format, msg);
         logOutput.append(String.format(format, msg));
         writeLogToFile();
         count++;
@@ -77,7 +80,8 @@ public class Protokollant {
         String[] splittedObjectPath = o.getClass().getName().split("\\.");
         String className = splittedObjectPath[splittedObjectPath.length - 1];
         Object[] msg = {className, count, s};
-        System.out.printf(format, msg);
+//        System.out.printf(format, msg);
+        protokollUi.schreibeInsProtokoll(format, msg);
         logOutput.append(String.format(format, msg));
         writeLogToFile();
         count++;
