@@ -186,6 +186,15 @@ public class MainWindow extends JFrame {
                 }
             }
         });
+        this.info_about.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Dear tester, \n ... Ah fuck that. This is NoNopoly - The negative Monopoly. Cuz' this is awesome. \n \n Have fun!" +
+                        "\n Logic and what not by. \n > Adrian Stölken - adri94@github.com <" +
+                        "\n > Nils Kneemeyer - KneeNinetySeven@github.com < \n" +
+                        "C u in da game. ");
+            }
+        });
     }
 
     /**

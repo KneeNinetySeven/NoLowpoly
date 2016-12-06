@@ -1,5 +1,7 @@
 package org.knee.nonopoly.exceptions;
 
+import org.knee.nonopoly.logik.logging.Protokollant;
+
 import java.security.PrivilegedActionException;
 
 /**
@@ -16,6 +18,7 @@ public class NameSchonVergebenException extends Exception {
     public NameSchonVergebenException() {
         super();
         System.err.println("Der Spielername ist schon vergeben");
+        Protokollant.printAs(this, "Der Spielername ist schon vergeben");
     }
 
     /**

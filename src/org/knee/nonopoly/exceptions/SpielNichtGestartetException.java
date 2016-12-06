@@ -1,5 +1,7 @@
 package org.knee.nonopoly.exceptions;
 
+import org.knee.nonopoly.logik.logging.Protokollant;
+
 import java.security.PrivilegedActionException;
 
 /**
@@ -16,6 +18,7 @@ public class SpielNichtGestartetException extends Exception {
     public SpielNichtGestartetException() {
         super();
         System.err.println("Das Spiel wurde noch nicht gestartet!");
+        Protokollant.printAs(this, "Das Spiel wurde noch nicht gestartet!");
     }
 
     /**
