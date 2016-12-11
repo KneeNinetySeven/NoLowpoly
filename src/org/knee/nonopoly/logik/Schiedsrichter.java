@@ -1,5 +1,7 @@
 package org.knee.nonopoly.logik;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.jdom2.DataConversionException;
 import org.jdom2.JDOMException;
 import org.knee.nonopoly.entities.Bank;
@@ -34,7 +36,8 @@ import java.util.*;
 public class Schiedsrichter {
 
     // Spieler
-    private ArrayList<Spieler> teilnehmer;
+    private ObservableList<Spieler> teilnehmer;
+    //    private ObservableList<Spieler> teilnehmerObservableList;
     private int naechsterSpieler;
 
     // Spielwerkzeuge
@@ -76,11 +79,14 @@ public class Schiedsrichter {
         spielbrett = new ArrayList<>();
 
         // Spieler
-        this.teilnehmer = new ArrayList<>();
+        this.teilnehmer = FXCollections.observableList(new ArrayList<>());
+//        this.teilnehmer = FXCollections.observableList(this.teilnehmer);
         this.naechsterSpieler = 0;
 
         try {
-            this.jdomParser = new JDOMParsing("nichtStrassen.xml", "strassen.xml");
+            this.jdomParser = new JDOMParsing(
+                    getClass().getResource("/org/knee/nonopoly/logik/XMLUtils/nichtStrassen.xml").toString(),
+                    getClass().getResource("/org/knee/nonopoly/logik/XMLUtils/strassen.xml").toString());
         } catch (JDOMException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -391,7 +397,7 @@ public class Schiedsrichter {
         }
 
         JOptionPane.showMessageDialog(null, "Das Spiel ist beendet! ", "Ein Spiel geht zu Ende! \n \n"
-                + "Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler,2);
+                + "Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler, 2);
         Protokollant.printAs(this, "Der Gesamtsieger ist: " + gesamtSieger.getName() + " (" + besitzverhältnisse.get(gesamtSieger) + "Mücken) in Runde " + this.rundenZaehler);
 
     }
@@ -432,7 +438,7 @@ public class Schiedsrichter {
         return bank;
     }
 
-    public ArrayList<Spieler> getTeilnehmer() {
+    public ObservableList<Spieler> getTeilnehmer() {
         return teilnehmer;
     }
 
