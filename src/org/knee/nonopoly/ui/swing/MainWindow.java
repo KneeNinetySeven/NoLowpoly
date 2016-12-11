@@ -1,14 +1,14 @@
-package org.knee.nonopoly.ui;
+package org.knee.nonopoly.ui.swing;
 
 import org.knee.nonopoly.entities.Spieler;
 import org.knee.nonopoly.entities.spielerStrategien.Interactive;
 import org.knee.nonopoly.exceptions.NameSchonVergebenException;
 import org.knee.nonopoly.logik.Schiedsrichter;
 import org.knee.nonopoly.logik.logging.Protokollant;
-import org.knee.nonopoly.ui.felder.Eckfeld;
-import org.knee.nonopoly.ui.felder.FeldPanel;
-import org.knee.nonopoly.ui.felder.HorizontalFeld;
-import org.knee.nonopoly.ui.felder.VerticalFeld;
+import org.knee.nonopoly.ui.swing.felder.Eckfeld;
+import org.knee.nonopoly.ui.swing.felder.FeldPanel;
+import org.knee.nonopoly.ui.swing.felder.HorizontalFeld;
+import org.knee.nonopoly.ui.swing.felder.VerticalFeld;
 
 import javax.swing.*;
 import java.awt.*;

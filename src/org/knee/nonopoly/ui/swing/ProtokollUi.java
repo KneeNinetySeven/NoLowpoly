@@ -1,4 +1,4 @@
-package org.knee.nonopoly.ui;
+package org.knee.nonopoly.ui.swing;
 
 import javax.swing.*;
 import java.awt.*;

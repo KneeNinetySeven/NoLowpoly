@@ -1,7 +1,7 @@
 package org.knee.nonopoly;
 
 import org.knee.nonopoly.logik.Schiedsrichter;
-import org.knee.nonopoly.ui.MainWindow;
+import org.knee.nonopoly.ui.swing.MainWindow;
 
 import java.util.concurrent.TimeUnit;
 

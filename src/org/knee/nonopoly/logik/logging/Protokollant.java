@@ -1,7 +1,7 @@
 package org.knee.nonopoly.logik.logging;
 
 import org.knee.nonopoly.entities.Spieler;
-import org.knee.nonopoly.ui.ProtokollUi;
+import org.knee.nonopoly.ui.swing.ProtokollUi;
 
 import java.io.File;
 import java.io.FileNotFoundException;
