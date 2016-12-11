@@ -1,5 +1,6 @@
 package org.knee.nonopoly.ui.fx;
 
+import javafx.beans.binding.ListBinding;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -87,22 +88,19 @@ public class Controller {
 
 
     @FXML
-    public void setItems(){
+    public void bind() {
         this.spielerListe.setItems(FXCollections.observableList(this.schiedsrichter.getTeilnehmer()));
+        this.spielerListe.itemsProperty().bindBidirectional(new SimpleListProperty<Spieler>(this.schiedsrichter.getTeilnehmer()));
     }
+
 
     @FXML
-    public void changeName() {
-        this.schiedsrichter.getTeilnehmer().get(this.schiedsrichter.getTeilnehmer().size() - 1).setName("Bfff");
-    }
-
-    public void setChangeListener(){
-        this.schiedsrichter.getTeilnehmer().addListener(new ListChangeListener<Spieler>() {
-            @Override
-            public void onChanged(Change<? extends Spieler> c) {
-                spielerListe.itemsProperty().bind(new SimpleListProperty<Spieler>(schiedsrichter.getTeilnehmer()));
-            }
-        });
+    public void change() throws InstantiationException, IllegalAccessException {
+//        this.schiedsrichter.getTeilnehmer().remove(1);
+        Spieler spieler = this.schiedsrichter.getTeilnehmer().get(0);
+        spieler.setName("Changed");
+        this.schiedsrichter.getTeilnehmer().set(0, spieler);
+        System.out.println(spieler == this.schiedsrichter.getTeilnehmer().get(0));
     }
 
 

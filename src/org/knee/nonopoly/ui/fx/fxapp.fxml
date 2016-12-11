@@ -157,9 +157,8 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
                               <TextField fx:id="testFeld" editable="false" layoutX="74.0" layoutY="56.0" />
-                              <Button layoutX="103.0" layoutY="165.0" mnemonicParsing="false" onAction="#changeName" text="Change Name" />
-                              <Button layoutX="109.0" layoutY="93.0" mnemonicParsing="false" onAction="#setChangeListener" text="Set Listener" />
-                              <Button layoutX="116.0" layoutY="131.0" mnemonicParsing="false" onAction="#setItems" text="Set Items" />
+                              <Button layoutX="120.0" layoutY="131.0" mnemonicParsing="false" onAction="#change" text="Change" />
+                              <Button layoutX="128.0" layoutY="95.0" mnemonicParsing="false" onAction="#bind" text="Bind" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
